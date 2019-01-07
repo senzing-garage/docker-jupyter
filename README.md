@@ -25,7 +25,7 @@ The `senzing/jupyter` docker image is a Senzing-ready, python 2.7 image hosting
 ### Build docker image
 
 ```console
-docker build --tag senzing/jupyter https://github.com/senzing/docker-jupyter.git
+sudo docker build --tag senzing/jupyter https://github.com/senzing/docker-jupyter.git
 ```
 
 ### Create SENZING_DIR
@@ -49,7 +49,7 @@ docker build --tag senzing/jupyter https://github.com/senzing/docker-jupyter.git
 
     export SENZING_DIR=/opt/senzing
 
-    docker run -it \
+    sudo docker run -it \
       --volume ${SENZING_DIR}:/opt/senzing \
       --publish ${WEBAPP_PORT}:8888 \
       senzing/jupyter
@@ -62,7 +62,7 @@ docker build --tag senzing/jupyter https://github.com/senzing/docker-jupyter.git
 
     export SENZING_DIR=/opt/senzing
 
-    docker run -it \
+    sudo docker run -it \
       --volume ${SENZING_DIR}:/opt/senzing \
       --publish ${WEBAPP_PORT}:8888 \
       senzing/jupyter \
@@ -83,7 +83,7 @@ docker build --tag senzing/jupyter https://github.com/senzing/docker-jupyter.git
     export SENZING_DATABASE_URL="${DATABASE_PROTOCOL}://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_DATABASE}"
     export SENZING_DIR=/opt/senzing
 
-    docker run -it  \
+    sudo docker run -it  \
       --volume ${SENZING_DIR}:/opt/senzing \
       --env SENZING_DATABASE_URL="${SENZING_DATABASE_URL}" \
       --publish ${WEBAPP_PORT}:8888 \
@@ -95,7 +95,7 @@ docker build --tag senzing/jupyter https://github.com/senzing/docker-jupyter.git
    Determine docker network. Example:
 
     ```console
-    docker network ls
+    sudo docker network ls
 
     # Choose value from NAME column of docker network ls
     export SENZING_NETWORK=nameofthe_network
@@ -115,7 +115,7 @@ docker build --tag senzing/jupyter https://github.com/senzing/docker-jupyter.git
     export SENZING_DATABASE_URL="${DATABASE_PROTOCOL}://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_DATABASE}"
     export SENZING_DIR=/opt/senzing
 
-    docker run -it  \
+    sudo docker run -it  \
       --volume ${SENZING_DIR}:/opt/senzing \
       --net ${SENZING_NETWORK} \
       --publish ${WEBAPP_PORT}:8888 \
@@ -162,8 +162,8 @@ make --version
 #### docker
 
 ```console
-docker --version
-docker run hello-world
+sudo docker --version
+sudo docker run hello-world
 ```
 
 ### Set environment variables for development
