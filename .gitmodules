@@ -1,0 +1,3 @@
+[submodule "example-notebooks/jrjohansson/scientific-python-lectures"]
+	path = example-notebooks/jrjohansson/scientific-python-lectures
+	url = https://github.com/jrjohansson/scientific-python-lectures.git
