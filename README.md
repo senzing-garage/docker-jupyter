@@ -17,6 +17,7 @@ The `senzing/jupyter` docker image is a Senzing-ready, python 2.7 image hosting
     1. [Prerequisite software](#prerequisite-software)
     1. [Set environment variables for development](#set-environment-variables-for-development)
     1. [Clone repository](#clone-repository)
+    1. [Git submodules](#git-submodules)
     1. [Build docker image for development](#build-docker-image-for-development)
 
 ## Demonstrate
@@ -192,6 +193,15 @@ docker run hello-world
     mkdir --parents ${GIT_ACCOUNT_DIR}
     cd  ${GIT_ACCOUNT_DIR}
     git clone ${GIT_REPOSITORY_URL}
+    ```
+
+### Git submodules
+
+1. Download git submodules.
+
+    ```console
+    cd ${GIT_REPOSITORY_DIR}
+    git submodule update --init --recursive
     ```
 
 ### Build docker image for development
