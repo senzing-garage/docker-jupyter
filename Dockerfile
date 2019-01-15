@@ -30,6 +30,7 @@ RUN apt-get -y install \
  && rm -rf /var/lib/apt/lists/*
 
 RUN pip2 install \
+    bokeh \
     matplotlib \
     networkx \
     numpy \
@@ -42,6 +43,7 @@ RUN pip2 install \
     version_information
 
 RUN pip install \
+    bokeh \
     matplotlib \
     networkx \
     numpy \
