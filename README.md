@@ -46,7 +46,6 @@ sudo docker build --tag senzing/jupyter https://github.com/senzing/docker-jupyte
 
     ```console
     export WEBAPP_PORT=8888
-
     export SENZING_DIR=/opt/senzing
 
     sudo docker run -it \
@@ -59,7 +58,6 @@ sudo docker build --tag senzing/jupyter https://github.com/senzing/docker-jupyte
 
     ```console
     export WEBAPP_PORT=8888
-
     export SENZING_DIR=/opt/senzing
 
     sudo docker run -it \
