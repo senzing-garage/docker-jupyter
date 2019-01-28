@@ -5,6 +5,12 @@
 The `senzing/jupyter` docker image is a Senzing-ready, python 2.7 image hosting
 [jupyter](https://jupyter.org/).
 
+These notebooks are built upon the DockerHub 
+[Jupyter organization](https://hub.docker.com/u/jupyter) docker images.
+The default base image is [jupyter/minimal-notebook](https://hub.docker.com/r/jupyter/minimal-notebook).
+There is more information on the 
+[Jupyter Docker Stacks](https://jupyter-docker-stacks.readthedocs.io).
+
 ### Contents
 
 1. [Demonstrate](#demonstrate)
@@ -34,6 +40,9 @@ sudo docker build --tag senzing/jupyter https://github.com/senzing/docker-jupyte
    [HOWTO - Create SENZING_DIR](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/create-senzing-dir.md).
 
 ### Configuration
+
+Non-Senzing configuration can be seen at
+[Jupyter Docker Stacks](https://jupyter-docker-stacks.readthedocs.io/en/latest/index.html)
 
 - **SENZING_DATABASE_URL** -
   Database URI in the form: `${DATABASE_PROTOCOL}://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_DATABASE}`
