@@ -95,8 +95,6 @@ ENV LD_LIBRARY_PATH=${SENZING_ROOT}/g2/lib:${SENZING_ROOT}/g2/lib/debian
 
 # Copy files from repository.
 
-RUN mkdir /home/$NB_USER/example-notebooks \
- && mkdir /home/$NB_USER/senzing-example-notebooks
+RUN mkdir /home/$NB_USER/senzing-example-notebooks
 
-COPY ./example-notebooks /home/$NB_USER/example-notebooks
 COPY ./senzing-example-notebooks /home/$NB_USER/senzing-example-notebooks
