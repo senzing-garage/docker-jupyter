@@ -1,6 +1,0 @@
-[submodule "example-notebooks/jrjohansson/scientific-python-lectures"]
-	path = example-notebooks/jrjohansson/scientific-python-lectures
-	url = https://github.com/jrjohansson/scientific-python-lectures.git
-[submodule "example-notebooks/bokeh-notebooks"]
-	path = example-notebooks/bokeh-notebooks
-	url = https://github.com/bokeh/bokeh-notebooks.git
