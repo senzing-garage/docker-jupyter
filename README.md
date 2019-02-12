@@ -13,7 +13,10 @@ There is more information on the
 
 ### Contents
 
+1. [Expectations](#expectations)
+1. [Quick starts](#quick-starts)
 1. [Demonstrate](#demonstrate)
+    1. [Prerequisite software for demonstration](#prerequisite-software-for-demonstration)
     1. [Build docker image](#build-docker-image)
     1. [Create SENZING_DIR](#create-senzing_dir)
     1. [Configuration](#configuration)
@@ -23,10 +26,10 @@ There is more information on the
     1. [Prerequisite software](#prerequisite-software)
     1. [Set environment variables for development](#set-environment-variables-for-development)
     1. [Clone repository](#clone-repository)
-    1. [Git submodules](#git-submodules)
     1. [Build docker image for development](#build-docker-image-for-development)
+1. [Reference](#reference)
 
-### Expectations
+## Expectations
 
 - **Space:** It requires about 9GB of free disk.
 
@@ -40,7 +43,7 @@ There is more information on the
 
 The following software programs need to be installed.
 
-#### git
+#### git for demonstration
 
 1. [Install Git](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-git.md)
 1. Test
@@ -49,7 +52,7 @@ The following software programs need to be installed.
     git --version
     ```
 
-#### docker
+#### docker for demonstration
 
 1. [Install docker](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker.md)
 1. Test
@@ -185,7 +188,7 @@ Non-Senzing configuration can be seen at
 
 The following software programs need to be installed.
 
-#### git for development
+#### git
 
 1. [Install Git](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-git.md)
 1. Test
@@ -194,7 +197,7 @@ The following software programs need to be installed.
     git --version
     ```
 
-#### docker for development
+#### docker
 
 1. [Install docker](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker.md)
 1. Test
