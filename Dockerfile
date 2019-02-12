@@ -4,15 +4,20 @@
 ARG BASE_CONTAINER=jupyter/minimal-notebook
 FROM ${BASE_CONTAINER}
 
-ENV REFRESHED_AT=2018-12-16
+ENV REFRESHED_AT=2019-02-09
 
-# "root" user is needed for apt-get installs.
+#############################################
+## OS infrastructure 
+#############################################
 
 USER root
 
-# Install prerequisites.
-
+# Update OS
 RUN apt-get update
+RUN apt-get -y upgrade
+RUN apt -y autoremove
+
+# Some extra applications
 RUN apt-get -y install \
       curl \
       gnupg \
@@ -29,34 +34,7 @@ RUN apt-get -y install \
       wget \
  && rm -rf /var/lib/apt/lists/*
 
-RUN pip2 install \
-    bokeh \
-    matplotlib \
-    networkx \
-    numpy \
-    pandas \
-    plotly \
-    psutil \
-    pyodbc \
-    seaborn \
-    sympy \
-    version_information
-
-RUN pip install \
-    bokeh \
-    matplotlib \
-    networkx \
-    numpy \
-    pandas \
-    plotly \
-    psutil \
-    pyodbc \
-    seaborn \
-    sympy \
-    version_information
-
 # Install libmysqlclient.
-
 ENV DEBIAN_FRONTEND=noninteractive
 RUN wget https://repo.mysql.com/mysql-apt-config_0.8.11-1_all.deb \
  && dpkg --install mysql-apt-config_0.8.11-1_all.deb \
@@ -77,24 +55,73 @@ RUN wget https://cdn.mysql.com//Downloads/Connector-ODBC/8.0/mysql-connector-odb
  && rm mysql-connector-odbc-8.0.13-linux-ubuntu18.04-x86-64bit.tar.gz \
  && rm -rf mysql-connector-odbc-8.0.13-linux-ubuntu18.04-x86-64bit
 
+#############################################
+## Python infrastructure 
+#############################################
+
+USER root
+
+# Update Anaconda
+RUN conda update -y -n base conda
+
+# Python 2
+RUN conda create -n ipykernel_py2 python=2 ipykernel
+
+# Python libraries for python 2.7
+RUN conda install -n ipykernel_py2 -y \
+      bokeh \
+      ipykernel \
+      ipython \
+      networkx \
+      numpy \
+      pandas \
+      plotly \
+      psutil \
+      pyodbc \
+      qgrid \
+      seaborn \
+      sympy \
+      version_information
+
+# Install notebook widgets
+RUN conda install -n ipykernel_py2 -c conda-forge -y \
+      widgetsnbextension \
+      ipywidgets
+
+# Install jupyter widgets for qgrid
+RUN conda run -n ipykernel_py2 jupyter labextension install @jupyter-widgets/jupyterlab-manager
+# Enable qgrid inside jupyter notebooks
+RUN conda run -n ipykernel_py2 jupyter labextension install qgrid
+# Install python 2.7 kernel for users
+RUN conda run -n ipykernel_py2 python -m ipykernel install --user
+
+# Update nodeJS
+RUN npm i -g npm
+
+#############################################
+## Prepare user home dir
+#############################################
+
+USER root
+
+# Copy files from repository.
+COPY ./senzing-example-notebooks /home/$NB_USER/
+
+# Adjust permissions
+RUN chown -R $NB_UID:$NB_GID /home/$NB_USER
+RUN chmod -R ug+rw /home/$NB_USER
+
 # Return to original user.
 # Defined in https://github.com/jupyter/docker-stacks/blob/master/base-notebook/Dockerfile
 
+#############################################
+## User environment setting
+#############################################
+
 USER $NB_UID
-
-# Install Python 2 kernel.
-
-RUN python2 -m pip install ipykernel \
- && python2 -m ipykernel install --user
-
-# Environment variables for user.
 
 ENV SENZING_ROOT=/opt/senzing
 ENV PYTHONPATH=${SENZING_ROOT}/g2/python
 ENV LD_LIBRARY_PATH=${SENZING_ROOT}/g2/lib:${SENZING_ROOT}/g2/lib/debian
 
-# Copy files from repository.
 
-RUN mkdir /home/$NB_USER/senzing-example-notebooks
-
-COPY ./senzing-example-notebooks /home/$NB_USER/senzing-example-notebooks
