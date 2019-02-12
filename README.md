@@ -166,7 +166,7 @@ Non-Senzing configuration can be seen at
 
 ### Run Jupyter
 
-1. If no token authentication, (Option #2), access your jupyter notebooks at: [http://127.0.0.1:8888/](http://127.0.0.1:8888/)
+1. If no token authentication (Option #2), access your jupyter notebooks at: [http://127.0.0.1:8888/](http://127.0.0.1:8888/)
 
 1. If token authentication, locate the URL in the Docker log.  Example:
 
