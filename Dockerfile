@@ -7,17 +7,19 @@ FROM ${BASE_CONTAINER}
 ENV REFRESHED_AT=2019-02-09
 
 #############################################
-## OS infrastructure 
+## OS infrastructure
 #############################################
 
 USER root
 
-# Update OS
+# Update OS packages.
+
 RUN apt-get update
 RUN apt-get -y upgrade
 RUN apt -y autoremove
 
-# Some extra applications
+# Install packages via apt.
+
 RUN apt-get -y install \
       curl \
       gnupg \
@@ -35,6 +37,7 @@ RUN apt-get -y install \
  && rm -rf /var/lib/apt/lists/*
 
 # Install libmysqlclient.
+
 ENV DEBIAN_FRONTEND=noninteractive
 RUN wget https://repo.mysql.com/mysql-apt-config_0.8.11-1_all.deb \
  && dpkg --install mysql-apt-config_0.8.11-1_all.deb \
@@ -56,18 +59,19 @@ RUN wget https://cdn.mysql.com//Downloads/Connector-ODBC/8.0/mysql-connector-odb
  && rm -rf mysql-connector-odbc-8.0.13-linux-ubuntu18.04-x86-64bit
 
 #############################################
-## Python infrastructure 
+## Python infrastructure
 #############################################
 
-USER root
+# Update Anaconda.
 
-# Update Anaconda
 RUN conda update -y -n base conda
 
-# Python 2
+# Python 2.
+
 RUN conda create -n ipykernel_py2 python=2 ipykernel
 
-# Python libraries for python 2.7
+# Python libraries for python 2.7.
+
 RUN conda install -n ipykernel_py2 -y \
       bokeh \
       ipykernel \
@@ -83,31 +87,38 @@ RUN conda install -n ipykernel_py2 -y \
       sympy \
       version_information
 
-# Install notebook widgets
+# Install notebook widgets.
+
 RUN conda install -n ipykernel_py2 -c conda-forge -y \
       widgetsnbextension \
       ipywidgets
 
-# Install jupyter widgets for qgrid
+# Install jupyter widgets for qgrid.
+
 RUN conda run -n ipykernel_py2 jupyter labextension install @jupyter-widgets/jupyterlab-manager
-# Enable qgrid inside jupyter notebooks
+
+# Enable qgrid inside jupyter notebooks.
+
 RUN conda run -n ipykernel_py2 jupyter labextension install qgrid
-# Install python 2.7 kernel for users
+
+# Install python 2.7 kernel for users.
+
 RUN conda run -n ipykernel_py2 python -m ipykernel install --user
 
-# Update nodeJS
+# Update nodeJS.
+
 RUN npm i -g npm
 
 #############################################
 ## Prepare user home dir
 #############################################
 
-USER root
-
 # Copy files from repository.
-COPY ./senzing-example-notebooks /home/$NB_USER/
+
+COPY ./notebooks /home/$NB_USER/
 
 # Adjust permissions
+
 RUN chown -R $NB_UID:$NB_GID /home/$NB_USER
 RUN chmod -R ug+rw /home/$NB_USER
 
@@ -123,5 +134,3 @@ USER $NB_UID
 ENV SENZING_ROOT=/opt/senzing
 ENV PYTHONPATH=${SENZING_ROOT}/g2/python
 ENV LD_LIBRARY_PATH=${SENZING_ROOT}/g2/lib:${SENZING_ROOT}/g2/lib/debian
-
-

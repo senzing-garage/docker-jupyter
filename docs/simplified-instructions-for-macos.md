@@ -1,13 +1,13 @@
-# Simplified instructions for personal experimentation
+# Simplified instructions for macOS
 
 ## Source
-This comes from [Senzing/docker-jupyter](https://github.com/Senzing/docker-jupyter)
 
-*NOTE*: This procedure was executed on macOS `10.14.2` (macOS Mojave). 
+*NOTE*: This procedure was executed on macOS `10.14.2` (macOS Mojave).
 The full spec is:
+
 * macOS: `10.14.2`
 * RAM: `8GB`
-* CPU: `1.7 GHz Intel Core i7` 
+* CPU: `1.7 GHz Intel Core i7`
 
 ## Additional software
 
@@ -19,33 +19,28 @@ The full spec is:
 The `senzing/jupyter` docker image is a Senzing-ready, python 3.7 image hosting
 [jupyter](https://jupyter.org/).
 
-These notebooks are built upon the DockerHub 
+These notebooks are built upon the DockerHub
 [Jupyter organization](https://hub.docker.com/u/jupyter) docker images.
 The default base image is [jupyter/minimal-notebook](https://hub.docker.com/r/jupyter/minimal-notebook).
-There is more information on the 
+There is more information on the
 [Jupyter Docker Stacks](https://jupyter-docker-stacks.readthedocs.io).
-
 
 ## Install required software
 
 ### Docker
 
-```bash
-brew cask install virtualbox
-brew cask install docker
-```
-
-Open it: *Applications -> Docker.app*
-
+See
+[HOWTO/install-docker macOS](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker.md#macos)
 
 ## Build docker image
 
 *Note*: Budget about 30 to 45min., depending on your internet speed.
 *Note*: It requires about 9GB of free disk.
 
-```bash
-docker build --tag senzing/jupyter \
-  https://github.com/fgka/docker-jupyter.git
+```console
+docker build \
+  --tag senzing/jupyter \
+  https://github.com/senzing/docker-jupyter.git
 ```
 
 ## Install Senzing
@@ -60,12 +55,14 @@ Follow the instructions at [HOWTO/create-senzing-dir.md](https://github.com/Senz
 ### Shell
 
 Edit the file:
-```
+
+```console
 ${HOME}Library/Group\ Containers/group.com.docker/settings.json
 ```
 
 It should have something like:
-```
+
+```console
 {
   "channelID" : "stable",
   "filesharingDirectories" : [
@@ -90,7 +87,7 @@ It should have something like:
 }
 ```
 
-The important part is that ```filesharingDirectories``` 
+The important part is that ```filesharingDirectories```
 contains ```"/opt/senzing"```.
 
 ### Docker Application
@@ -102,7 +99,7 @@ contains ```"/opt/senzing"```.
 This is a simplified version that is aimed at individuals testing in their own
 computer.
 
-```bash
+```console
 export WEBAPP_PORT=8888
 export SENZING_DIR=/opt/senzing
 

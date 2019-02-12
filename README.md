@@ -26,9 +26,13 @@ There is more information on the
     1. [Git submodules](#git-submodules)
     1. [Build docker image for development](#build-docker-image-for-development)
 
-### Expectations 
+### Expectations
 
 - **Space:** It requires about 9GB of free disk.
+
+## Quick starts
+
+1. [Simplified instructions for macOS](docs/simplified-instructions-for-macos.md)
 
 ## Demonstrate
 
@@ -181,7 +185,7 @@ Non-Senzing configuration can be seen at
 
 The following software programs need to be installed.
 
-#### git
+#### git for development
 
 1. [Install Git](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-git.md)
 1. Test
@@ -190,7 +194,7 @@ The following software programs need to be installed.
     git --version
     ```
 
-#### docker
+#### docker for development
 
 1. [Install docker](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker.md)
 1. Test
@@ -236,15 +240,6 @@ The following software programs need to be installed.
     mkdir --parents ${GIT_ACCOUNT_DIR}
     cd  ${GIT_ACCOUNT_DIR}
     git clone ${GIT_REPOSITORY_URL}
-    ```
-
-### Git submodules
-
-1. Download git submodules.
-
-    ```console
-    cd ${GIT_REPOSITORY_DIR}
-    git submodule update --init --recursive
     ```
 
 ### Build docker image for development
