@@ -5,10 +5,10 @@
 The `senzing/jupyter` docker image is a Senzing-ready, python 2.7 image hosting
 [jupyter](https://jupyter.org/).
 
-These notebooks are built upon the DockerHub 
+These notebooks are built upon the DockerHub
 [Jupyter organization](https://hub.docker.com/u/jupyter) docker images.
 The default base image is [jupyter/minimal-notebook](https://hub.docker.com/r/jupyter/minimal-notebook).
-There is more information on the 
+There is more information on the
 [Jupyter Docker Stacks](https://jupyter-docker-stacks.readthedocs.io).
 
 ### Contents
@@ -26,7 +26,34 @@ There is more information on the
     1. [Git submodules](#git-submodules)
     1. [Build docker image for development](#build-docker-image-for-development)
 
+### Expectations 
+
+- **Space:** It requires about 9GB of free disk.
+
 ## Demonstrate
+
+### Prerequisite software for demonstration
+
+The following software programs need to be installed.
+
+#### git
+
+1. [Install Git](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-git.md)
+1. Test
+
+    ```console
+    git --version
+    ```
+
+#### docker
+
+1. [Install docker](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker.md)
+1. Test
+
+    ```console
+    sudo docker --version
+    sudo docker run hello-world
+    ```
 
 ### Build docker image
 
@@ -156,22 +183,31 @@ The following software programs need to be installed.
 
 #### git
 
-```console
-git --version
-```
+1. [Install Git](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-git.md)
+1. Test
 
-#### make
-
-```console
-make --version
-```
+    ```console
+    git --version
+    ```
 
 #### docker
 
-```console
-sudo docker --version
-sudo docker run hello-world
-```
+1. [Install docker](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker.md)
+1. Test
+
+    ```console
+    sudo docker --version
+    sudo docker run hello-world
+    ```
+
+#### make
+
+1. [Install make](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-make.md)
+1. Test
+
+    ```console
+    make --version
+    ```
 
 ### Set environment variables for development
 
