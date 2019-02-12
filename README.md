@@ -97,7 +97,7 @@ Non-Senzing configuration can be seen at
       senzing/jupyter
     ```
 
-1. Option #1 without token authentication. Example:
+1. Option #2 - Like Option #1 but without token authentication. Example:
 
     ```console
     export WEBAPP_PORT=8888
@@ -110,7 +110,7 @@ Non-Senzing configuration can be seen at
         start.sh jupyter notebook --NotebookApp.token=''
     ```
 
-1. Option #2 - Run the docker container with database and volumes.  Example:
+1. Option #3 - Run the docker container with database and volumes.  Example:
 
     ```console
     export DATABASE_PROTOCOL=mysql
@@ -131,7 +131,7 @@ Non-Senzing configuration can be seen at
       senzing/jupyter
     ```
 
-1. Option #3 - Run the docker container accessing a database in a docker network. Example:
+1. Option #4 - Run the docker container accessing a database in a docker network. Example:
 
    Determine docker network. Example:
 
@@ -166,7 +166,9 @@ Non-Senzing configuration can be seen at
 
 ### Run Jupyter
 
-1. Locate the URL in the Docker log.  Example:
+1. If no token authentication, (Option #2), access your jupyter notebooks at: [http://127.0.0.1:8888/](http://127.0.0.1:8888/)
+
+1. If token authentication, locate the URL in the Docker log.  Example:
 
     ```console
     Copy/paste this URL into your browser when you connect for the first time,
@@ -174,13 +176,13 @@ Non-Senzing configuration can be seen at
         http://(a152e5586fdc or 127.0.0.1):8888/?token=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     ```
 
-1. Adjust the URL.  Example:
+    Adjust the URL.  Example:
 
     ```console
     http://127.0.0.1:8888/?token=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     ```
 
-1. Paste the URL into a web browser.
+    Paste the URL into a web browser.
 
 ## Develop
 
