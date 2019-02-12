@@ -13,7 +13,10 @@ There is more information on the
 
 ### Contents
 
+1. [Expectations](#expectations)
+1. [Quick starts](#quick-starts)
 1. [Demonstrate](#demonstrate)
+    1. [Prerequisite software for demonstration](#prerequisite-software-for-demonstration)
     1. [Build docker image](#build-docker-image)
     1. [Create SENZING_DIR](#create-senzing_dir)
     1. [Configuration](#configuration)
@@ -23,12 +26,16 @@ There is more information on the
     1. [Prerequisite software](#prerequisite-software)
     1. [Set environment variables for development](#set-environment-variables-for-development)
     1. [Clone repository](#clone-repository)
-    1. [Git submodules](#git-submodules)
     1. [Build docker image for development](#build-docker-image-for-development)
+1. [Reference](#reference)
 
-### Expectations 
+## Expectations
 
 - **Space:** It requires about 9GB of free disk.
+
+## Quick starts
+
+1. [Simplified instructions for macOS](docs/simplified-instructions-for-macos.md)
 
 ## Demonstrate
 
@@ -36,7 +43,7 @@ There is more information on the
 
 The following software programs need to be installed.
 
-#### git
+#### git for demonstration
 
 1. [Install Git](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-git.md)
 1. Test
@@ -45,7 +52,7 @@ The following software programs need to be installed.
     git --version
     ```
 
-#### docker
+#### docker for demonstration
 
 1. [Install docker](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker.md)
 1. Test
@@ -90,7 +97,7 @@ Non-Senzing configuration can be seen at
       senzing/jupyter
     ```
 
-1. Option #1 without token authentication. Example:
+1. Option #2 - Like Option #1 but without token authentication. Example:
 
     ```console
     export WEBAPP_PORT=8888
@@ -103,7 +110,7 @@ Non-Senzing configuration can be seen at
         start.sh jupyter notebook --NotebookApp.token=''
     ```
 
-1. Option #2 - Run the docker container with database and volumes.  Example:
+1. Option #3 - Run the docker container with database and volumes.  Example:
 
     ```console
     export DATABASE_PROTOCOL=mysql
@@ -124,7 +131,7 @@ Non-Senzing configuration can be seen at
       senzing/jupyter
     ```
 
-1. Option #3 - Run the docker container accessing a database in a docker network. Example:
+1. Option #4 - Run the docker container accessing a database in a docker network. Example:
 
    Determine docker network. Example:
 
@@ -159,7 +166,9 @@ Non-Senzing configuration can be seen at
 
 ### Run Jupyter
 
-1. Locate the URL in the Docker log.  Example:
+1. If no token authentication (Option #2), access your jupyter notebooks at: [http://127.0.0.1:8888/](http://127.0.0.1:8888/)
+
+1. If token authentication, locate the URL in the Docker log.  Example:
 
     ```console
     Copy/paste this URL into your browser when you connect for the first time,
@@ -167,13 +176,13 @@ Non-Senzing configuration can be seen at
         http://(a152e5586fdc or 127.0.0.1):8888/?token=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     ```
 
-1. Adjust the URL.  Example:
+    Adjust the URL.  Example:
 
     ```console
     http://127.0.0.1:8888/?token=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     ```
 
-1. Paste the URL into a web browser.
+    Paste the URL into a web browser.
 
 ## Develop
 
@@ -236,15 +245,6 @@ The following software programs need to be installed.
     mkdir --parents ${GIT_ACCOUNT_DIR}
     cd  ${GIT_ACCOUNT_DIR}
     git clone ${GIT_REPOSITORY_URL}
-    ```
-
-### Git submodules
-
-1. Download git submodules.
-
-    ```console
-    cd ${GIT_REPOSITORY_DIR}
-    git submodule update --init --recursive
     ```
 
 ### Build docker image for development
