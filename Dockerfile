@@ -4,7 +4,7 @@
 ARG BASE_CONTAINER=jupyter/minimal-notebook
 FROM ${BASE_CONTAINER}
 
-ENV REFRESHED_AT=2019-02-09
+ENV REFRESHED_AT=2019-02-18
 
 #############################################
 ## OS infrastructure
@@ -39,7 +39,8 @@ RUN apt-get -y install \
 # Install libmysqlclient.
 
 ENV DEBIAN_FRONTEND=noninteractive
-RUN wget https://repo.mysql.com/mysql-apt-config_0.8.11-1_all.deb \
+RUN wget -qO - https://repo.mysql.com/RPM-GPG-KEY-mysql | apt-key add - \
+ && wget https://repo.mysql.com/mysql-apt-config_0.8.11-1_all.deb \
  && dpkg --install mysql-apt-config_0.8.11-1_all.deb \
  && apt-get update \
  && apt-get -y install libmysqlclient21 \
