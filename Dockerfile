@@ -1,8 +1,8 @@
 # User can select the base image.
-# For BASE_CONTAINER choices, see https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html
+# For BASE_IMAGE choices, see https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html
 
-ARG BASE_CONTAINER=jupyter/minimal-notebook
-FROM ${BASE_CONTAINER}
+ARG BASE_IMAGE=jupyter/minimal-notebook
+FROM ${BASE_IMAGE}
 
 ENV REFRESHED_AT=2019-02-18
 
