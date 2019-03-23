@@ -24,7 +24,6 @@ There is more information on the
     1. [Run Jupyter](#run-jupyter)
 1. [Develop](#develop)
     1. [Prerequisite software](#prerequisite-software)
-    1. [Set environment variables for development](#set-environment-variables-for-development)
     1. [Clone repository](#clone-repository)
     1. [Build docker image for development](#build-docker-image-for-development)
 1. [Reference](#reference)
@@ -188,63 +187,28 @@ Non-Senzing configuration can be seen at
 
 ### Prerequisite software
 
-The following software programs need to be installed.
+The following software programs need to be installed:
 
-#### git
+1. [git](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-git.md)
+1. [make](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-make.md)
+1. [docker](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker.md)
 
-1. [Install Git](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-git.md)
-1. Test
+### Clone repository
 
-    ```console
-    git --version
-    ```
-
-#### docker
-
-1. [Install docker](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker.md)
-1. Test
-
-    ```console
-    sudo docker --version
-    sudo docker run hello-world
-    ```
-
-#### make
-
-1. [Install make](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-make.md)
-1. Test
-
-    ```console
-    make --version
-    ```
-
-### Set environment variables for development
-
-1. These variables may be modified, but do not need to be modified.
-   The variables are used throughout the installation procedure.
+1. Set these environment variable values:
 
     ```console
     export GIT_ACCOUNT=senzing
     export GIT_REPOSITORY=docker-jupyter
-    export DOCKER_IMAGE_TAG=senzing/jupyter
     ```
 
-1. Synthesize environment variables.
+   Then follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/clone-repository.md).
+
+1. After the repository has been cloned, be sure the following are set:
 
     ```console
     export GIT_ACCOUNT_DIR=~/${GIT_ACCOUNT}.git
     export GIT_REPOSITORY_DIR="${GIT_ACCOUNT_DIR}/${GIT_REPOSITORY}"
-    export GIT_REPOSITORY_URL="git@github.com:${GIT_ACCOUNT}/${GIT_REPOSITORY}.git"
-    ```
-
-### Clone repository
-
-1. Get repository.
-
-    ```console
-    mkdir --parents ${GIT_ACCOUNT_DIR}
-    cd  ${GIT_ACCOUNT_DIR}
-    git clone ${GIT_REPOSITORY_URL}
     ```
 
 ### Build docker image for development
@@ -259,6 +223,8 @@ The following software programs need to be installed.
 1. Option #2 - Using docker command
 
     ```console
+    export DOCKER_IMAGE_TAG=senzing/jupyter
+
     cd ${GIT_REPOSITORY_DIR}
     docker build --tag ${DOCKER_IMAGE_TAG} .
     ```
