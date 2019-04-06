@@ -83,10 +83,12 @@ Non-Senzing configuration can be seen at
     export SENZING_DIR=/opt/senzing
     export SHARED_DIR=$(pwd)
 
-    sudo docker run -it \
+    sudo docker run \
+      --interactive \
       --name senzing-jupyter \
       --publish ${WEBAPP_PORT}:8888 \
       --rm \
+      --tty \
       --volume ${SHARED_DIR}:/notebooks/shared \
       --volume ${SENZING_DIR}:/opt/senzing \
       senzing/jupyter
@@ -99,7 +101,8 @@ Non-Senzing configuration can be seen at
     export SENZING_DIR=/opt/senzing
     export SHARED_DIR=$(pwd)
 
-    sudo docker run -it \
+    sudo docker run \
+      --interactive \
       --name senzing-jupyter \
       --publish ${WEBAPP_PORT}:8888 \
       --rm \
@@ -124,11 +127,13 @@ Non-Senzing configuration can be seen at
     export SENZING_DIR=/opt/senzing
     export SHARED_DIR=$(pwd)
 
-    sudo docker run -it  \
+    sudo docker run \
       --env SENZING_DATABASE_URL="${SENZING_DATABASE_URL}" \
+      --interactive \
       --name senzing-jupyter \
       --publish ${WEBAPP_PORT}:8888 \
       --rm \
+      --tty \
       --volume ${SHARED_DIR}:/notebooks/shared \
       --volume ${SENZING_DIR}:/opt/senzing \
       senzing/jupyter
@@ -160,12 +165,14 @@ Non-Senzing configuration can be seen at
     export SENZING_DIR=/opt/senzing
     export SHARED_DIR=$(pwd)
 
-    sudo docker run -it  \
+    sudo docker run \
       --env SENZING_DATABASE_URL="${SENZING_DATABASE_URL}" \
+      --interactive \
       --name senzing-jupyter \
       --net ${SENZING_NETWORK} \
       --publish ${WEBAPP_PORT}:8888 \
       --rm \
+      --tty \
       --volume ${SHARED_DIR}:/notebooks/shared \
       --volume ${SENZING_DIR}:/opt/senzing \
       senzing/jupyter
