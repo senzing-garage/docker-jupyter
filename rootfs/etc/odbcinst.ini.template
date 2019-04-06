@@ -1,0 +1,15 @@
+[DB2]
+Description = Db2 ODBC Driver
+Driver = {SENZING_ROOT}/db2/clidriver/lib/libdb2o.so
+FileUsage = 1
+dontdlclose = 1
+
+[MySQL]
+Driver=/usr/lib/x86_64-linux-gnu/odbc/libmyodbc8w.so
+UsageCount=1
+
+[PostgreSQL]
+Description=ODBC for PostgreSQL
+Driver=/usr/lib/x86_64-linux-gnu/odbc/psqlodbcw.so
+FileUsage=1
+Setup=/usr/lib/x86_64-linux-gnu/odbc/libodbcpsqlS.so

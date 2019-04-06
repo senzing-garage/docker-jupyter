@@ -6,6 +6,9 @@ FROM ${BASE_IMAGE}
 
 ENV REFRESHED_AT=2019-02-18
 
+LABEL Name="senzing/jupyter" \
+      Version="1.0.0"
+
 #############################################
 ## OS infrastructure
 #############################################
@@ -24,9 +27,10 @@ RUN apt-get -y install \
       curl \
       gnupg \
       jq \
-      libmysqlclient-dev \
       lsb-core \
       lsb-release \
+      odbc-postgresql \
+      postgresql-client \
       python-dev \
       python-pip \
       python-pyodbc \
@@ -35,29 +39,6 @@ RUN apt-get -y install \
       unixodbc-dev \
       wget \
  && rm -rf /var/lib/apt/lists/*
-
-# Install libmysqlclient.
-
-ENV DEBIAN_FRONTEND=noninteractive
-RUN wget -qO - https://repo.mysql.com/RPM-GPG-KEY-mysql | apt-key add - \
- && wget https://repo.mysql.com/mysql-apt-config_0.8.11-1_all.deb \
- && dpkg --install mysql-apt-config_0.8.11-1_all.deb \
- && apt-get update \
- && apt-get -y install libmysqlclient21 \
- && rm mysql-apt-config_0.8.11-1_all.deb \
- && rm -rf /var/lib/apt/lists/*
-
-# Create MySQL connector.
-# References:
-#  - https://dev.mysql.com/downloads/connector/odbc/
-#  - https://dev.mysql.com/doc/connector-odbc/en/connector-odbc-installation-binary-unix-tarball.html
-
-RUN wget https://cdn.mysql.com//Downloads/Connector-ODBC/8.0/mysql-connector-odbc-8.0.13-linux-ubuntu18.04-x86-64bit.tar.gz \
- && tar -xvf mysql-connector-odbc-8.0.13-linux-ubuntu18.04-x86-64bit.tar.gz \
- && cp mysql-connector-odbc-8.0.13-linux-ubuntu18.04-x86-64bit/lib/* /usr/lib/x86_64-linux-gnu/odbc/ \
- && mysql-connector-odbc-8.0.13-linux-ubuntu18.04-x86-64bit/bin/myodbc-installer -d -a -n "MySQL" -t "DRIVER=/usr/lib/x86_64-linux-gnu/odbc/libmyodbc8w.so;" \
- && rm mysql-connector-odbc-8.0.13-linux-ubuntu18.04-x86-64bit.tar.gz \
- && rm -rf mysql-connector-odbc-8.0.13-linux-ubuntu18.04-x86-64bit
 
 #############################################
 ## Python infrastructure
@@ -116,22 +97,30 @@ RUN npm i -g npm
 
 # Copy files from repository.
 
-COPY ./notebooks /home/$NB_USER/
+COPY ./rootfs /
+COPY ./notebooks /notebooks
+VOLUME /notebooks/shared
 
 # Adjust permissions
 
+RUN chown -R $NB_UID:$NB_GID /notebooks
+RUN chmod -R ug+rw /notebooks
 RUN chown -R $NB_UID:$NB_GID /home/$NB_USER
 RUN chmod -R ug+rw /home/$NB_USER
-
-# Return to original user.
-# Defined in https://github.com/jupyter/docker-stacks/blob/master/base-notebook/Dockerfile
 
 #############################################
 ## User environment setting
 #############################################
+
+# Return to original user.
+# Defined in https://github.com/jupyter/docker-stacks/blob/master/base-notebook/Dockerfile
 
 USER $NB_UID
 
 ENV SENZING_ROOT=/opt/senzing
 ENV PYTHONPATH=${SENZING_ROOT}/g2/python
 ENV LD_LIBRARY_PATH=${SENZING_ROOT}/g2/lib:${SENZING_ROOT}/g2/lib/debian
+ENV DB2_CLI_DRIVER_INSTALL_PATH=${SENZING_ROOT}/db2/clidriver
+ENV PATH=$PATH:${SENZING_ROOT}/db2/clidriver/adm:${SENZING_ROOT}/db2/clidriver/bin
+
+WORKDIR /notebooks

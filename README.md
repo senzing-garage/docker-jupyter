@@ -14,10 +14,12 @@ There is more information on the
 ### Contents
 
 1. [Expectations](#expectations)
+    1. [Space](#space)
+    1. [Time](#time)
+    1. [Background knowledge](#background-knowledge)
 1. [Quick starts](#quick-starts)
 1. [Demonstrate](#demonstrate)
     1. [Prerequisite software for demonstration](#prerequisite-software-for-demonstration)
-    1. [Build docker image](#build-docker-image)
     1. [Create SENZING_DIR](#create-senzing_dir)
     1. [Configuration](#configuration)
     1. [Run docker container](#run-docker-container)
@@ -30,7 +32,20 @@ There is more information on the
 
 ## Expectations
 
-- **Space:** It requires about 9GB of free disk.
+### Space
+
+This repository and demonstration require 9 GB free disk space.
+
+### Time
+
+Budget 40 minutes to get the demonstration up-and-running, depending on CPU and network speeds.
+
+### Background knowledge
+
+This repository assumes a working knowledge of:
+
+1. [Jupyter](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/jupyter.md)
+1. [Docker](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/docker.md)
 
 ## Quick starts
 
@@ -40,32 +55,9 @@ There is more information on the
 
 ### Prerequisite software for demonstration
 
-The following software programs need to be installed.
+The following software programs need to be installed:
 
-#### git for demonstration
-
-1. [Install Git](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-git.md)
-1. Test
-
-    ```console
-    git --version
-    ```
-
-#### docker for demonstration
-
-1. [Install docker](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker.md)
-1. Test
-
-    ```console
-    sudo docker --version
-    sudo docker run hello-world
-    ```
-
-### Build docker image
-
-```console
-sudo docker build --tag senzing/jupyter https://github.com/senzing/docker-jupyter.git
-```
+1. [docker](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker.md)
 
 ### Create SENZING_DIR
 
@@ -89,10 +81,14 @@ Non-Senzing configuration can be seen at
     ```console
     export WEBAPP_PORT=8888
     export SENZING_DIR=/opt/senzing
+    export SHARED_DIR=$(pwd)
 
     sudo docker run -it \
-      --volume ${SENZING_DIR}:/opt/senzing \
+      --name senzing-jupyter \
       --publish ${WEBAPP_PORT}:8888 \
+      --rm \
+      --volume ${SHARED_DIR}:/notebooks/shared \
+      --volume ${SENZING_DIR}:/opt/senzing \
       senzing/jupyter
     ```
 
@@ -101,10 +97,14 @@ Non-Senzing configuration can be seen at
     ```console
     export WEBAPP_PORT=8888
     export SENZING_DIR=/opt/senzing
+    export SHARED_DIR=$(pwd)
 
     sudo docker run -it \
-      --volume ${SENZING_DIR}:/opt/senzing \
+      --name senzing-jupyter \
       --publish ${WEBAPP_PORT}:8888 \
+      --rm \
+      --volume ${SHARED_DIR}:/notebooks/shared \
+      --volume ${SENZING_DIR}:/opt/senzing \
       senzing/jupyter \
         start.sh jupyter notebook --NotebookApp.token=''
     ```
@@ -122,11 +122,15 @@ Non-Senzing configuration can be seen at
 
     export SENZING_DATABASE_URL="${DATABASE_PROTOCOL}://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_DATABASE}"
     export SENZING_DIR=/opt/senzing
+    export SHARED_DIR=$(pwd)
 
     sudo docker run -it  \
-      --volume ${SENZING_DIR}:/opt/senzing \
       --env SENZING_DATABASE_URL="${SENZING_DATABASE_URL}" \
+      --name senzing-jupyter \
       --publish ${WEBAPP_PORT}:8888 \
+      --rm \
+      --volume ${SHARED_DIR}:/notebooks/shared \
+      --volume ${SENZING_DIR}:/opt/senzing \
       senzing/jupyter
     ```
 
@@ -154,13 +158,40 @@ Non-Senzing configuration can be seen at
 
     export SENZING_DATABASE_URL="${DATABASE_PROTOCOL}://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_DATABASE}"
     export SENZING_DIR=/opt/senzing
+    export SHARED_DIR=$(pwd)
 
     sudo docker run -it  \
-      --volume ${SENZING_DIR}:/opt/senzing \
+      --env SENZING_DATABASE_URL="${SENZING_DATABASE_URL}" \
+      --name senzing-jupyter \
       --net ${SENZING_NETWORK} \
       --publish ${WEBAPP_PORT}:8888 \
-      --env SENZING_DATABASE_URL="${SENZING_DATABASE_URL}" \
+      --rm \
+      --volume ${SHARED_DIR}:/notebooks/shared \
+      --volume ${SENZING_DIR}:/opt/senzing \
       senzing/jupyter
+    ```
+
+### Database connection configuration
+
+When using PostgreSQL, MySQL, and DB2 database,
+database connection configuration in the container needs to be updated.
+
+1. Open a terminal in the `senzing-jupyter` container.
+
+    ```console
+    docker exec \
+      --interactive \
+      --tty \
+      --user root \
+      senzing-jupyter \
+        /bin/bash
+    ```
+
+1. Inside the `senzing-jupyter` container:
+
+    ```console
+    /app/docker-entrypoint.sh
+    exit
     ```
 
 ### Run Jupyter

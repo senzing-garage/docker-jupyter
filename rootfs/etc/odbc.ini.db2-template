@@ -1,0 +1,5 @@
+[{SCHEMA}]
+Description = Senzing DB2 database for {SCHEMA}
+Driver = DB2
+Port = {PORT}
+Server = {HOST}
