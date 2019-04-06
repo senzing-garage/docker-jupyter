@@ -1,0 +1,9 @@
+[{SCHEMA}]
+Database = {SCHEMA}
+Description = Senzing PostgreSQL database for {SCHEMA}
+Driver = PostgreSQL
+Password = {PASSWORD}
+Port = {PORT}
+Protocol = 11.2
+Servername = {HOST}
+UserName = {USERNAME}

@@ -1,0 +1,6 @@
+[{SCHEMA}]
+Database = {SCHEMA}
+Description = Senzing MySQL database for {SCHEMA}
+Driver = MySQL
+Port = {PORT}
+Server = {HOST}
