@@ -24,7 +24,7 @@ There is more information on the
     1. [Configuration](#configuration)
     1. [Run docker container](#run-docker-container)
     1. [Run Jupyter](#run-jupyter)
-1. [Develop](#develop)
+1. [Developing](#developing)
     1. [Prerequisite software](#prerequisite-software)
     1. [Clone repository](#clone-repository)
     1. [Build docker image for development](#build-docker-image-for-development)
@@ -221,15 +221,15 @@ database connection configuration in the container needs to be updated.
 
     Paste the URL into a web browser.
 
-## Develop
+## Developing
 
 ### Prerequisite software
 
 The following software programs need to be installed:
 
+1. [docker](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker.md)
 1. [git](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-git.md)
 1. [make](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-make.md)
-1. [docker](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker.md)
 
 ### Clone repository
 
@@ -251,21 +251,29 @@ The following software programs need to be installed:
 
 ### Build docker image for development
 
-1. Option #1 - Using make command
+1. Option #1 - Using docker command and GitHub.
+
+    ```console
+    sudo docker build --tag senzing/docker-jupyter https://github.com/senzing/docker-jupyter.git
+    ```
+
+1. Option #2 - Using docker command and local repository.
 
     ```console
     cd ${GIT_REPOSITORY_DIR}
-    make docker-build
+    sudo docker build --tag senzing/jupyter .
     ```
 
-1. Option #2 - Using docker command
+1. Option #3 - Using make command.
 
     ```console
-    export DOCKER_IMAGE_TAG=senzing/jupyter
-
     cd ${GIT_REPOSITORY_DIR}
-    docker build --tag ${DOCKER_IMAGE_TAG} .
+    sudo make docker-build
     ```
+
+## Errors
+
+1. See [doc/errors.md](doc/errors.md).
 
 ## Reference
 
