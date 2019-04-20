@@ -270,3 +270,7 @@ The following software programs need to be installed:
 ## Reference
 
 1. [A gallery of interesting Jupyter Notebooks](https://github.com/jupyter/jupyter/wiki/A-gallery-of-interesting-Jupyter-Notebooks)
+1. Senzing notebooks
+    1. [senzing-addDataSource](notebooks/senzing-examples/python/senzing-addDataSource.ipynb)
+    1. [senzing-addRecord](notebooks/senzing-examples/python/senzing-addRecord.ipynb)
+    1. [senzing-getSummaryData](notebooks/senzing-examples/python/senzing-getSummaryData.ipynb)
