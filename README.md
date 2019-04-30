@@ -19,16 +19,18 @@ There is more information on the
     1. [Background knowledge](#background-knowledge)
 1. [Quick starts](#quick-starts)
 1. [Demonstrate](#demonstrate)
-    1. [Prerequisite software for demonstration](#prerequisite-software-for-demonstration)
     1. [Create SENZING_DIR](#create-senzing_dir)
     1. [Configuration](#configuration)
     1. [Run docker container](#run-docker-container)
+    1. [Database connection configuration](#database-connection-configuration)
     1. [Run Jupyter](#run-jupyter)
-1. [Developing](#developing)
+1. [Develop](#develop)
     1. [Prerequisite software](#prerequisite-software)
     1. [Clone repository](#clone-repository)
     1. [Build docker image for development](#build-docker-image-for-development)
-1. [Reference](#reference)
+1. [Examples](#examples)
+1. [Errors](#errors)
+1. [References](#references)
 
 ## Expectations
 
@@ -53,15 +55,9 @@ This repository assumes a working knowledge of:
 
 ## Demonstrate
 
-### Prerequisite software for demonstration
-
-The following software programs need to be installed:
-
-1. [docker](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker.md)
-
 ### Create SENZING_DIR
 
-1. If you do not already have an `/opt/senzing` directory on your local system, visit
+1. If `/opt/senzing` directory is not on local system, visit
    [HOWTO - Create SENZING_DIR](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/create-senzing-dir.md).
 
 ### Configuration
@@ -69,20 +65,33 @@ The following software programs need to be installed:
 Non-Senzing configuration can be seen at
 [Jupyter Docker Stacks](https://jupyter-docker-stacks.readthedocs.io/en/latest/index.html)
 
-- **SENZING_DATABASE_URL** -
+* **SENZING_DATABASE_URL** -
   Database URI in the form: `${DATABASE_PROTOCOL}://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_DATABASE}`
-- **SENZING_DIR** -
-  Location of Senzing libraries. Default: "/opt/senzing".
+* **SENZING_DIR** -
+  Path on the local system where
+  [Senzing_API.tgz](https://s3.amazonaws.com/public-read-access/SenzingComDownloads/Senzing_API.tgz)
+  has been extracted.
+  See [Create SENZING_DIR](#create-senzing_dir).
+  No default.
+  Usually set to "/opt/senzing".
 
 ### Run docker container
 
-1. Option #1 - Run the docker container with volumes and internal database and token authentication. Example:
+#### Demonstration 1
+
+Run the docker container with volumes and internal database and token authentication.
+
+1. :pencil2: Set environment variables.  Example:
 
     ```console
     export WEBAPP_PORT=8888
     export SENZING_DIR=/opt/senzing
     export SHARED_DIR=$(pwd)
+    ```
 
+1. Run the docker container.  Example:
+
+    ```console
     sudo docker run \
       --interactive \
       --name senzing-jupyter \
@@ -94,13 +103,21 @@ Non-Senzing configuration can be seen at
       senzing/jupyter
     ```
 
-1. Option #2 - Like Option #1 but without token authentication. Example:
+#### Demonstration 2
+
+Like Demonstration #1 but without token authentication.
+
+1. :pencil2: Set environment variables.  Example:
 
     ```console
     export WEBAPP_PORT=8888
     export SENZING_DIR=/opt/senzing
     export SHARED_DIR=$(pwd)
+    ```
 
+1. Run the docker container.  Example:
+
+    ```console
     sudo docker run \
       --interactive \
       --name senzing-jupyter \
@@ -112,7 +129,11 @@ Non-Senzing configuration can be seen at
         start.sh jupyter notebook --NotebookApp.token=''
     ```
 
-1. Option #3 - Run the docker container with database and volumes.  Example:
+#### Demonstration 3
+
+Run the docker container with MySQL database and volumes.
+
+1. :pencil2: Set environment variables.  Example:
 
     ```console
     export DATABASE_PROTOCOL=mysql
@@ -121,11 +142,15 @@ Non-Senzing configuration can be seen at
     export DATABASE_HOST=senzing-mysql
     export DATABASE_PORT=3306
     export DATABASE_DATABASE=G2
-    export WEBAPP_PORT=8888
-
-    export SENZING_DATABASE_URL="${DATABASE_PROTOCOL}://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_DATABASE}"
     export SENZING_DIR=/opt/senzing
     export SHARED_DIR=$(pwd)
+    export WEBAPP_PORT=8888
+    ```
+
+1. Run the docker container.  Example:
+
+    ```console
+    export SENZING_DATABASE_URL="${DATABASE_PROTOCOL}://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_DATABASE}"
 
     sudo docker run \
       --env SENZING_DATABASE_URL="${SENZING_DATABASE_URL}" \
@@ -139,9 +164,11 @@ Non-Senzing configuration can be seen at
       senzing/jupyter
     ```
 
-1. Option #4 - Run the docker container accessing a database in a docker network. Example:
+#### Demonstration 4
 
-   Determine docker network. Example:
+Run the docker container accessing a MySQL database in a docker network.
+
+1. :pencil2: Determine docker network.  Example:
 
     ```console
     sudo docker network ls
@@ -150,7 +177,7 @@ Non-Senzing configuration can be seen at
     export SENZING_NETWORK=nameofthe_network
     ```
 
-    Run docker container. Example:
+1. :pencil2: Set environment variables.  Example:
 
     ```console
     export DATABASE_PROTOCOL=mysql
@@ -160,10 +187,14 @@ Non-Senzing configuration can be seen at
     export DATABASE_PORT=3306
     export DATABASE_DATABASE=G2
     export WEBAPP_PORT=8888
-
-    export SENZING_DATABASE_URL="${DATABASE_PROTOCOL}://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_DATABASE}"
     export SENZING_DIR=/opt/senzing
     export SHARED_DIR=$(pwd)
+    ```
+
+1. Run the docker container.  Example:
+
+    ```console
+    export SENZING_DATABASE_URL="${DATABASE_PROTOCOL}://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_DATABASE}"
 
     sudo docker run \
       --env SENZING_DATABASE_URL="${SENZING_DATABASE_URL}" \
@@ -203,7 +234,7 @@ database connection configuration in the container needs to be updated.
 
 ### Run Jupyter
 
-1. If no token authentication (Option #2), access your jupyter notebooks at: [http://127.0.0.1:8888/](http://127.0.0.1:8888/)
+1. If no token authentication (Demonstration #2), access your jupyter notebooks at: [http://127.0.0.1:8888/](http://127.0.0.1:8888/)
 
 1. If token authentication, locate the URL in the Docker log.  Example:
 
@@ -221,15 +252,15 @@ database connection configuration in the container needs to be updated.
 
     Paste the URL into a web browser.
 
-## Developing
+## Develop
 
 ### Prerequisite software
 
 The following software programs need to be installed:
 
-1. [docker](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker.md)
 1. [git](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-git.md)
 1. [make](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-make.md)
+1. [docker](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker.md)
 
 ### Clone repository
 
@@ -240,7 +271,7 @@ The following software programs need to be installed:
     export GIT_REPOSITORY=docker-jupyter
     ```
 
-   Then follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/clone-repository.md).
+1. Follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/clone-repository.md) to install the Git repository.
 
 1. After the repository has been cloned, be sure the following are set:
 
@@ -271,11 +302,13 @@ The following software programs need to be installed:
     sudo make docker-build
     ```
 
+## Examples
+
 ## Errors
 
-1. See [doc/errors.md](doc/errors.md).
+1. See [docs/errors.md](docs/errors.md).
 
-## Reference
+## References
 
 1. [A gallery of interesting Jupyter Notebooks](https://github.com/jupyter/jupyter/wiki/A-gallery-of-interesting-Jupyter-Notebooks)
 1. Senzing notebooks
