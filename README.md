@@ -217,7 +217,7 @@ database connection configuration in the container needs to be updated.
 1. Open a terminal in the `senzing-jupyter` container.
 
     ```console
-    docker exec \
+    sudo docker exec \
       --interactive \
       --tty \
       --user root \
