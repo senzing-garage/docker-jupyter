@@ -57,7 +57,7 @@ This repository assumes a working knowledge of:
 
 ### Create SENZING_DIR
 
-1. If `/opt/senzing` directory is not on local system, visit
+1. If you do not already have an `/opt/senzing` directory on your local system, visit
    [HOWTO - Create SENZING_DIR](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/create-senzing-dir.md).
 
 ### Configuration
@@ -66,7 +66,8 @@ Non-Senzing configuration can be seen at
 [Jupyter Docker Stacks](https://jupyter-docker-stacks.readthedocs.io/en/latest/index.html)
 
 * **SENZING_DATABASE_URL** -
-  Database URI in the form: `${DATABASE_PROTOCOL}://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_DATABASE}`
+  Database URI in the form: `${DATABASE_PROTOCOL}://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_DATABASE}`.
+  The default is to use the SQLite database.
 * **SENZING_DIR** -
   Path on the local system where
   [Senzing_API.tgz](https://s3.amazonaws.com/public-read-access/SenzingComDownloads/Senzing_API.tgz)
@@ -77,9 +78,9 @@ Non-Senzing configuration can be seen at
 
 ### Run docker container
 
-#### Demonstration 1
+#### Variation 1
 
-Run the docker container with volumes and internal database and token authentication.
+Run the docker container with internal SQLite database, external volume, and token authentication.
 
 1. :pencil2: Set environment variables.  Example:
 
@@ -89,7 +90,7 @@ Run the docker container with volumes and internal database and token authentica
     export SHARED_DIR=$(pwd)
     ```
 
-1. Run the docker container.  Example:
+1. Run docker container.  Example:
 
     ```console
     sudo docker run \
@@ -103,9 +104,9 @@ Run the docker container with volumes and internal database and token authentica
       senzing/jupyter
     ```
 
-#### Demonstration 2
+#### Variation 2
 
-Like Demonstration #1 but without token authentication.
+Like Variation #1 but without token authentication.
 
 1. :pencil2: Set environment variables.  Example:
 
@@ -115,7 +116,7 @@ Like Demonstration #1 but without token authentication.
     export SHARED_DIR=$(pwd)
     ```
 
-1. Run the docker container.  Example:
+1. Run docker container.  Example:
 
     ```console
     sudo docker run \
@@ -129,7 +130,7 @@ Like Demonstration #1 but without token authentication.
         start.sh jupyter notebook --NotebookApp.token=''
     ```
 
-#### Demonstration 3
+#### Variation 3
 
 Run the docker container with MySQL database and volumes.
 
@@ -147,7 +148,7 @@ Run the docker container with MySQL database and volumes.
     export WEBAPP_PORT=8888
     ```
 
-1. Run the docker container.  Example:
+1. Run docker container.  Example:
 
     ```console
     export SENZING_DATABASE_URL="${DATABASE_PROTOCOL}://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_DATABASE}"
@@ -164,9 +165,9 @@ Run the docker container with MySQL database and volumes.
       senzing/jupyter
     ```
 
-#### Demonstration 4
+#### Variation 4
 
-Run the docker container accessing a MySQL database in a docker network.
+Run the docker container accessing an external MySQL database in a docker network.
 
 1. :pencil2: Determine docker network.  Example:
 
@@ -191,7 +192,7 @@ Run the docker container accessing a MySQL database in a docker network.
     export SHARED_DIR=$(pwd)
     ```
 
-1. Run the docker container.  Example:
+1. Run docker container.  Example:
 
     ```console
     export SENZING_DATABASE_URL="${DATABASE_PROTOCOL}://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_DATABASE}"
@@ -214,7 +215,7 @@ Run the docker container accessing a MySQL database in a docker network.
 When using PostgreSQL, MySQL, and DB2 database,
 database connection configuration in the container needs to be updated.
 
-1. Open a terminal in the `senzing-jupyter` container.
+1. From a new terminal, log into the `senzing-jupyter` container.  Example:
 
     ```console
     sudo docker exec \
@@ -234,7 +235,7 @@ database connection configuration in the container needs to be updated.
 
 ### Run Jupyter
 
-1. If no token authentication (Demonstration #2), access your jupyter notebooks at: [http://127.0.0.1:8888/](http://127.0.0.1:8888/)
+1. If no token authentication (Variation #2), access your jupyter notebooks at: [http://127.0.0.1:8888/](http://127.0.0.1:8888/)
 
 1. If token authentication, locate the URL in the Docker log.  Example:
 
@@ -282,25 +283,27 @@ The following software programs need to be installed:
 
 ### Build docker image for development
 
-1. Option #1 - Using docker command and GitHub.
+1. Option #1 - Using `docker` command and GitHub.
 
     ```console
     sudo docker build --tag senzing/docker-jupyter https://github.com/senzing/docker-jupyter.git
     ```
 
-1. Option #2 - Using docker command and local repository.
+1. Option #2 - Using `docker` command and local repository.
 
     ```console
     cd ${GIT_REPOSITORY_DIR}
     sudo docker build --tag senzing/jupyter .
     ```
 
-1. Option #3 - Using make command.
+1. Option #3 - Using `make` command.
 
     ```console
     cd ${GIT_REPOSITORY_DIR}
     sudo make docker-build
     ```
+
+    Note: `sudo make docker-build-base` can be used to create cached docker layers.
 
 ## Examples
 
