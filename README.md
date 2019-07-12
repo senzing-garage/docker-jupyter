@@ -2,8 +2,14 @@
 
 ## Overview
 
-The `senzing/jupyter` docker image is a Senzing-ready, python 2.7 image hosting
-[jupyter](https://jupyter.org/).
+The `docker-jupyter` repository holds example Senzing
+[jupyter](https://jupyter.org/)
+notebooks in the
+[notebooks](notebooks)
+subdirectory.
+
+The `senzing/jupyter` docker image is a Senzing-ready image hosting
+the example [Senzing notebooks](notebooks).
 
 These notebooks are built upon the DockerHub
 [Jupyter organization](https://hub.docker.com/u/jupyter) docker images.
@@ -65,6 +71,8 @@ This repository assumes a working knowledge of:
 Non-Senzing configuration can be seen at
 [Jupyter Docker Stacks](https://jupyter-docker-stacks.readthedocs.io/en/latest/index.html)
 
+* **JUPYTER_NOTEBOOKS_SHARED_DIR** -
+  A directory on the localhost that is shared with the docker container as Jupyter's `shared` folder.
 * **SENZING_DATABASE_URL** -
   Database URI in the form: `${DATABASE_PROTOCOL}://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_DATABASE}`.
   The default is to use the SQLite database.
@@ -87,7 +95,7 @@ Run the docker container with internal SQLite database, external volume, and tok
     ```console
     export WEBAPP_PORT=8888
     export SENZING_DIR=/opt/senzing
-    export SHARED_DIR=$(pwd)
+    export JUPYTER_NOTEBOOKS_SHARED_DIR=$(pwd)
     ```
 
 1. Run docker container.  Example:
@@ -99,7 +107,7 @@ Run the docker container with internal SQLite database, external volume, and tok
       --publish ${WEBAPP_PORT}:8888 \
       --rm \
       --tty \
-      --volume ${SHARED_DIR}:/notebooks/shared \
+      --volume ${JUPYTER_NOTEBOOKS_SHARED_DIR}:/notebooks/shared \
       --volume ${SENZING_DIR}:/opt/senzing \
       senzing/jupyter
     ```
@@ -113,7 +121,7 @@ Like Variation #1 but without token authentication.
     ```console
     export WEBAPP_PORT=8888
     export SENZING_DIR=/opt/senzing
-    export SHARED_DIR=$(pwd)
+    export JUPYTER_NOTEBOOKS_SHARED_DIR=$(pwd)
     ```
 
 1. Run docker container.  Example:
@@ -124,7 +132,7 @@ Like Variation #1 but without token authentication.
       --name senzing-jupyter \
       --publish ${WEBAPP_PORT}:8888 \
       --rm \
-      --volume ${SHARED_DIR}:/notebooks/shared \
+      --volume ${JUPYTER_NOTEBOOKS_SHARED_DIR}:/notebooks/shared \
       --volume ${SENZING_DIR}:/opt/senzing \
       senzing/jupyter \
         start.sh jupyter notebook --NotebookApp.token=''
@@ -144,7 +152,7 @@ Run the docker container with MySQL database and volumes.
     export DATABASE_PORT=3306
     export DATABASE_DATABASE=G2
     export SENZING_DIR=/opt/senzing
-    export SHARED_DIR=$(pwd)
+    export JUPYTER_NOTEBOOKS_SHARED_DIR=$(pwd)
     export WEBAPP_PORT=8888
     ```
 
@@ -160,7 +168,7 @@ Run the docker container with MySQL database and volumes.
       --publish ${WEBAPP_PORT}:8888 \
       --rm \
       --tty \
-      --volume ${SHARED_DIR}:/notebooks/shared \
+      --volume ${JUPYTER_NOTEBOOKS_SHARED_DIR}:/notebooks/shared \
       --volume ${SENZING_DIR}:/opt/senzing \
       senzing/jupyter
     ```
@@ -189,7 +197,7 @@ Run the docker container accessing an external MySQL database in a docker networ
     export DATABASE_DATABASE=G2
     export WEBAPP_PORT=8888
     export SENZING_DIR=/opt/senzing
-    export SHARED_DIR=$(pwd)
+    export JUPYTER_NOTEBOOKS_SHARED_DIR=$(pwd)
     ```
 
 1. Run docker container.  Example:
@@ -205,7 +213,7 @@ Run the docker container accessing an external MySQL database in a docker networ
       --publish ${WEBAPP_PORT}:8888 \
       --rm \
       --tty \
-      --volume ${SHARED_DIR}:/notebooks/shared \
+      --volume ${JUPYTER_NOTEBOOKS_SHARED_DIR}:/notebooks/shared \
       --volume ${SENZING_DIR}:/opt/senzing \
       senzing/jupyter
     ```
@@ -314,7 +322,4 @@ The following software programs need to be installed:
 ## References
 
 1. [A gallery of interesting Jupyter Notebooks](https://github.com/jupyter/jupyter/wiki/A-gallery-of-interesting-Jupyter-Notebooks)
-1. Senzing notebooks
-    1. [senzing-addDataSource](notebooks/senzing-examples/python/senzing-addDataSource.ipynb)
-    1. [senzing-addRecord](notebooks/senzing-examples/python/senzing-addRecord.ipynb)
-    1. [senzing-getSummaryData](notebooks/senzing-examples/python/senzing-getSummaryData.ipynb)
+1. [Senzing notebooks](notebooks)
