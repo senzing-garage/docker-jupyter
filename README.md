@@ -3,7 +3,7 @@
 ## Overview
 
 The `docker-jupyter` repository holds example Senzing
-[jupyter](https://jupyter.org/)
+[Jupyter](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/jupyter-notebook.md)
 notebooks in the
 [notebooks](notebooks)
 subdirectory.
@@ -11,8 +11,8 @@ subdirectory.
 The `senzing/jupyter` docker image is a Senzing-ready image hosting
 the example [Senzing notebooks](notebooks).
 
-These notebooks are built upon the DockerHub
-[Jupyter organization](https://hub.docker.com/u/jupyter) docker images.
+These notebooks are built upon the
+[DockerHub Jupyter organization](https://hub.docker.com/u/jupyter) docker images.
 The default base image is [jupyter/minimal-notebook](https://hub.docker.com/r/jupyter/minimal-notebook).
 There is more information on the
 [Jupyter Docker Stacks](https://jupyter-docker-stacks.readthedocs.io).
