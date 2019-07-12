@@ -93,9 +93,9 @@ Run the docker container with internal SQLite database, external volume, and tok
 1. :pencil2: Set environment variables.  Example:
 
     ```console
-    export WEBAPP_PORT=8888
-    export SENZING_DIR=/opt/senzing
     export JUPYTER_NOTEBOOKS_SHARED_DIR=$(pwd)
+    export SENZING_DIR=/opt/senzing
+    export WEBAPP_PORT=8888
     ```
 
 1. Run docker container.  Example:
@@ -119,9 +119,9 @@ Like Variation #1 but without token authentication.
 1. :pencil2: Set environment variables.  Example:
 
     ```console
-    export WEBAPP_PORT=8888
-    export SENZING_DIR=/opt/senzing
     export JUPYTER_NOTEBOOKS_SHARED_DIR=$(pwd)
+    export SENZING_DIR=/opt/senzing
+    export WEBAPP_PORT=8888
     ```
 
 1. Run docker container.  Example:
@@ -151,8 +151,8 @@ Run the docker container with MySQL database and volumes.
     export DATABASE_HOST=senzing-mysql
     export DATABASE_PORT=3306
     export DATABASE_DATABASE=G2
-    export SENZING_DIR=/opt/senzing
     export JUPYTER_NOTEBOOKS_SHARED_DIR=$(pwd)
+    export SENZING_DIR=/opt/senzing
     export WEBAPP_PORT=8888
     ```
 
@@ -195,9 +195,9 @@ Run the docker container accessing an external MySQL database in a docker networ
     export DATABASE_HOST=senzing-mysql
     export DATABASE_PORT=3306
     export DATABASE_DATABASE=G2
-    export WEBAPP_PORT=8888
-    export SENZING_DIR=/opt/senzing
     export JUPYTER_NOTEBOOKS_SHARED_DIR=$(pwd)
+    export SENZING_DIR=/opt/senzing
+    export WEBAPP_PORT=8888
     ```
 
 1. Run docker container.  Example:
