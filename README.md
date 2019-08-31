@@ -56,10 +56,6 @@ This repository assumes a working knowledge of:
 1. [Jupyter](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/jupyter.md)
 1. [Docker](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/docker.md)
 
-## Quick starts
-
-1. [Simplified instructions for macOS](docs/simplified-instructions-for-macos.md)
-
 ## Demonstrate
 
 ### Initialize Senzing
