@@ -4,11 +4,11 @@
 ARG BASE_IMAGE=jupyter/minimal-notebook
 FROM ${BASE_IMAGE}
 
-ENV REFRESHED_AT=2019-07-11
+ENV REFRESHED_AT=2019-08-31
 
 LABEL Name="senzing/jupyter" \
       Maintainer="support@senzing.com" \
-      Version="1.0.2"
+      Version="1.1.0"
 
 HEALTHCHECK CMD ["/app/healthcheck.sh"]
 
