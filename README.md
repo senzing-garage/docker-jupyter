@@ -106,6 +106,39 @@ Create a folder for each output directory.
     export SENZING_VAR_DIR=${SENZING_VOLUME}/var
     ```
 
+1. :thinking: If internal database is used, permissions may need to be changed in `/var/opt/senzing`.
+   Example:
+
+    ```console
+    sudo chmod -R 777 ${SENZING_VAR_DIR}
+    ```
+
+### Docker network
+
+:thinking: **Optional:**  Use if docker container is part of a docker network.
+
+1. List docker networks.
+   Example:
+
+    ```console
+    sudo docker network ls
+    ```
+
+1. :pencil2: Specify docker network.
+   Choose value from NAME column of `docker network ls`.
+   Example:
+
+    ```console
+    export SENZING_NETWORK=*nameofthe_network*
+    ```
+
+1. Construct parameter for `docker run`.
+   Example:
+
+    ```console
+    export SENZING_NETWORK_PARAMETER="--net ${SENZING_NETWORK}"
+    ```
+
 ### Run docker container
 
 1. :pencil2: Set environment variables.
@@ -116,41 +149,7 @@ Create a folder for each output directory.
     export WEBAPP_PORT=8888
     ```
 
-1. :pencil2: If using a docker network, specify docker network.
-   Example:
-
-    ```console
-    sudo docker network ls
-    ```
-
-    Choose value from NAME column of `docker network ls`.
-
-    ```console
-    export SENZING_NETWORK=*nameofthe_network*
-    export SENZING_NETWORK_PARAMETER="--net ${SENZING_NETWORK}"
-    ```
-
-1. :pencil2: If using an external database, specify database.
-   Example:
-
-    ```console
-    export DATABASE_PROTOCOL=postgresql
-    export DATABASE_USERNAME=postgres
-    export DATABASE_PASSWORD=postgres
-    export DATABASE_HOST=senzing-postgresql
-    export DATABASE_PORT=5432
-    export DATABASE_DATABASE=G2
-    ```
-
-    Construct parameter for `docker run`.
-
-    ```console
-    export SENZING_DATABASE_URL="${DATABASE_PROTOCOL}://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_DATABASE}"
-
-    export SENZING_DATABASE_URL_PARAMETER="--env SENZING_DATABASE_URL=${SENZING_DATABASE_URL}
-    ```
-
-1. Optional:  Run Jupter without token authentication.
+1. :thinking: **Optional:**   Run Jupyter without token authentication.
    Example:
 
     ```console
@@ -162,7 +161,6 @@ Create a folder for each output directory.
 
     ```console
     sudo docker run \
-      ${SENZING_DATABASE_URL_PARAMETER} \
       ${SENZING_NETWORK_PARAMETER} \
       --interactive \
       --name senzing-jupyter \
