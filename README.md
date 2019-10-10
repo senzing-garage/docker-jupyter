@@ -17,6 +17,10 @@ The default base image is [jupyter/minimal-notebook](https://hub.docker.com/r/ju
 There is more information on the
 [Jupyter Docker Stacks](https://jupyter-docker-stacks.readthedocs.io).
 
+### Related artifacts
+
+1. [DockerHub](https://hub.docker.com/r/senzing/jupyter)
+
 ### Contents
 
 1. [Expectations](#expectations)
