@@ -27,10 +27,12 @@ There is more information on the
     1. [Space](#space)
     1. [Time](#time)
     1. [Background knowledge](#background-knowledge)
-1. [Demonstrate](#demonstrate)
+1. [Demonstrate using Docker](#demonstrate-using-docker)
     1. [Initialize Senzing](#initialize-senzing)
     1. [Configuration](#configuration)
     1. [Volumes](#volumes)
+    1. [Docker network](#docker-network)
+    1. [MSSQL support](#mssql-support)
     1. [Run docker container](#run-docker-container)
     1. [Run Jupyter](#run-jupyter)
 1. [Develop](#develop)
@@ -74,10 +76,10 @@ Non-Senzing configuration can be seen at
 
 - **[JUPYTER_NOTEBOOKS_SHARED_DIR](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#jupyter_notebooks_shared_dir)**
 - **[SENZING_DATA_VERSION_DIR](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_data_version_dir)**
-- **[SENZING_DATABASE_URL](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_database_url)**
 - **[SENZING_ETC_DIR](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_etc_dir)**
 - **[SENZING_G2_DIR](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_g2_dir)**
 - **[SENZING_NETWORK](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_network)**
+- **[SENZING_OPT_MICROSOFT_DIR](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_opt_microsoft_dir)**
 - **[SENZING_VAR_DIR](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_var_dir)**
 
 ### Volumes
@@ -145,6 +147,25 @@ The following examples show how to identify each output directory.
     export SENZING_NETWORK_PARAMETER="--net ${SENZING_NETWORK}"
     ```
 
+### MSSQL support
+
+:thinking: **Optional:**  This is only needed if using a Microsoft MSSQL database.
+If using a different database, these steps may be skipped.
+
+1. :pencil2: Identify directory with MSSQL drivers.
+   Example:
+
+    ```console
+    export SENZING_OPT_MICROSOFT_DIR=${SENZING_VOLUME}/opt-microsoft
+    ```
+
+1. Construct parameter for `docker run`.
+   Example:
+
+    ```console
+    export SENZING_OPT_MICROSOFT_DIR_PARAMETER="--volume ${SENZING_OPT_MICROSOFT_DIR}:/opt/microsoft"
+    ```
+
 ### Run docker container
 
 1. :pencil2: Set environment variables.
@@ -167,7 +188,6 @@ The following examples show how to identify each output directory.
 
     ```console
     sudo docker run \
-      ${SENZING_NETWORK_PARAMETER} \
       --interactive \
       --name senzing-jupyter \
       --publish ${WEBAPP_PORT}:8888 \
@@ -178,6 +198,8 @@ The following examples show how to identify each output directory.
       --volume ${SENZING_ETC_DIR}:/etc/opt/senzing \
       --volume ${SENZING_G2_DIR}:/opt/senzing/g2 \
       --volume ${SENZING_VAR_DIR}:/var/opt/senzing \
+      ${SENZING_NETWORK_PARAMETER} \
+      ${SENZING_OPT_MICROSOFT_DIR_PARAMETER} \
       senzing/jupyter ${JUPYTER_PARAMETERS}
     ```
 
