@@ -248,7 +248,7 @@ see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/maste
 1. **Option #1:** Using `docker` command and GitHub.
 
     ```console
-    sudo docker build --tag senzing/docker-jupyter https://github.com/senzing/docker-jupyter.git
+    sudo docker build --tag senzing/jupyter https://github.com/senzing/docker-jupyter.git
     ```
 
 1. **Option #2:** Using `docker` command and local repository.
