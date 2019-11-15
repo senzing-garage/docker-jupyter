@@ -158,7 +158,8 @@ If using a different database, these steps may be skipped.
     ```console
     export SENZING_OPT_MICROSOFT_DIR=${SENZING_VOLUME}/opt-microsoft
     ```
-
+1. If not done previously,
+   [install MS SQL drivers](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/initialize-senzing-with-docker.md#ms-sql).
 1. Construct parameter for `docker run`.
    Example:
 
