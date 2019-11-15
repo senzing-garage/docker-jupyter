@@ -32,7 +32,7 @@ There is more information on the
     1. [Configuration](#configuration)
     1. [Volumes](#volumes)
     1. [Docker network](#docker-network)
-    1. [MSSQL support](#mssql-support)
+    1. [Database support](#database-support)
     1. [Run docker container](#run-docker-container)
     1. [Run Jupyter](#run-jupyter)
 1. [Develop](#develop)
@@ -79,7 +79,7 @@ Non-Senzing configuration can be seen at
 - **[SENZING_ETC_DIR](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_etc_dir)**
 - **[SENZING_G2_DIR](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_g2_dir)**
 - **[SENZING_NETWORK](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_network)**
-- **[SENZING_OPT_MICROSOFT_DIR](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_opt_microsoft_dir)**
+- **[SENZING_RUNAS_USER](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_runas_user)**
 - **[SENZING_VAR_DIR](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_var_dir)**
 
 ### Volumes
@@ -147,25 +147,17 @@ The following examples show how to identify each output directory.
     export SENZING_NETWORK_PARAMETER="--net ${SENZING_NETWORK}"
     ```
 
-### MSSQL support
+### Database support
 
-:thinking: **Optional:**  This is only needed if using a Microsoft MSSQL database.
-If using a different database, these steps may be skipped.
+:thinking: **Optional:**  Some database need additional support.
+For other databases, these steps may be skipped.
 
-1. :pencil2: Identify directory with MSSQL drivers.
-   Example:
-
-    ```console
-    export SENZING_OPT_MICROSOFT_DIR=${SENZING_VOLUME}/opt-microsoft
-    ```
-1. If not done previously,
-   [install MS SQL drivers](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/initialize-senzing-with-docker.md#ms-sql).
-1. Construct parameter for `docker run`.
-   Example:
-
-    ```console
-    export SENZING_OPT_MICROSOFT_DIR_PARAMETER="--volume ${SENZING_OPT_MICROSOFT_DIR}:/opt/microsoft"
-    ```
+1. **Db2:** See
+   [Support Db2](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/support-db2.md)
+   instructions to set `SENZING_OPT_IBM_DIR_PARAMETER`.
+1. **MS SQL:** See
+   [Support MS SQL](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/support-mssql.md)
+   instructions to set `SENZING_OPT_MICROSOFT_DIR_PARAMETER`.
 
 ### Run docker container
 
@@ -200,6 +192,7 @@ If using a different database, these steps may be skipped.
       --volume ${SENZING_G2_DIR}:/opt/senzing/g2 \
       --volume ${SENZING_VAR_DIR}:/var/opt/senzing \
       ${SENZING_NETWORK_PARAMETER} \
+      ${SENZING_OPT_IBM_DIR_PARAMETER} \
       ${SENZING_OPT_MICROSOFT_DIR_PARAMETER} \
       senzing/jupyter ${JUPYTER_PARAMETERS}
     ```
