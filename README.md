@@ -43,6 +43,14 @@ There is more information on the
 1. [Errors](#errors)
 1. [References](#references)
 
+### Legend
+
+1. :thinking: - A "thinker" icon means that a little extra thinking may be required.
+   Perhaps you'll need to make some choices.
+   Perhaps it's an optional step.
+1. :pencil2: - A "pencil" icon means that the instructions may need modification before performing.
+1. :warning: - A "warning" icon means that something tricky is happening, so pay attention.
+
 ## Expectations
 
 ### Space
@@ -118,7 +126,7 @@ The following examples show how to identify each output directory.
    Example:
 
     ```console
-    sudo chmod -R 777 ${SENZING_VAR_DIR}
+    sudo chown $(id -u):$(id -g) -R ${SENZING_VAR_DIR}
     ```
 
 ### Docker network
