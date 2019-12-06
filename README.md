@@ -234,6 +234,7 @@ The following software programs need to be installed:
 1. [git](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-git.md)
 1. [make](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-make.md)
 1. [docker](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker.md)
+1. [jupyter](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-jupyter.md)
 
 ### Clone repository
 
@@ -250,6 +251,39 @@ see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/maste
     ```
 
 1. Follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/clone-repository.md) to install the Git repository.
+
+### Develop notebooks on host system
+
+1. Set environment variables for senzing directories.  See [Volumes](#volumes).
+   Example:
+
+    ```console
+    export SENZING_VOLUME=/opt/my-senzing
+
+    export SENZING_DATA_DIR=${SENZING_VOLUME}/data
+    export SENZING_DATA_VERSION_DIR=${SENZING_DATA_DIR}/1.0.0
+    export SENZING_ETC_DIR=${SENZING_VOLUME}/etc
+    export SENZING_G2_DIR=${SENZING_VOLUME}/g2
+    export SENZING_VAR_DIR=${SENZING_VOLUME}/var
+    ```
+
+1. Set environment variables.
+   Example:
+
+    ```console
+    export PYTHONPATH=${SENZING_G2_DIR}/python
+    export LD_LIBRARY_PATH=${SENZING_G2_DIR}/lib:${SENZING_G2_DIR}/lib/debian
+    export SENZING_SQL_CONNECTION="sqlite3://na:na@${SENZING_VAR_DIR}/sqlite/G2C.db"
+    ```
+
+1. Start juypter notebook.
+   Example:
+
+    ```console
+    cd ${GIT_REPOSITORY_DIR}
+
+    jupyter notebook
+    ```
 
 ### Build docker image for development
 
