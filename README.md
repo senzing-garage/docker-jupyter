@@ -38,6 +38,7 @@ There is more information on the
 1. [Develop](#develop)
     1. [Prerequisite software](#prerequisite-software)
     1. [Clone repository](#clone-repository)
+    1. [Develop notebooks on host system](#develop-notebooks-on-host-system)
     1. [Build docker image for development](#build-docker-image-for-development)
 1. [Examples](#examples)
 1. [Errors](#errors)
