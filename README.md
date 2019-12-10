@@ -35,6 +35,7 @@ There is more information on the
     1. [Database support](#database-support)
     1. [Run docker container](#run-docker-container)
     1. [Run Jupyter](#run-jupyter)
+    1. [Guides and References](#guides-and-references)
 1. [Develop](#develop)
     1. [Prerequisite software](#prerequisite-software)
     1. [Clone repository](#clone-repository)
@@ -225,6 +226,22 @@ For other databases, these steps may be skipped.
     ```
 
     Paste the URL into a web browser.
+
+### Guides and References
+
+The Jupyter notebooks in
+[notebooks/senzing-examples](notebooks/senzing-examples)
+are of two types:
+
+1. **References** - Information on specific method invocations and their parameters.
+   Examples:
+    1. [G2Config reference](notebooks/senzing-examples/python/senzing-G2Config.ipynb)
+    1. [G2Engine reference](notebooks/senzing-examples/python/senzing-G2Engine.ipynb)
+1. **Guides** - Illustrations of how to use methods to accomplish tasks.
+   Often points to appropriate "Reference" entries for specific method invocations.
+   Examples:
+    1. [G2Config add data source](notebooks/senzing-examples/python/senzing-G2Config-addDataSource.ipynb)
+    1. [G2Engine add record](notebooks/senzing-examples/python/senzing-G2Engine-addRecord.ipynb)
 
 ## Develop
 
