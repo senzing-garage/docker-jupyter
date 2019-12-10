@@ -18,7 +18,7 @@ There is more information on the
 [Jupyter Docker Stacks](https://jupyter-docker-stacks.readthedocs.io).
 
 In addition, the Jupyter notebooks can be viewed on
-[https://nbviewer.jupyter.org/](https://nbviewer.jupyter.org/).
+[nbviewer.jupyter.org](https://nbviewer.jupyter.org/).
 For example, visit
 [Senzing examples on NbViewer](https://nbviewer.jupyter.org/github/Senzing/docker-jupyter/tree/master/notebooks/senzing-examples/python).
 
