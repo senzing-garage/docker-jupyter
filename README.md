@@ -35,6 +35,7 @@ There is more information on the
     1. [Database support](#database-support)
     1. [Run docker container](#run-docker-container)
     1. [Run Jupyter](#run-jupyter)
+    1. [Guides and References](#guides-and-references)
 1. [Develop](#develop)
     1. [Prerequisite software](#prerequisite-software)
     1. [Clone repository](#clone-repository)
