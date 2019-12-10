@@ -235,8 +235,8 @@ are of two types:
 
 1. **References** - Information on specific method invocations and their parameters.
    Examples:
-    1. [G2Config reference](notebooks/senzing-examples/python/senzing-G2Config.ipynb)
-    1. [G2Engine reference](notebooks/senzing-examples/python/senzing-G2Engine.ipynb)
+    1. [G2Config reference](notebooks/senzing-examples/python/senzing-G2Config-reference.ipynb)
+    1. [G2Engine reference](notebooks/senzing-examples/python/senzing-G2Engine-reference.ipynb)
 1. **Guides** - Illustrations of how to use methods to accomplish tasks.
    Often points to appropriate "Reference" entries for specific method invocations.
    Examples:
