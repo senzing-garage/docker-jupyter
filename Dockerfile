@@ -78,6 +78,15 @@ RUN conda install -n ipykernel_py2 -c conda-forge -y \
       widgetsnbextension \
       ipywidgets
 
+# Install nbextensions
+RUN pip3 install \
+      jupyter_contrib_nbextensions \
+      https://github.com/ipython-contrib/jupyter_contrib_nbextensions/tarball/master
+RUN jupyter contrib nbextension install --user
+RUN pip3 install jupyter_nbextensions_configurator
+RUN jupyter nbextensions_configurator enable --user
+RUN sudo -E jupyter nbextension enable toc2
+
 # Install jupyter widgets for qgrid.
 
 RUN conda run -n ipykernel_py2 jupyter labextension install @jupyter-widgets/jupyterlab-manager
