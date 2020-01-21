@@ -90,6 +90,19 @@ RUN conda run -n ipykernel_py2 jupyter labextension install qgrid
 
 RUN conda run -n ipykernel_py2 python -m ipykernel install --user
 
+# Install Java kernel
+
+# RUN conda install -c conda-forge scijava-jupyter-kernel
+# RUN conda install -c bioconda java-jdk
+# RUN conda install -c conda-forge openjdk
+
+# WORKDIR /tmp/ijava
+# RUN wget https://github.com/SpencerPark/IJava/releases/download/v1.3.0/ijava-1.3.0.zip \
+#  && unzip ijava-1.3.0.zip \
+#  && python3 install.py
+
+RUN conda install -c conda-forge ipywidgets beakerx
+
 # Update nodeJS.
 
 RUN npm i -g npm
