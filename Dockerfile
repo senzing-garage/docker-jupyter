@@ -147,7 +147,7 @@ ENV PYTHONPATH=${SENZING_ROOT}/g2/python
 ENV LD_LIBRARY_PATH=${SENZING_ROOT}/g2/lib:${SENZING_ROOT}/g2/lib/debian
 ENV DB2_CLI_DRIVER_INSTALL_PATH=${SENZING_ROOT}/db2/clidriver
 ENV PATH=$PATH:${SENZING_ROOT}/db2/clidriver/adm:${SENZING_ROOT}/db2/clidriver/bin
-ENV CLASSPATH=/opt/senzing/g2/lib/g2.jar
+ENV IJAVA_CLASSPATH=/opt/senzing/g2/lib/g2.jar
 ENV DYLD_LIBRARY_PATH=/opt/senzing/g2/lib/
 
 WORKDIR /notebooks
