@@ -93,24 +93,10 @@ RUN conda run -n ipykernel_py2 python -m ipykernel install --user
 
 # Install Java kernel
 
-# RUN conda install -c conda-forge scijava-jupyter-kernel
-# RUN conda install -c bioconda java-jdk
-# RUN conda install -c conda-forge openjdk
-
-# WORKDIR /tmp/ijava
-# RUN wget https://github.com/SpencerPark/IJava/releases/download/v1.3.0/ijava-1.3.0.zip \
-#  && unzip ijava-1.3.0.zip \
-#  && python3 install.py
-
-# The following works for BeakerX
-# RUN conda install -c conda-forge ipywidgets beakerx
-
-RUN curl -L https://github.com/SpencerPark/IJava/releases/download/v1.3.0/ijava-1.3.0.zip > ijava-kernel.zip
-
-# Unpack and install the kernel
-RUN unzip ijava-kernel.zip -d ijava-kernel \
-  && cd ijava-kernel \
-  && python3 install.py --sys-prefix
+RUN curl -L https://github.com/SpencerPark/IJava/releases/download/v1.3.0/ijava-1.3.0.zip > ijava-kernel.zip \
+ && unzip ijava-kernel.zip -d ijava-kernel \
+ && cd ijava-kernel \
+ && python3 install.py --sys-prefix
 
 # Update nodeJS.
 
