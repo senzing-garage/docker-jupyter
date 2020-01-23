@@ -4,7 +4,7 @@
 ARG BASE_IMAGE=jupyter/minimal-notebook
 FROM ${BASE_IMAGE}
 
-ENV REFRESHED_AT=2019-08-31
+ENV REFRESHED_AT=2020-01-22
 
 LABEL Name="senzing/jupyter" \
       Maintainer="support@senzing.com" \
@@ -28,6 +28,7 @@ RUN apt -y autoremove
 
 RUN apt-get -y install \
       curl \
+      default-jdk \
       gnupg \
       jq \
       lsb-core \
@@ -90,6 +91,13 @@ RUN conda run -n ipykernel_py2 jupyter labextension install qgrid
 
 RUN conda run -n ipykernel_py2 python -m ipykernel install --user
 
+# Install Java kernel
+
+RUN curl -L https://github.com/SpencerPark/IJava/releases/download/v1.3.0/ijava-1.3.0.zip > ijava-kernel.zip \
+ && unzip ijava-kernel.zip -d ijava-kernel \
+ && cd ijava-kernel \
+ && python3 install.py --sys-prefix
+
 # Update nodeJS.
 
 RUN npm i -g npm
@@ -125,5 +133,7 @@ ENV PYTHONPATH=${SENZING_ROOT}/g2/python
 ENV LD_LIBRARY_PATH=${SENZING_ROOT}/g2/lib:${SENZING_ROOT}/g2/lib/debian
 ENV DB2_CLI_DRIVER_INSTALL_PATH=${SENZING_ROOT}/db2/clidriver
 ENV PATH=$PATH:${SENZING_ROOT}/db2/clidriver/adm:${SENZING_ROOT}/db2/clidriver/bin
+ENV IJAVA_CLASSPATH=/opt/senzing/g2/lib/g2.jar
+ENV DYLD_LIBRARY_PATH=/opt/senzing/g2/lib/
 
 WORKDIR /notebooks

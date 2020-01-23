@@ -342,3 +342,4 @@ see [Environment Variables](https://github.com/Senzing/knowledge-base/blob/maste
 
 1. [A gallery of interesting Jupyter Notebooks](https://github.com/jupyter/jupyter/wiki/A-gallery-of-interesting-Jupyter-Notebooks)
 1. [Senzing notebooks](notebooks)
+1. [IJava setup](docs/ijava-kernel-setup.md)
