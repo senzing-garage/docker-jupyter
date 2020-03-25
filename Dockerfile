@@ -77,8 +77,7 @@ RUN conda install -n ipykernel_py2 -y \
 
 RUN conda install -n ipykernel_py2 -c conda-forge -y \
       widgetsnbextension \
-      ipywidgets \
-      jupyter_contrib_nbextensions
+      ipywidgets 
 
 # Install jupyter widgets for qgrid.
 
@@ -138,3 +137,8 @@ ENV IJAVA_CLASSPATH=/opt/senzing/g2/lib/g2.jar
 ENV DYLD_LIBRARY_PATH=/opt/senzing/g2/lib/
 
 WORKDIR /notebooks
+
+# Install nbextensions
+ RUN conda install -c conda-forge jupyter_contrib_nbextensions
+ RUN jupyter contrib nbextension install --system
+ RUN jupyter nbextension enable toc2/main --system
