@@ -77,7 +77,8 @@ RUN conda install -n ipykernel_py2 -y \
 
 RUN conda install -n ipykernel_py2 -c conda-forge -y \
       widgetsnbextension \
-      ipywidgets
+      ipywidgets \
+      jupyter_contrib_nbextensions
 
 # Install jupyter widgets for qgrid.
 
