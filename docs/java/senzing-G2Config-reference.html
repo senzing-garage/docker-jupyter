@@ -13108,6 +13108,13 @@ $( document ).ready(function(){
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Prepare-Environment">Prepare Environment<a class="anchor-link" href="#Prepare-Environment">&#182;</a></h2>
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
@@ -13125,7 +13132,120 @@ $( document ).ready(function(){
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Initialize-Senzing-configuration">Initialize Senzing configuration<a class="anchor-link" href="#Initialize-Senzing-configuration">&#182;</a></h2><p>Using environment variables and default values, create <code>senzingConfigJson</code>.
+<h3 id="Helper-class-for-Json-Rendering">Helper class for Json Rendering<a class="anchor-link" href="#Helper-class-for-Json-Rendering">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="o">%%</span><span class="n">loadFromPOM</span>
+<span class="o">&lt;</span><span class="n">dependency</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">groupId</span><span class="o">&gt;</span><span class="n">org</span><span class="p">.</span><span class="na">glassfish</span><span class="o">&lt;/</span><span class="n">groupId</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">javax</span><span class="p">.</span><span class="na">json</span><span class="o">&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span><span class="mf">1.1.4</span><span class="o">&lt;/</span><span class="n">version</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">dependency</span><span class="o">&gt;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="kn">import</span> <span class="nn">javax.json.*</span><span class="p">;</span>
+<span class="kn">import static</span> <span class="nn">java.util.Collections.*</span><span class="p">;</span>
+<span class="kn">import static</span> <span class="nn">javax.json.stream.JsonGenerator.PRETTY_PRINTING</span><span class="p">;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">JsonUtil</span> <span class="p">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">JsonWriterFactory</span> <span class="n">PRETTY_FACTORY</span>
+        <span class="o">=</span> <span class="n">Json</span><span class="p">.</span><span class="na">createWriterFactory</span><span class="p">(</span><span class="n">singletonMap</span><span class="p">(</span><span class="n">PRETTY_PRINTING</span><span class="p">,</span> <span class="kc">true</span><span class="p">));</span>
+        
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">JsonWriterFactory</span> <span class="n">UGLY_FACTORY</span>
+        <span class="o">=</span> <span class="n">Json</span><span class="p">.</span><span class="na">createWriterFactory</span><span class="p">(</span><span class="n">emptyMap</span><span class="p">());</span>
+    
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">toJsonText</span><span class="p">(</span><span class="n">JsonValue</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">toJsonText</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">toJsonText</span><span class="p">(</span><span class="n">JsonValue</span> <span class="n">val</span><span class="p">,</span> <span class="kt">boolean</span> <span class="n">prettyPrint</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">JsonWriterFactory</span> <span class="n">factory</span> <span class="o">=</span> <span class="p">(</span><span class="n">prettyPrint</span><span class="p">)</span> <span class="o">?</span> <span class="n">PRETTY_FACTORY</span> <span class="p">:</span> <span class="n">UGLY_FACTORY</span><span class="p">;</span>
+        <span class="n">StringWriter</span> <span class="n">sw</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringWriter</span><span class="p">();</span>
+        <span class="n">JsonWriter</span> <span class="n">writer</span> <span class="o">=</span> <span class="n">factory</span><span class="p">.</span><span class="na">createWriter</span><span class="p">(</span><span class="n">sw</span><span class="p">);</span>
+        <span class="n">writer</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="n">val</span><span class="p">);</span>
+        <span class="n">sw</span><span class="p">.</span><span class="na">flush</span><span class="p">();</span>
+        <span class="k">return</span> <span class="n">sw</span><span class="p">.</span><span class="na">toString</span><span class="p">();</span>
+    <span class="p">}</span>
+    
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">JsonObject</span> <span class="nf">parseJsonObject</span><span class="p">(</span><span class="n">String</span> <span class="n">jsonText</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">jsonText</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+        <span class="n">StringReader</span> <span class="n">sr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringReader</span><span class="p">(</span><span class="n">jsonText</span><span class="p">);</span>
+        <span class="n">JsonReader</span> <span class="n">jsonReader</span> <span class="o">=</span> <span class="n">Json</span><span class="p">.</span><span class="na">createReader</span><span class="p">(</span><span class="n">sr</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">jsonReader</span><span class="p">.</span><span class="na">readObject</span><span class="p">();</span>
+  <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">JsonArray</span> <span class="nf">parseJsonArray</span><span class="p">(</span><span class="n">String</span> <span class="n">jsonText</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">jsonText</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+        <span class="n">StringReader</span> <span class="n">sr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringReader</span><span class="p">(</span><span class="n">jsonText</span><span class="p">);</span>
+        <span class="n">JsonReader</span> <span class="n">jsonReader</span> <span class="o">=</span> <span class="n">Json</span><span class="p">.</span><span class="na">createReader</span><span class="p">(</span><span class="n">sr</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">jsonReader</span><span class="p">.</span><span class="na">readArray</span><span class="p">();</span>
+  <span class="p">}</span>
+    
+    
+<span class="p">}</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="kn">import</span> <span class="nn">java.util.UUID</span><span class="p">;</span>
+<span class="n">String</span> <span class="n">str</span><span class="p">;</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">RenderJSON</span><span class="p">(</span><span class="n">Object</span> <span class="n">obj</span><span class="p">){</span>
+    <span class="n">str</span> <span class="o">=</span> <span class="n">obj</span><span class="p">.</span><span class="na">toString</span><span class="p">();</span>
+    <span class="n">JsonObject</span> <span class="n">json</span> <span class="o">=</span> <span class="n">JsonUtil</span><span class="p">.</span><span class="na">parseJsonObject</span><span class="p">(</span><span class="n">str</span><span class="p">);</span>
+    <span class="n">String</span> <span class="n">Config</span> <span class="o">=</span> <span class="n">JsonUtil</span><span class="p">.</span><span class="na">toJsonText</span><span class="p">(</span><span class="n">json</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+    <span class="n">UUID</span> <span class="n">id</span> <span class="o">=</span> <span class="n">UUID</span><span class="p">.</span><span class="na">randomUUID</span><span class="p">();</span>
+    <span class="n">String</span> <span class="n">uuid</span> <span class="o">=</span> <span class="n">id</span><span class="p">.</span><span class="na">toString</span><span class="p">();</span>
+    <span class="n">String</span> <span class="n">div</span> <span class="o">=</span> <span class="s">&quot;&lt;div id=\&quot;&quot;</span><span class="o">+</span> <span class="n">uuid</span> <span class="o">+</span><span class="s">&quot;\&quot; style=\&quot;height:100%; width:100%; background-color: LightCyan\&quot;&gt;&lt;/div&gt;&quot;</span><span class="p">;</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">div</span><span class="p">,</span> <span class="s">&quot;text/html&quot;</span><span class="p">);</span>
+    <span class="n">String</span> <span class="n">jav</span> <span class="o">=</span> <span class="s">&quot;require([\&quot;https://rawgit.com/caldwell/renderjson/master/renderjson.js\&quot;], function() {document.getElementById(\&#39;&quot;</span><span class="o">+</span> <span class="n">uuid</span> <span class="o">+</span><span class="s">&quot;\&#39;).appendChild(renderjson(&quot;</span><span class="o">+</span><span class="n">json</span><span class="o">+</span><span class="s">&quot;))});&quot;</span><span class="p">;</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">jav</span><span class="p">,</span> <span class="s">&quot;application/javascript&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Initialize-Senzing-configuration">Initialize Senzing configuration<a class="anchor-link" href="#Initialize-Senzing-configuration">&#182;</a></h3><p>Using environment variables and default values, create <code>senzingConfigJson</code>.
 This value is used when instantiating Senzing objects.</p>
 
 </div>
@@ -13172,7 +13292,7 @@ This value is used when instantiating Senzing objects.</p>
    <span class="o">+</span>     <span class="s">&quot;\&quot;CONNECTION\&quot;: \&quot;&quot;</span> <span class="o">+</span> <span class="n">sqlConnection</span> <span class="o">+</span> <span class="s">&quot;\&quot;&quot;</span>
    <span class="o">+</span> <span class="s">&quot;}}&quot;</span><span class="p">;</span>
    
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">senzingConfigJson</span><span class="p">);</span>
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">senzingConfigJson</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13221,7 +13341,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">initV2</span><span class="p">(</span><span class="n">moduleName</span><span class="p">,</span> <span class="n">senzingConfigJson</span><span class="p">,</span> <span class="n">verboseLogging</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 </pre></div>
@@ -13276,9 +13396,9 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listDataSourcesV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13306,9 +13426,9 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">addDataSourceV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">dataSource</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13334,9 +13454,9 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listDataSourcesV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13369,9 +13489,9 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listEntityTypesV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13397,9 +13517,9 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listEntityTypesV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13426,9 +13546,9 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">addEntityClassV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">entityClass</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13454,9 +13574,9 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listEntityClassesV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13483,9 +13603,9 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">addEntityTypeV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">entityType</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13511,9 +13631,9 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listEntityTypesV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13539,7 +13659,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">deleteEntityClassV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">entityClass</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 </pre></div>
@@ -13567,7 +13687,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">deleteEntityTypeV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">entityType</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 </pre></div>
@@ -13602,9 +13722,9 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listFeatureElementsV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13631,9 +13751,9 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">getFeatureElementV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureElm</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13660,9 +13780,9 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">addFeatureElementV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureElm</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13688,7 +13808,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">deleteFeatureElementV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureElm</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 </pre></div>
@@ -13716,9 +13836,9 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listFeatureClassesV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13744,9 +13864,9 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listFeaturesV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13773,9 +13893,9 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">getFeatureV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">feature</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13802,9 +13922,9 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">addFeatureV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">feature</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13830,7 +13950,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">deleteFeatureV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">feature</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 </pre></div>
@@ -13858,7 +13978,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">addElementToFeatureV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">elmnt</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 </pre></div>
@@ -13886,7 +14006,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">deleteElementFromFeatureV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">elmnt</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 </pre></div>
@@ -13921,9 +14041,9 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listFeatureStandardizationFunctionsV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13949,9 +14069,9 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listFeatureStandardizationFunctionCallsV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13978,9 +14098,9 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">getFeatureStandardizationFunctionCallV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureStandard</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -14007,9 +14127,9 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">addFeatureStandardizationFunctionCallV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureStandard</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -14035,7 +14155,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">deleteFeatureStandardizationFunctionCallV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureStandard</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 </pre></div>
@@ -14070,9 +14190,9 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listFeatureExpressionFunctionsV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -14098,9 +14218,9 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listFeatureExpressionFunctionCallsV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -14127,9 +14247,9 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">getFeatureExpressionFunctionCallV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureExpress</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -14156,9 +14276,9 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">addFeatureExpressionFunctionCallV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureExpress</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -14184,7 +14304,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">addFeatureExpressionFunctionCallElementV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureExpressElm</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 </pre></div>
@@ -14212,7 +14332,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">deleteFeatureExpressionFunctionCallElementV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureExpressElm</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 </pre></div>
@@ -14240,7 +14360,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">deleteFeatureExpressionFunctionCallV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureExpressElm</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 </pre></div>
@@ -14275,9 +14395,9 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listFeatureComparisonFunctionsV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -14303,9 +14423,9 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listFeatureComparisonFunctionCallsV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -14332,9 +14452,9 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">getFeatureComparisonFunctionCallV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureCompFunc</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -14362,9 +14482,9 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -14390,7 +14510,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">deleteFeatureComparisonFunctionCallV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureComp</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 </pre></div>
@@ -14418,7 +14538,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">addFeatureComparisonFunctionCallElementV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureCompElm</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 </pre></div>
@@ -14446,7 +14566,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">deleteFeatureComparisonFunctionCallElementV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureCompElm</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 </pre></div>
@@ -14481,9 +14601,9 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listFeatureDistinctFunctionsV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -14509,9 +14629,9 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listFeatureDistinctFunctionsV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -14538,9 +14658,9 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">getFeatureDistinctFunctionCallV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureFunc</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -14567,9 +14687,9 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">addFeatureDistinctFunctionCallV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureFunc</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -14595,7 +14715,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">deleteFeatureDistinctFunctionCallV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureFunc</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 </pre></div>
@@ -14623,7 +14743,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">addFeatureDistinctFunctionCallElementV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureElmt</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 </pre></div>
@@ -14651,7 +14771,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">deleteFeatureDistinctFunctionCallElementV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureElmt</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 </pre></div>
@@ -14686,9 +14806,9 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listAttributeClassesV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -14714,9 +14834,9 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listAttributesV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -14743,9 +14863,9 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">getAttributeV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -14772,9 +14892,9 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">addAttributeV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -14800,9 +14920,9 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">deleteAttributeV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">attr</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>

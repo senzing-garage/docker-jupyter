@@ -13133,6 +13133,118 @@ $( document ).ready(function(){
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Helper-class-for-Json-Rendering">Helper class for Json Rendering<a class="anchor-link" href="#Helper-class-for-Json-Rendering">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="o">%%</span><span class="n">loadFromPOM</span>
+<span class="o">&lt;</span><span class="n">dependency</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">groupId</span><span class="o">&gt;</span><span class="n">org</span><span class="p">.</span><span class="na">glassfish</span><span class="o">&lt;/</span><span class="n">groupId</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">javax</span><span class="p">.</span><span class="na">json</span><span class="o">&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span><span class="mf">1.1.4</span><span class="o">&lt;/</span><span class="n">version</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">dependency</span><span class="o">&gt;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="kn">import</span> <span class="nn">javax.json.*</span><span class="p">;</span>
+<span class="kn">import static</span> <span class="nn">java.util.Collections.*</span><span class="p">;</span>
+<span class="kn">import static</span> <span class="nn">javax.json.stream.JsonGenerator.PRETTY_PRINTING</span><span class="p">;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">JsonUtil</span> <span class="p">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">JsonWriterFactory</span> <span class="n">PRETTY_FACTORY</span>
+        <span class="o">=</span> <span class="n">Json</span><span class="p">.</span><span class="na">createWriterFactory</span><span class="p">(</span><span class="n">singletonMap</span><span class="p">(</span><span class="n">PRETTY_PRINTING</span><span class="p">,</span> <span class="kc">true</span><span class="p">));</span>
+        
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">JsonWriterFactory</span> <span class="n">UGLY_FACTORY</span>
+        <span class="o">=</span> <span class="n">Json</span><span class="p">.</span><span class="na">createWriterFactory</span><span class="p">(</span><span class="n">emptyMap</span><span class="p">());</span>
+    
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">toJsonText</span><span class="p">(</span><span class="n">JsonValue</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">toJsonText</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">toJsonText</span><span class="p">(</span><span class="n">JsonValue</span> <span class="n">val</span><span class="p">,</span> <span class="kt">boolean</span> <span class="n">prettyPrint</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">JsonWriterFactory</span> <span class="n">factory</span> <span class="o">=</span> <span class="p">(</span><span class="n">prettyPrint</span><span class="p">)</span> <span class="o">?</span> <span class="n">PRETTY_FACTORY</span> <span class="p">:</span> <span class="n">UGLY_FACTORY</span><span class="p">;</span>
+        <span class="n">StringWriter</span> <span class="n">sw</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringWriter</span><span class="p">();</span>
+        <span class="n">JsonWriter</span> <span class="n">writer</span> <span class="o">=</span> <span class="n">factory</span><span class="p">.</span><span class="na">createWriter</span><span class="p">(</span><span class="n">sw</span><span class="p">);</span>
+        <span class="n">writer</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="n">val</span><span class="p">);</span>
+        <span class="n">sw</span><span class="p">.</span><span class="na">flush</span><span class="p">();</span>
+        <span class="k">return</span> <span class="n">sw</span><span class="p">.</span><span class="na">toString</span><span class="p">();</span>
+    <span class="p">}</span>
+    
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">JsonObject</span> <span class="nf">parseJsonObject</span><span class="p">(</span><span class="n">String</span> <span class="n">jsonText</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">jsonText</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+        <span class="n">StringReader</span> <span class="n">sr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringReader</span><span class="p">(</span><span class="n">jsonText</span><span class="p">);</span>
+        <span class="n">JsonReader</span> <span class="n">jsonReader</span> <span class="o">=</span> <span class="n">Json</span><span class="p">.</span><span class="na">createReader</span><span class="p">(</span><span class="n">sr</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">jsonReader</span><span class="p">.</span><span class="na">readObject</span><span class="p">();</span>
+  <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">JsonArray</span> <span class="nf">parseJsonArray</span><span class="p">(</span><span class="n">String</span> <span class="n">jsonText</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">jsonText</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+        <span class="n">StringReader</span> <span class="n">sr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringReader</span><span class="p">(</span><span class="n">jsonText</span><span class="p">);</span>
+        <span class="n">JsonReader</span> <span class="n">jsonReader</span> <span class="o">=</span> <span class="n">Json</span><span class="p">.</span><span class="na">createReader</span><span class="p">(</span><span class="n">sr</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">jsonReader</span><span class="p">.</span><span class="na">readArray</span><span class="p">();</span>
+  <span class="p">}</span>
+    
+    
+<span class="p">}</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="kn">import</span> <span class="nn">java.util.UUID</span><span class="p">;</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">RenderJSON</span><span class="p">(</span><span class="n">Object</span> <span class="n">obj</span><span class="p">){</span>
+    <span class="n">String</span> <span class="n">str</span> <span class="o">=</span> <span class="n">obj</span><span class="p">.</span><span class="na">toString</span><span class="p">();</span>
+    <span class="n">JsonObject</span> <span class="n">json</span> <span class="o">=</span> <span class="n">JsonUtil</span><span class="p">.</span><span class="na">parseJsonObject</span><span class="p">(</span><span class="n">str</span><span class="p">);</span>
+    <span class="n">String</span> <span class="n">Config</span> <span class="o">=</span> <span class="n">JsonUtil</span><span class="p">.</span><span class="na">toJsonText</span><span class="p">(</span><span class="n">json</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+    <span class="n">UUID</span> <span class="n">id</span> <span class="o">=</span> <span class="n">UUID</span><span class="p">.</span><span class="na">randomUUID</span><span class="p">();</span>
+    <span class="n">String</span> <span class="n">uuid</span> <span class="o">=</span> <span class="n">id</span><span class="p">.</span><span class="na">toString</span><span class="p">();</span>
+    <span class="n">String</span> <span class="n">div</span> <span class="o">=</span> <span class="s">&quot;&lt;div id=\&quot;&quot;</span><span class="o">+</span> <span class="n">uuid</span> <span class="o">+</span><span class="s">&quot;\&quot; style=\&quot;height:100%; width:100%; background-color: LightCyan\&quot;&gt;&lt;/div&gt;&quot;</span><span class="p">;</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">div</span><span class="p">,</span> <span class="s">&quot;text/html&quot;</span><span class="p">);</span>
+    <span class="n">String</span> <span class="n">jav</span> <span class="o">=</span> <span class="s">&quot;require([\&quot;https://rawgit.com/caldwell/renderjson/master/renderjson.js\&quot;], function() {document.getElementById(\&#39;&quot;</span><span class="o">+</span> <span class="n">uuid</span> <span class="o">+</span><span class="s">&quot;\&#39;).appendChild(renderjson(&quot;</span><span class="o">+</span><span class="n">json</span><span class="o">+</span><span class="s">&quot;))});&quot;</span><span class="p">;</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">jav</span><span class="p">,</span> <span class="s">&quot;application/javascript&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Initialize-Senzing-configuration">Initialize Senzing configuration<a class="anchor-link" href="#Initialize-Senzing-configuration">&#182;</a></h3><p>Using environment variables and default values, create <code>senzingConfigJson</code>.
 This value is used when instantiating Senzing objects.</p>
 
@@ -13179,8 +13291,8 @@ This value is used when instantiating Senzing objects.</p>
    <span class="o">+</span> <span class="s">&quot;\&quot;SQL\&quot;: {&quot;</span>
    <span class="o">+</span>     <span class="s">&quot;\&quot;CONNECTION\&quot;: \&quot;&quot;</span> <span class="o">+</span> <span class="n">sqlConnection</span> <span class="o">+</span> <span class="s">&quot;\&quot;&quot;</span>
    <span class="o">+</span> <span class="s">&quot;}}&quot;</span><span class="p">;</span>
-   
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">senzingConfigJson</span><span class="p">);</span>
+
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">senzingConfigJson</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13260,7 +13372,7 @@ using a specified initConfigID. See
     <div class="input_area">
 <div class=" highlight hl-java"><pre><span></span><span class="kt">int</span> <span class="n">return_code</span><span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">primeEngine</span><span class="p">();</span>
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">)</span>
 </pre></div>
 
@@ -13327,8 +13439,7 @@ can be returned here.</li>
 <div class=" highlight hl-java"><pre><span></span><span class="n">StringBuffer</span> <span class="n">response</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="p">();</span>
 
 <span class="n">g2engine</span><span class="p">.</span><span class="na">exportConfig</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">configID</span><span class="p">);</span>
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Config ID: &quot;</span><span class="o">+</span><span class="n">configID</span><span class="p">.</span><span class="na">getValue</span><span class="p">());</span>
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="s">&quot;Config ID: &quot;</span><span class="o">+</span><span class="n">configID</span><span class="p">.</span><span class="na">getValue</span><span class="p">());</span>
 </pre></div>
 
     </div>
@@ -13355,7 +13466,7 @@ document.  If an error occurred, an error response is stored here.</li>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-java"><pre><span></span><span class="n">String</span> <span class="n">response</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">stats</span><span class="p">();</span>
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;STATS: &quot;</span> <span class="o">+</span> <span class="n">response</span><span class="p">);</span>
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13435,14 +13546,14 @@ call is returned here</li>
 <span class="n">StringBuffer</span> <span class="n">recordID2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="p">();</span>
 <span class="kt">int</span> <span class="n">ret2</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">addRecordWithReturnedRecordID</span><span class="p">(</span><span class="n">dataSourceCode</span><span class="p">,</span> <span class="n">recordID2</span><span class="p">,</span> <span class="n">jsonData</span><span class="p">,</span> <span class="n">loadID</span><span class="p">);</span>
 
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;New Record ID: &quot;</span> <span class="o">+</span> <span class="n">recordID2</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
+<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="s">&quot;New Record ID: &quot;</span> <span class="o">+</span> <span class="n">recordID2</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
 
 <span class="cm">/** addRecordWithInfo */</span>
 <span class="n">StringBuffer</span> <span class="n">responseBuffer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="p">();</span>
 <span class="kt">int</span> <span class="n">flags</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="kt">int</span> <span class="n">ret3</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">addRecordWithInfo</span><span class="p">(</span><span class="n">dataSourceCode</span><span class="p">,</span> <span class="n">recordID</span><span class="p">,</span> <span class="n">jsonData</span><span class="p">,</span> <span class="n">loadID</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">responseBuffer</span><span class="p">);</span>
 
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Modified Entities: &quot;</span> <span class="o">+</span> <span class="n">responseBuffer</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">responseBuffer</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
 </pre></div>
 
     </div>
@@ -13489,9 +13600,9 @@ call is returned here</li>
 <span class="kt">int</span> <span class="n">return_code</span><span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">getRecordV2</span><span class="p">(</span><span class="n">dataSourceCode</span><span class="p">,</span> <span class="n">recordID</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13532,12 +13643,13 @@ entity to retrieve.</li>
 <span class="n">StringBuffer</span> <span class="n">response</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="p">();</span>
 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">getEntityByRecordIDV2</span><span class="p">(</span><span class="n">dataSourceCode</span><span class="p">,</span> <span class="n">recordID</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;GET Entity: &quot;</span> <span class="o">+</span> <span class="n">response</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
 <span class="kt">int</span> <span class="n">start</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="na">indexOf</span><span class="p">(</span><span class="s">&quot;\&quot;ENTITY_ID\&quot;:&quot;</span><span class="p">)</span><span class="o">+</span><span class="mi">12</span><span class="p">;</span>
 <span class="kt">int</span> <span class="n">end</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="na">indexOf</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">);</span>
 <span class="kt">long</span> <span class="n">entityID</span><span class="o">=</span><span class="n">Integer</span><span class="p">.</span><span class="na">parseInt</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="na">substring</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">));</span>
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+<span class="k">else</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13577,8 +13689,11 @@ document; if an error occurred, an error response is stored here.</li>
     <div class="input_area">
 <div class=" highlight hl-java"><pre><span></span><span class="n">response</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="p">();</span>
 
-<span class="kt">int</span> <span class="n">ret2</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">getEntityByEntityIDV2</span><span class="p">(</span><span class="n">entityID</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;GET Entity: &quot;</span> <span class="o">+</span> <span class="n">response</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
+<span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">getEntityByEntityIDV2</span><span class="p">(</span><span class="n">entityID</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
+<span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+<span class="k">else</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13609,9 +13724,10 @@ document; if an error occurred, an error response is stored here.</li>
 <span class="n">response</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="p">();</span>
 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">searchByAttributesV2</span><span class="p">(</span><span class="n">jsonData</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;GET Entity: &quot;</span> <span class="o">+</span> <span class="n">response</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+<span class="k">else</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13659,14 +13775,14 @@ document; if an error occurred, an error response is stored here.</li>
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">addRecord</span><span class="p">(</span><span class="n">dataSourceCode</span><span class="p">,</span> <span class="n">recordID</span><span class="p">,</span> <span class="n">jsonData</span><span class="p">,</span> <span class="n">loadID</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 
 <span class="n">StringBuffer</span> <span class="n">recordID2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="p">();</span>
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">addRecordWithReturnedRecordID</span><span class="p">(</span><span class="n">dataSourceCode</span><span class="p">,</span> <span class="n">recordID2</span><span class="p">,</span> <span class="n">jsonData</span><span class="p">,</span> <span class="n">loadID</span><span class="p">);</span>
 
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;New Record ID: &quot;</span> <span class="o">+</span> <span class="n">recordID2</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
+<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="s">&quot;New Record ID: &quot;</span> <span class="o">+</span> <span class="n">recordID2</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 </pre></div>
 
     </div>
@@ -13683,9 +13799,8 @@ document; if an error occurred, an error response is stored here.</li>
 <span class="n">String</span> <span class="n">recordID</span> <span class="o">=</span> <span class="s">&quot;2&quot;</span><span class="p">;</span>
 <span class="n">StringBuffer</span> <span class="n">response</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="p">();</span>
 <span class="n">g2engine</span><span class="p">.</span><span class="na">getEntityByRecordIDV2</span><span class="p">(</span><span class="n">dataSourceCode</span><span class="p">,</span> <span class="n">recordID</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
-<span class="kt">int</span> <span class="n">start</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="na">indexOf</span><span class="p">(</span><span class="s">&quot;\&quot;ENTITY_ID\&quot;:&quot;</span><span class="p">)</span><span class="o">+</span><span class="mi">12</span><span class="p">;</span>
-<span class="kt">int</span> <span class="n">end</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="na">indexOf</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">);</span>
-<span class="kt">long</span> <span class="n">entityID2</span><span class="o">=</span><span class="n">Integer</span><span class="p">.</span><span class="na">parseInt</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="na">substring</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">));</span>
+<span class="n">JsonObject</span> <span class="n">jsonObject</span> <span class="o">=</span> <span class="n">JsonUtil</span><span class="p">.</span><span class="na">parseJsonObject</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
+<span class="kt">long</span> <span class="n">entityID</span> <span class="o">=</span> <span class="n">jsonObject</span><span class="p">.</span><span class="na">getJsonObject</span><span class="p">(</span><span class="s">&quot;RESOLVED_ENTITY&quot;</span><span class="p">).</span><span class="na">getJsonNumber</span><span class="p">(</span><span class="s">&quot;ENTITY_ID&quot;</span><span class="p">).</span><span class="na">longValue</span><span class="p">();</span>
 </pre></div>
 
     </div>
@@ -13712,9 +13827,10 @@ document; if an error occurred, an error response is stored here.</li>
 
 <span class="kt">int</span> <span class="n">ret_code</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">findPathByEntityID</span><span class="p">(</span><span class="n">entityID1</span><span class="p">,</span><span class="n">entityID2</span><span class="p">,</span><span class="n">maxDegree</span><span class="p">,</span><span class="n">response</span><span class="p">);</span>
 
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Path result document: &quot;</span> <span class="o">+</span> <span class="n">response</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
 <span class="k">if</span><span class="p">(</span><span class="n">ret_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+<span class="k">else</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13741,9 +13857,10 @@ document; if an error occurred, an error response is stored here.</li>
 
 <span class="n">ret_code</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">findPathByRecordID</span><span class="p">(</span><span class="n">dataSourceCode1</span><span class="p">,</span><span class="n">recordID1</span><span class="p">,</span><span class="n">dataSourceCode2</span><span class="p">,</span><span class="n">recordID2</span><span class="p">,</span><span class="n">maxDegree</span><span class="p">,</span><span class="n">response</span><span class="p">);</span>
 
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Path result document: &quot;</span> <span class="o">+</span> <span class="n">response</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
 <span class="k">if</span><span class="p">(</span><span class="n">ret_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+<span class="k">else</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13785,14 +13902,16 @@ document; if an error occurred, an error response is stored here.</li>
 
 <span class="kt">int</span> <span class="n">return_code</span><span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">addRecord</span><span class="p">(</span><span class="n">dataSourceCode</span><span class="p">,</span> <span class="n">recordID</span><span class="p">,</span> <span class="n">jsonData</span><span class="p">,</span> <span class="n">loadID</span><span class="p">);</span>
 
+<span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+
 <span class="n">StringBuffer</span> <span class="n">recordID2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="p">();</span>
 <span class="kt">int</span> <span class="n">return_code2</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">addRecordWithReturnedRecordID</span><span class="p">(</span><span class="n">dataSourceCode</span><span class="p">,</span> <span class="n">recordID2</span><span class="p">,</span> <span class="n">jsonData</span><span class="p">,</span> <span class="n">loadID</span><span class="p">);</span>
 
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;New Record ID: &quot;</span> <span class="o">+</span> <span class="n">recordID2</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
-<span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="s">&quot;New Record ID: &quot;</span> <span class="o">+</span> <span class="n">recordID2</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
+
 <span class="k">if</span><span class="p">(</span><span class="n">return_code2</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 </pre></div>
 
     </div>
@@ -13819,9 +13938,11 @@ document; if an error occurred, an error response is stored here.</li>
 <span class="n">StringBuffer</span> <span class="n">response</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="p">();</span>
 
 <span class="kt">int</span> <span class="n">ret_code</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">findPathExcludingByEntityID</span><span class="p">(</span><span class="n">entityID1</span><span class="p">,</span><span class="n">entityID2</span><span class="p">,</span><span class="n">maxDegree</span><span class="p">,</span><span class="n">excludedEntities</span><span class="p">,</span><span class="n">flags</span><span class="p">,</span><span class="n">response</span><span class="p">);</span>
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Path result document: &quot;</span> <span class="o">+</span> <span class="n">response</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
+
 <span class="k">if</span><span class="p">(</span><span class="n">ret_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+<span class="k">else</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13849,9 +13970,10 @@ document; if an error occurred, an error response is stored here.</li>
 
 <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">findPathExcludingByRecordID</span><span class="p">(</span><span class="n">dataSourceCode1</span><span class="p">,</span><span class="n">recordID1</span><span class="p">,</span><span class="n">dataSourceCode2</span><span class="p">,</span><span class="n">recordID2</span><span class="p">,</span><span class="n">maxDegree</span><span class="p">,</span><span class="n">excludedRecords</span><span class="p">,</span><span class="n">flags</span><span class="p">,</span><span class="n">response</span><span class="p">);</span>
 
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Path result document: &quot;</span> <span class="o">+</span> <span class="n">response</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+<span class="k">else</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13896,8 +14018,10 @@ document; if an error occurred, an error response is stored here.</li>
 
 <span class="kt">int</span> <span class="n">ret_code</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">findPathIncludingSourceByEntityID</span><span class="p">(</span><span class="n">entityID1</span><span class="p">,</span><span class="n">entityID2</span><span class="p">,</span><span class="n">maxDegree</span><span class="p">,</span><span class="n">excludedEntities</span><span class="p">,</span><span class="n">requiredDsrcs</span><span class="p">,</span><span class="n">flags</span><span class="p">,</span><span class="n">response</span><span class="p">);</span>
 
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Path result document: &quot;</span> <span class="o">+</span> <span class="n">response</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
-
+<span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+<span class="k">else</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 <span class="n">String</span> <span class="n">dataSourceCode1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="p">(</span><span class="s">&quot;TEST&quot;</span><span class="p">);</span>
 <span class="n">String</span> <span class="n">recordID1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="p">(</span><span class="s">&quot;2&quot;</span><span class="p">);</span>
 <span class="n">String</span> <span class="n">dataSourceCode2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="p">(</span><span class="s">&quot;TEST&quot;</span><span class="p">);</span>
@@ -13906,9 +14030,10 @@ document; if an error occurred, an error response is stored here.</li>
 
 <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">findPathIncludingSourceByRecordID</span><span class="p">(</span><span class="n">dataSourceCode1</span><span class="p">,</span><span class="n">recordID1</span><span class="p">,</span><span class="n">dataSourceCode2</span><span class="p">,</span><span class="n">recordID2</span><span class="p">,</span><span class="n">maxDegree</span><span class="p">,</span><span class="n">excludedRecords</span><span class="p">,</span><span class="n">requiredDsrcs</span><span class="p">,</span><span class="n">flags</span><span class="p">,</span><span class="n">response</span><span class="p">);</span>
 
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Path result document: &quot;</span> <span class="o">+</span> <span class="n">response</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+<span class="k">else</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13968,7 +14093,7 @@ entities in question (search entities, path entities, and build-out entities.</p
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13998,7 +14123,7 @@ entities in question (search entities, path entities, and build-out entities.</p
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -14050,7 +14175,7 @@ They also have various arguments used to return response documents.</li>
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Result document: &quot;</span> <span class="o">+</span> <span class="n">response</span><span class="p">.</span><span class="na">toString</span><span class="p">()</span><span class="o">+</span><span class="s">&quot;\n&quot;</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -14074,7 +14199,7 @@ They also have various arguments used to return response documents.</li>
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Result document: &quot;</span> <span class="o">+</span> <span class="n">response</span><span class="p">.</span><span class="na">toString</span><span class="p">()</span><span class="o">+</span><span class="s">&quot;\n&quot;</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -14115,9 +14240,9 @@ They also have various arguments used to return response documents.</li>
 
 <span class="kt">int</span> <span class="n">return_code</span><span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">replaceRecord</span><span class="p">(</span><span class="n">dataSourceCode</span><span class="p">,</span> <span class="n">recordID</span><span class="p">,</span> <span class="n">jsonData</span><span class="p">,</span> <span class="n">loadID</span><span class="p">);</span>
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">return_code</span><span class="p">)</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14144,10 +14269,10 @@ They also have various arguments used to return response documents.</li>
 
 <span class="n">g2engine</span><span class="p">.</span><span class="na">getRecord</span><span class="p">(</span><span class="n">dataSourceCode</span><span class="p">,</span> <span class="n">recordID</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;GET RECORD: &quot;</span> <span class="o">+</span> <span class="n">response</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">);</span>
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+<span class="k">else</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -14175,9 +14300,9 @@ They also have various arguments used to return response documents.</li>
 
 <span class="kt">int</span> <span class="n">return_code</span><span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">replaceRecordWithInfo</span><span class="p">(</span><span class="n">dataSourceCode</span><span class="p">,</span> <span class="n">recordID</span><span class="p">,</span> <span class="n">jsonData</span><span class="p">,</span> <span class="n">loadID</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14236,7 +14361,7 @@ They also have various arguments used to return response documents.</li>
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -14268,9 +14393,8 @@ They also have various arguments used to return response documents.</li>
 <span class="n">String</span> <span class="n">recordID</span> <span class="o">=</span> <span class="s">&quot;2&quot;</span><span class="p">;</span>
 <span class="n">StringBuffer</span> <span class="n">response</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="p">();</span>
 <span class="n">g2engine</span><span class="p">.</span><span class="na">getEntityByRecordIDV2</span><span class="p">(</span><span class="n">dataSourceCode</span><span class="p">,</span> <span class="n">recordID</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
-<span class="kt">int</span> <span class="n">start</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="na">indexOf</span><span class="p">(</span><span class="s">&quot;\&quot;ENTITY_ID\&quot;:&quot;</span><span class="p">)</span><span class="o">+</span><span class="mi">12</span><span class="p">;</span>
-<span class="kt">int</span> <span class="n">end</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="na">indexOf</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">);</span>
-<span class="kt">long</span> <span class="n">entityID</span><span class="o">=</span><span class="n">Integer</span><span class="p">.</span><span class="na">parseInt</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="na">substring</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">));</span>
+<span class="n">JsonObject</span> <span class="n">jsonObject</span> <span class="o">=</span> <span class="n">JsonUtil</span><span class="p">.</span><span class="na">parseJsonObject</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
+<span class="kt">long</span> <span class="n">entityID</span> <span class="o">=</span> <span class="n">jsonObject</span><span class="p">.</span><span class="na">getJsonObject</span><span class="p">(</span><span class="s">&quot;RESOLVED_ENTITY&quot;</span><span class="p">).</span><span class="na">getJsonNumber</span><span class="p">(</span><span class="s">&quot;ENTITY_ID&quot;</span><span class="p">).</span><span class="na">longValue</span><span class="p">();</span>
 </pre></div>
 
     </div>
@@ -14323,7 +14447,7 @@ They also have various arguments used to return response documents.</li>
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -14364,7 +14488,7 @@ They also have various arguments used to return response documents.</li>
 <span class="kt">long</span> <span class="n">exportHandle</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">exportJSONEntityReport</span><span class="p">(</span><span class="n">flags</span><span class="p">);</span>
 
 <span class="n">String</span> <span class="n">response</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">fetchNext</span><span class="p">(</span><span class="n">exportHandle</span><span class="p">);</span>
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 
 <span class="n">g2engine</span><span class="p">.</span><span class="na">closeExport</span><span class="p">(</span><span class="n">exportHandle</span><span class="p">);</span>
 </pre></div>
@@ -14400,7 +14524,6 @@ Second, use the <code>fetchNext()</code> method to read the exportHandle and exp
 <span class="kt">long</span> <span class="n">exportHandle</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">exportCSVEntityReport</span><span class="p">(</span><span class="n">flags</span><span class="p">);</span>
 
 <span class="n">String</span> <span class="n">response</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">fetchNext</span><span class="p">(</span><span class="n">exportHandle</span><span class="p">);</span>
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 
 <span class="n">g2engine</span><span class="p">.</span><span class="na">closeExport</span><span class="p">(</span><span class="n">exportHandle</span><span class="p">);</span>
 </pre></div>
@@ -14436,8 +14559,8 @@ First we will need to have a total of 6 data sources so let's add 4 more</li>
 <span class="n">String</span> <span class="n">loadID</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
 <span class="kt">int</span> <span class="n">return_code</span><span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">addRecord</span><span class="p">(</span><span class="n">dataSourceCode</span><span class="p">,</span> <span class="n">recordID</span><span class="p">,</span> <span class="n">jsonData</span><span class="p">,</span> <span class="n">loadID</span><span class="p">);</span>
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 
 <span class="n">String</span> <span class="n">dataSourceCode</span> <span class="o">=</span> <span class="s">&quot;TEST&quot;</span><span class="p">;</span>
 <span class="n">String</span> <span class="n">recordID</span> <span class="o">=</span> <span class="s">&quot;5&quot;</span><span class="p">;</span>
@@ -14445,8 +14568,8 @@ First we will need to have a total of 6 data sources so let's add 4 more</li>
 <span class="n">String</span> <span class="n">loadID</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
 <span class="kt">int</span> <span class="n">return_code</span><span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">addRecord</span><span class="p">(</span><span class="n">dataSourceCode</span><span class="p">,</span> <span class="n">recordID</span><span class="p">,</span> <span class="n">jsonData</span><span class="p">,</span> <span class="n">loadID</span><span class="p">);</span>
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 
 <span class="n">String</span> <span class="n">dataSourceCode</span> <span class="o">=</span> <span class="s">&quot;TEST&quot;</span><span class="p">;</span>
 <span class="n">String</span> <span class="n">recordID</span> <span class="o">=</span> <span class="s">&quot;6&quot;</span><span class="p">;</span>
@@ -14454,8 +14577,8 @@ First we will need to have a total of 6 data sources so let's add 4 more</li>
 <span class="n">String</span> <span class="n">loadID</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
 <span class="kt">int</span> <span class="n">return_code</span><span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">addRecord</span><span class="p">(</span><span class="n">dataSourceCode</span><span class="p">,</span> <span class="n">recordID</span><span class="p">,</span> <span class="n">jsonData</span><span class="p">,</span> <span class="n">loadID</span><span class="p">);</span>
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 
 <span class="n">String</span> <span class="n">dataSourceCode</span> <span class="o">=</span> <span class="s">&quot;TEST&quot;</span><span class="p">;</span>
 <span class="n">String</span> <span class="n">recordID</span> <span class="o">=</span> <span class="s">&quot;7&quot;</span><span class="p">;</span>
@@ -14463,8 +14586,8 @@ First we will need to have a total of 6 data sources so let's add 4 more</li>
 <span class="n">String</span> <span class="n">loadID</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
 <span class="kt">int</span> <span class="n">return_code</span><span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">addRecord</span><span class="p">(</span><span class="n">dataSourceCode</span><span class="p">,</span> <span class="n">recordID</span><span class="p">,</span> <span class="n">jsonData</span><span class="p">,</span> <span class="n">loadID</span><span class="p">);</span>
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 
 <span class="n">String</span> <span class="n">dataSourceCode</span> <span class="o">=</span> <span class="s">&quot;TEST&quot;</span><span class="p">;</span>
 <span class="n">String</span> <span class="n">recordID</span> <span class="o">=</span> <span class="s">&quot;8&quot;</span><span class="p">;</span>
@@ -14472,8 +14595,8 @@ First we will need to have a total of 6 data sources so let's add 4 more</li>
 <span class="n">String</span> <span class="n">loadID</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
 <span class="kt">int</span> <span class="n">return_code</span><span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">addRecord</span><span class="p">(</span><span class="n">dataSourceCode</span><span class="p">,</span> <span class="n">recordID</span><span class="p">,</span> <span class="n">jsonData</span><span class="p">,</span> <span class="n">loadID</span><span class="p">);</span>
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -14496,8 +14619,7 @@ First we will need to have a total of 6 data sources so let's add 4 more</li>
     <div class="input_area">
 <div class=" highlight hl-java"><pre><span></span><span class="kt">long</span> <span class="n">response</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">countRedoRecords</span><span class="p">();</span>
 <span class="k">if</span><span class="p">(</span><span class="n">response</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 </pre></div>
 
     </div>
@@ -14518,9 +14640,9 @@ First we will need to have a total of 6 data sources so let's add 4 more</li>
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-java"><pre><span></span><span class="n">StringBuffer</span> <span class="n">response_string</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="p">();</span>
-<span class="n">g2engine</span><span class="p">.</span><span class="na">getRedoRecord</span><span class="p">(</span><span class="n">response_string</span><span class="p">);</span>
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">response_string</span><span class="p">);</span>
+<div class=" highlight hl-java"><pre><span></span><span class="n">StringBuffer</span> <span class="n">response</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="p">();</span>
+<span class="n">g2engine</span><span class="p">.</span><span class="na">getRedoRecord</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -14538,8 +14660,8 @@ First we will need to have a total of 6 data sources so let's add 4 more</li>
 <span class="k">if</span><span class="p">(</span><span class="n">response</span><span class="o">==</span><span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">response_string</span><span class="p">.</span><span class="na">length</span><span class="p">()</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">response</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">process</span><span class="p">(</span><span class="n">response_string</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
 <span class="k">if</span><span class="p">(</span><span class="n">response</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -14612,7 +14734,7 @@ First we will need to have a total of 6 data sources so let's add 4 more</li>
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Modified Entities: &quot;</span> <span class="o">+</span> <span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -14637,7 +14759,7 @@ First we will need to have a total of 6 data sources so let's add 4 more</li>
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">getRecord</span><span class="p">(</span><span class="n">dataSourceCode</span><span class="p">,</span> <span class="n">recordID</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 </pre></div>
 
     </div>
@@ -14667,7 +14789,7 @@ First we will need to have a total of 6 data sources so let's add 4 more</li>
     <div class="input_area">
 <div class=" highlight hl-java"><pre><span></span><span class="kt">int</span> <span class="n">return_code</span><span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">purgeRepository</span><span class="p">();</span>
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">)</span>
 </pre></div>

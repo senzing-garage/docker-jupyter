@@ -13133,6 +13133,118 @@ $( document ).ready(function(){
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Helper-class-for-Json-Rendering">Helper class for Json Rendering<a class="anchor-link" href="#Helper-class-for-Json-Rendering">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="o">%%</span><span class="n">loadFromPOM</span>
+<span class="o">&lt;</span><span class="n">dependency</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">groupId</span><span class="o">&gt;</span><span class="n">org</span><span class="p">.</span><span class="na">glassfish</span><span class="o">&lt;/</span><span class="n">groupId</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">javax</span><span class="p">.</span><span class="na">json</span><span class="o">&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span><span class="mf">1.1.4</span><span class="o">&lt;/</span><span class="n">version</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">dependency</span><span class="o">&gt;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="kn">import</span> <span class="nn">javax.json.*</span><span class="p">;</span>
+<span class="kn">import static</span> <span class="nn">java.util.Collections.*</span><span class="p">;</span>
+<span class="kn">import static</span> <span class="nn">javax.json.stream.JsonGenerator.PRETTY_PRINTING</span><span class="p">;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">JsonUtil</span> <span class="p">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">JsonWriterFactory</span> <span class="n">PRETTY_FACTORY</span>
+        <span class="o">=</span> <span class="n">Json</span><span class="p">.</span><span class="na">createWriterFactory</span><span class="p">(</span><span class="n">singletonMap</span><span class="p">(</span><span class="n">PRETTY_PRINTING</span><span class="p">,</span> <span class="kc">true</span><span class="p">));</span>
+        
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">JsonWriterFactory</span> <span class="n">UGLY_FACTORY</span>
+        <span class="o">=</span> <span class="n">Json</span><span class="p">.</span><span class="na">createWriterFactory</span><span class="p">(</span><span class="n">emptyMap</span><span class="p">());</span>
+    
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">toJsonText</span><span class="p">(</span><span class="n">JsonValue</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">toJsonText</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">toJsonText</span><span class="p">(</span><span class="n">JsonValue</span> <span class="n">val</span><span class="p">,</span> <span class="kt">boolean</span> <span class="n">prettyPrint</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">JsonWriterFactory</span> <span class="n">factory</span> <span class="o">=</span> <span class="p">(</span><span class="n">prettyPrint</span><span class="p">)</span> <span class="o">?</span> <span class="n">PRETTY_FACTORY</span> <span class="p">:</span> <span class="n">UGLY_FACTORY</span><span class="p">;</span>
+        <span class="n">StringWriter</span> <span class="n">sw</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringWriter</span><span class="p">();</span>
+        <span class="n">JsonWriter</span> <span class="n">writer</span> <span class="o">=</span> <span class="n">factory</span><span class="p">.</span><span class="na">createWriter</span><span class="p">(</span><span class="n">sw</span><span class="p">);</span>
+        <span class="n">writer</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="n">val</span><span class="p">);</span>
+        <span class="n">sw</span><span class="p">.</span><span class="na">flush</span><span class="p">();</span>
+        <span class="k">return</span> <span class="n">sw</span><span class="p">.</span><span class="na">toString</span><span class="p">();</span>
+    <span class="p">}</span>
+    
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">JsonObject</span> <span class="nf">parseJsonObject</span><span class="p">(</span><span class="n">String</span> <span class="n">jsonText</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">jsonText</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+        <span class="n">StringReader</span> <span class="n">sr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringReader</span><span class="p">(</span><span class="n">jsonText</span><span class="p">);</span>
+        <span class="n">JsonReader</span> <span class="n">jsonReader</span> <span class="o">=</span> <span class="n">Json</span><span class="p">.</span><span class="na">createReader</span><span class="p">(</span><span class="n">sr</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">jsonReader</span><span class="p">.</span><span class="na">readObject</span><span class="p">();</span>
+  <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">JsonArray</span> <span class="nf">parseJsonArray</span><span class="p">(</span><span class="n">String</span> <span class="n">jsonText</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">jsonText</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+        <span class="n">StringReader</span> <span class="n">sr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringReader</span><span class="p">(</span><span class="n">jsonText</span><span class="p">);</span>
+        <span class="n">JsonReader</span> <span class="n">jsonReader</span> <span class="o">=</span> <span class="n">Json</span><span class="p">.</span><span class="na">createReader</span><span class="p">(</span><span class="n">sr</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">jsonReader</span><span class="p">.</span><span class="na">readArray</span><span class="p">();</span>
+  <span class="p">}</span>
+    
+    
+<span class="p">}</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="kn">import</span> <span class="nn">java.util.UUID</span><span class="p">;</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">RenderJSON</span><span class="p">(</span><span class="n">Object</span> <span class="n">obj</span><span class="p">){</span>
+    <span class="n">String</span> <span class="n">str</span> <span class="o">=</span> <span class="n">obj</span><span class="p">.</span><span class="na">toString</span><span class="p">();</span>
+    <span class="n">JsonObject</span> <span class="n">json</span> <span class="o">=</span> <span class="n">JsonUtil</span><span class="p">.</span><span class="na">parseJsonObject</span><span class="p">(</span><span class="n">str</span><span class="p">);</span>
+    <span class="n">String</span> <span class="n">Config</span> <span class="o">=</span> <span class="n">JsonUtil</span><span class="p">.</span><span class="na">toJsonText</span><span class="p">(</span><span class="n">json</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+    <span class="n">UUID</span> <span class="n">id</span> <span class="o">=</span> <span class="n">UUID</span><span class="p">.</span><span class="na">randomUUID</span><span class="p">();</span>
+    <span class="n">String</span> <span class="n">uuid</span> <span class="o">=</span> <span class="n">id</span><span class="p">.</span><span class="na">toString</span><span class="p">();</span>
+    <span class="n">String</span> <span class="n">div</span> <span class="o">=</span> <span class="s">&quot;&lt;div id=\&quot;&quot;</span><span class="o">+</span> <span class="n">uuid</span> <span class="o">+</span><span class="s">&quot;\&quot; style=\&quot;height:100%; width:100%; background-color: LightCyan\&quot;&gt;&lt;/div&gt;&quot;</span><span class="p">;</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">div</span><span class="p">,</span> <span class="s">&quot;text/html&quot;</span><span class="p">);</span>
+    <span class="n">String</span> <span class="n">jav</span> <span class="o">=</span> <span class="s">&quot;require([\&quot;https://rawgit.com/caldwell/renderjson/master/renderjson.js\&quot;], function() {document.getElementById(\&#39;&quot;</span><span class="o">+</span> <span class="n">uuid</span> <span class="o">+</span><span class="s">&quot;\&#39;).appendChild(renderjson(&quot;</span><span class="o">+</span><span class="n">json</span><span class="o">+</span><span class="s">&quot;))});&quot;</span><span class="p">;</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">jav</span><span class="p">,</span> <span class="s">&quot;application/javascript&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Initialize-Senzing-configuration">Initialize Senzing configuration<a class="anchor-link" href="#Initialize-Senzing-configuration">&#182;</a></h3><p>Using environment variables and default values, create <code>senzingConfigJson</code>.
 This value is used when instantiating Senzing objects.</p>
 
@@ -13180,8 +13292,7 @@ This value is used when instantiating Senzing objects.</p>
    <span class="o">+</span>     <span class="s">&quot;\&quot;CONNECTION\&quot;: \&quot;&quot;</span> <span class="o">+</span> <span class="n">sqlConnection</span> <span class="o">+</span> <span class="s">&quot;\&quot;&quot;</span>
    <span class="o">+</span> <span class="s">&quot;}}&quot;</span><span class="p">;</span>
    
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">senzingConfigJson</span><span class="p">);</span>
-<span class="kd">static</span> <span class="n">String</span> <span class="n">json</span> <span class="o">=</span> <span class="n">senzingConfigJson</span>
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">senzingConfigJson</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13229,7 +13340,7 @@ This value is used when instantiating Senzing objects.</p>
     <div class="input_area">
 <div class=" highlight hl-java"><pre><span></span><span class="n">String</span> <span class="n">license_string</span> <span class="o">=</span> <span class="n">g2product</span><span class="p">.</span><span class="na">license</span><span class="p">();</span>
 
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">license_string</span><span class="p">);</span>
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">license_string</span><span class="p">);</span>
 </pre></div>
 
     </div>

@@ -2,7 +2,7 @@
 <html>
 <head><meta charset="utf-8" />
 
-<title>senzing-G2Product-version</title>
+<title>senzing-G2Engine-whyEntity</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13099,11 +13099,11 @@ $( document ).ready(function(){
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="G2Product-Guide---Version">G2Product Guide - Version<a class="anchor-link" href="#G2Product-Guide---Version">&#182;</a></h1><p>The <code>version()</code> method creates a JSON string with information about your Senzing version.</p>
-<p>More information:</p>
+<h1 id="G2Engine-Guide---Why-Entities">G2Engine Guide - Why Entities<a class="anchor-link" href="#G2Engine-Guide---Why-Entities">&#182;</a></h1><p>More information:</p>
 <ol>
 <li><a href="https://github.com/Senzing/docker-jupyter">GitHub repository</a></li>
 <li><a href="http://docs.senzing.com/?python#g2config">Senzing documentation</a></li>
+<li><a href="senzing-G2Engine-reference.ipynb">G2Engine Reference</a></li>
 </ol>
 
 </div>
@@ -13121,8 +13121,9 @@ $( document ).ready(function(){
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-java"><pre><span></span><span class="kn">import</span> <span class="nn">com.senzing.g2.engine.G2Product</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">com.senzing.g2.engine.G2ProductJNI</span><span class="p">;</span>
+<div class=" highlight hl-java"><pre><span></span><span class="kn">import</span> <span class="nn">com.senzing.g2.engine.G2Engine</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">com.senzing.g2.engine.G2JNI</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">com.senzing.g2.engine.Result</span><span class="p">;</span>
 </pre></div>
 
     </div>
@@ -13161,21 +13162,12 @@ $( document ).ready(function(){
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-java"><pre><span></span><span class="kn">import</span> <span class="nn">javax.json.*</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Map</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.HashMap</span><span class="p">;</span>
 <span class="kn">import static</span> <span class="nn">java.util.Collections.*</span><span class="p">;</span>
 <span class="kn">import static</span> <span class="nn">javax.json.stream.JsonGenerator.PRETTY_PRINTING</span><span class="p">;</span>
-</pre></div>
 
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-java"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">JsonUtil</span> <span class="p">{</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">JsonUtil</span> <span class="p">{</span>
     <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">JsonWriterFactory</span> <span class="n">PRETTY_FACTORY</span>
         <span class="o">=</span> <span class="n">Json</span><span class="p">.</span><span class="na">createWriterFactory</span><span class="p">(</span><span class="n">singletonMap</span><span class="p">(</span><span class="n">PRETTY_PRINTING</span><span class="p">,</span> <span class="kc">true</span><span class="p">));</span>
         
@@ -13245,8 +13237,8 @@ $( document ).ready(function(){
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Initialize-Senzing-configuration">Initialize Senzing configuration<a class="anchor-link" href="#Initialize-Senzing-configuration">&#182;</a></h3><p>Using environment variables and default values, create <code>senzingConfigJson</code>.
-This value is used when instantiating Senzing objects.</p>
+<h3 id="Initialize-Senzing-configuration">Initialize Senzing configuration<a class="anchor-link" href="#Initialize-Senzing-configuration">&#182;</a></h3><p>Run <a href="senzing-G2ConfigMgr-reference.ipynb">senzing-G2ConfigMgr-reference.ipynb</a>
+to install a Senzing Engine configuration in the database.</p>
 
 </div>
 </div>
@@ -13303,14 +13295,7 @@ This value is used when instantiating Senzing objects.</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="G2Product">G2Product<a class="anchor-link" href="#G2Product">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Create-G2Product-instance">Create G2Product instance<a class="anchor-link" href="#Create-G2Product-instance">&#182;</a></h3>
+<h2 id="G2Engine">G2Engine<a class="anchor-link" href="#G2Engine">&#182;</a></h2>
 </div>
 </div>
 </div>
@@ -13319,11 +13304,25 @@ This value is used when instantiating Senzing objects.</p>
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-java"><pre><span></span><span class="n">G2Product</span> <span class="n">g2product</span> <span class="o">=</span> <span class="k">new</span> <span class="n">G2ProductJNI</span><span class="p">();</span>
+<div class=" highlight hl-java"><pre><span></span><span class="n">G2Engine</span> <span class="n">g2engine</span> <span class="o">=</span> <span class="k">new</span> <span class="n">G2JNI</span><span class="p">();</span>
 
-<span class="n">String</span> <span class="n">moduleName</span> <span class="o">=</span> <span class="s">&quot;ExampleG2Config&quot;</span><span class="p">;</span>
+<span class="n">String</span> <span class="n">moduleName</span> <span class="o">=</span> <span class="s">&quot;ExampleG2Engine&quot;</span><span class="p">;</span>
 <span class="kt">boolean</span> <span class="n">verboseLogging</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
-<span class="kt">int</span> <span class="n">returnCode</span> <span class="o">=</span> <span class="n">g2product</span><span class="p">.</span><span class="na">initV2</span><span class="p">(</span><span class="n">moduleName</span><span class="p">,</span> <span class="n">senzingConfigJson</span><span class="p">,</span> <span class="n">verboseLogging</span><span class="p">);</span>
+<span class="kt">int</span> <span class="n">returnCode</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">initV2</span><span class="p">(</span><span class="n">moduleName</span><span class="p">,</span> <span class="n">senzingConfigJson</span><span class="p">,</span> <span class="n">verboseLogging</span><span class="p">);</span>
+<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">returnCode</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="kt">int</span> <span class="n">returnCode</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">purgeRepository</span><span class="p">();</span>
 <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">returnCode</span><span class="p">);</span>
 </pre></div>
 
@@ -13335,7 +13334,93 @@ This value is used when instantiating Senzing objects.</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="version()">version()<a class="anchor-link" href="#version()">&#182;</a></h3><p>Call G2Product's <code>version()</code> method and print the results.</p>
+<h3 id="Insert-records">Insert records<a class="anchor-link" href="#Insert-records">&#182;</a></h3><p>Details at <a href="senzing-G2Engine-reference.ipynb#addRecord">G2Engine.addRecord</a>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Insert-record-1">Insert record 1<a class="anchor-link" href="#Insert-record-1">&#182;</a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="n">String</span> <span class="n">dataSourceCode</span> <span class="o">=</span> <span class="s">&quot;TEST&quot;</span><span class="p">;</span>
+<span class="n">String</span> <span class="n">recordID</span> <span class="o">=</span> <span class="s">&quot;1&quot;</span><span class="p">;</span>
+<span class="n">String</span> <span class="n">jsonData</span> <span class="o">=</span>  <span class="s">&quot;{\&quot;NAME_TYPE\&quot;: \&quot;PRIMARY\&quot;, \&quot;NAME_FIRST\&quot;: \&quot;Bob\&quot;, \&quot;NAME_LAST\&quot;: \&quot;Max\&quot;, \&quot;PHONE_NUMBER\&quot;: \&quot;123-456-7899\&quot;}&quot;</span><span class="p">;</span>
+<span class="n">String</span> <span class="n">loadID</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="n">returnCode</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">addRecord</span><span class="p">(</span><span class="n">dataSourceCode</span><span class="p">,</span> <span class="n">recordID</span><span class="p">,</span> <span class="n">jsonData</span><span class="p">,</span> <span class="n">loadID</span><span class="p">);</span>
+<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">returnCode</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Insert-record-2">Insert record 2<a class="anchor-link" href="#Insert-record-2">&#182;</a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="n">String</span> <span class="n">dataSourceCode</span> <span class="o">=</span> <span class="s">&quot;TEST&quot;</span><span class="p">;</span>
+<span class="n">String</span> <span class="n">recordID</span> <span class="o">=</span> <span class="s">&quot;3&quot;</span><span class="p">;</span>
+<span class="n">String</span> <span class="n">jsonData</span> <span class="o">=</span>  <span class="s">&quot;{\&quot;NAME_TYPE\&quot;: \&quot;PRIMARY\&quot;, \&quot;NAME_FIRST\&quot;: \&quot;Robart\&quot;, \&quot;NAME_LAST\&quot;: \&quot;Max\&quot;, \&quot;ADDR_FULL\&quot;: \&quot;456 Funny ST\&quot;}&quot;</span><span class="p">;</span>
+<span class="n">String</span> <span class="n">loadID</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="n">returnCode</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">addRecord</span><span class="p">(</span><span class="n">dataSourceCode</span><span class="p">,</span> <span class="n">recordID</span><span class="p">,</span> <span class="n">jsonData</span><span class="p">,</span> <span class="n">loadID</span><span class="p">);</span>
+<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">returnCode</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Insert-record-3">Insert record 3<a class="anchor-link" href="#Insert-record-3">&#182;</a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="n">String</span> <span class="n">dataSourceCode</span> <span class="o">=</span> <span class="s">&quot;TEST&quot;</span><span class="p">;</span>
+<span class="n">String</span> <span class="n">recordID</span> <span class="o">=</span> <span class="s">&quot;2&quot;</span><span class="p">;</span>
+<span class="n">String</span> <span class="n">jsonData</span> <span class="o">=</span>  <span class="s">&quot;{\&quot;NAMES\&quot;: [{ \&quot;NAME_TYPE\&quot;: \&quot;PRIMARY\&quot;, \&quot;NAME_FIRST\&quot;: \&quot;Bob\&quot;, \&quot;NAME_LAST\&quot;: \&quot;Max\&quot;, \&quot;MIDDLE_NAME\&quot;: \&quot;S\&quot;}], \&quot;ADDR_FULL\&quot;: \&quot;456 Funny ST\&quot;, \&quot;PHONE_NUMBER\&quot;: \&quot;123-456-7899\&quot;}&quot;</span><span class="p">;</span>
+<span class="n">String</span> <span class="n">loadID</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="n">returnCode</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">addRecord</span><span class="p">(</span><span class="n">dataSourceCode</span><span class="p">,</span> <span class="n">recordID</span><span class="p">,</span> <span class="n">jsonData</span><span class="p">,</span> <span class="n">loadID</span><span class="p">);</span>
+<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">returnCode</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Ask-Why">Ask Why<a class="anchor-link" href="#Ask-Why">&#182;</a></h3><p>Details at <a href="senzing-G2Engine-reference.ipynb#whyEntityByRecordID">G2Engine.whyEntityByRecordID</a>.</p>
 
 </div>
 </div>
@@ -13345,9 +13430,179 @@ This value is used when instantiating Senzing objects.</p>
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-java"><pre><span></span><span class="n">String</span> <span class="n">version_string</span> <span class="o">=</span> <span class="n">g2product</span><span class="p">.</span><span class="na">version</span><span class="p">();</span>
+<div class=" highlight hl-java"><pre><span></span><span class="n">String</span> <span class="n">datasource_code</span> <span class="o">=</span> <span class="s">&quot;TEST&quot;</span><span class="p">;</span>
+<span class="n">String</span> <span class="n">recordID</span> <span class="o">=</span> <span class="s">&quot;2&quot;</span><span class="p">;</span>
+<span class="n">StringBuffer</span> <span class="n">response</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="p">();</span>
+<span class="kt">int</span> <span class="n">returncode</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">whyEntityByRecordID</span><span class="p">(</span><span class="n">datasource_code</span><span class="p">,</span> <span class="n">recordID</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+</pre></div>
 
-<span class="n">RenderJSON</span><span class="p">(</span><span class="n">version_string</span><span class="p">);</span>
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Start-constructing-final-report">Start constructing final report<a class="anchor-link" href="#Start-constructing-final-report">&#182;</a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="n">JsonObject</span> <span class="n">finalResult</span> <span class="o">=</span> <span class="n">JsonUtil</span><span class="p">.</span><span class="na">parseJsonObject</span><span class="p">(</span><span class="s">&quot;{\&quot;Data_source\&quot;: \&quot;&quot;</span><span class="o">+</span><span class="n">datasource_code</span><span class="o">+</span><span class="s">&quot;\&quot;, \&quot;Record_ID\&quot;: \&quot;&quot;</span><span class="o">+</span><span class="n">recordID</span><span class="o">+</span><span class="s">&quot;\&quot;}&quot;</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Get-the-main-document-data-sections">Get the main document data sections<a class="anchor-link" href="#Get-the-main-document-data-sections">&#182;</a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="n">JsonObject</span> <span class="n">resp</span> <span class="o">=</span> <span class="n">JsonUtil</span><span class="p">.</span><span class="na">parseJsonObject</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
+<span class="n">JsonArray</span> <span class="n">resp1</span> <span class="o">=</span> <span class="n">resp</span><span class="p">.</span><span class="na">getJsonArray</span><span class="p">(</span><span class="s">&quot;WHY_RESULTS&quot;</span><span class="p">);</span>
+<span class="n">JsonObject</span> <span class="n">why_result</span> <span class="o">=</span> <span class="n">resp1</span><span class="p">.</span><span class="na">getJsonObject</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="n">JsonObject</span> <span class="n">focus_records</span> <span class="o">=</span> <span class="n">why_result</span><span class="p">.</span><span class="na">getJsonArray</span><span class="p">(</span><span class="s">&quot;FOCUS_RECORDS&quot;</span><span class="p">).</span><span class="na">getJsonObject</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+<span class="k">if</span><span class="p">(</span><span class="n">focus_records</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;DATA_SOURCE&quot;</span><span class="p">).</span><span class="na">equals</span><span class="p">(</span><span class="n">finalResult</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;Data_source&quot;</span><span class="p">))</span> <span class="o">&amp;&amp;</span> <span class="n">focus_records</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;RECORD_ID&quot;</span><span class="p">).</span><span class="na">equals</span><span class="p">(</span><span class="n">finalResult</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;Record_ID&quot;</span><span class="p">)));</span>
+    <span class="n">finalResult</span> <span class="o">=</span> <span class="n">Json</span><span class="p">.</span><span class="na">createObjectBuilder</span><span class="p">(</span><span class="n">finalResult</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="s">&quot;ENTITY_ID&quot;</span><span class="p">,</span> <span class="n">why_result</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;ENTITY_ID&quot;</span><span class="p">)).</span><span class="na">build</span><span class="p">();</span>
+
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">finalResult</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Get-the-basic-why-results">Get the basic why results<a class="anchor-link" href="#Get-the-basic-why-results">&#182;</a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="n">JsonObject</span> <span class="n">match_info</span> <span class="o">=</span> <span class="n">why_result</span><span class="p">.</span><span class="na">getJsonObject</span><span class="p">(</span><span class="s">&quot;MATCH_INFO&quot;</span><span class="p">);</span>
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">match_info</span><span class="p">);</span>
+<span class="n">finalResult</span> <span class="o">=</span> <span class="n">Json</span><span class="p">.</span><span class="na">createObjectBuilder</span><span class="p">(</span><span class="n">finalResult</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="s">&quot;Why_key&quot;</span><span class="p">,</span> <span class="n">match_info</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;WHY_KEY&quot;</span><span class="p">)).</span><span class="na">build</span><span class="p">();</span>
+<span class="n">finalResult</span> <span class="o">=</span> <span class="n">Json</span><span class="p">.</span><span class="na">createObjectBuilder</span><span class="p">(</span><span class="n">finalResult</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="s">&quot;Why_ER_rule_code&quot;</span><span class="p">,</span> <span class="n">match_info</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;WHY_ERRULE_CODE&quot;</span><span class="p">)).</span><span class="na">build</span><span class="p">();</span>
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">finalResult</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="n">JsonObject</span> <span class="n">nameFeatureDictionary</span> <span class="o">=</span> <span class="n">JsonUtil</span><span class="p">.</span><span class="na">parseJsonObject</span><span class="p">(</span><span class="s">&quot;{\&quot;NAME_KEY\&quot;: []}&quot;</span><span class="p">);</span>
+<span class="kt">int</span> <span class="n">name_size</span> <span class="o">=</span> <span class="n">match_info</span><span class="p">.</span><span class="na">getJsonObject</span><span class="p">(</span><span class="s">&quot;CANDIDATE_KEYS&quot;</span><span class="p">).</span><span class="na">getJsonArray</span><span class="p">(</span><span class="s">&quot;NAME_KEY&quot;</span><span class="p">).</span><span class="na">size</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<span class="n">JsonObject</span> <span class="n">name_key</span> <span class="o">=</span> <span class="n">match_info</span><span class="p">.</span><span class="na">getJsonObject</span><span class="p">(</span><span class="s">&quot;CANDIDATE_KEYS&quot;</span><span class="p">).</span><span class="na">getJsonArray</span><span class="p">(</span><span class="s">&quot;NAME_KEY&quot;</span><span class="p">).</span><span class="na">getJsonObject</span><span class="p">(</span><span class="n">name_size</span><span class="p">);</span>
+<span class="n">JsonValue</span> <span class="n">name</span> <span class="o">=</span> <span class="n">name_key</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;FEAT_DESC&quot;</span><span class="p">);</span>
+<span class="n">JsonObject</span> <span class="n">nameFeature</span> <span class="o">=</span> <span class="n">Json</span><span class="p">.</span><span class="na">createObjectBuilder</span><span class="p">(</span><span class="n">nameFeatureDictionary</span><span class="p">).</span><span class="na">add</span><span class="p">(</span><span class="s">&quot;NAME_KEY&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">).</span><span class="na">build</span><span class="p">();</span>
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">nameFeature</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span>
 </pre></div>
 
     </div>

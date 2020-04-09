@@ -2,7 +2,7 @@
 <html>
 <head><meta charset="utf-8" />
 
-<title>senzing-G2Product-version</title>
+<title>senzing-create-redo-records</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13099,12 +13099,7 @@ $( document ).ready(function(){
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="G2Product-Guide---Version">G2Product Guide - Version<a class="anchor-link" href="#G2Product-Guide---Version">&#182;</a></h1><p>The <code>version()</code> method creates a JSON string with information about your Senzing version.</p>
-<p>More information:</p>
-<ol>
-<li><a href="https://github.com/Senzing/docker-jupyter">GitHub repository</a></li>
-<li><a href="http://docs.senzing.com/?python#g2config">Senzing documentation</a></li>
-</ol>
+<h1 id="Create-redo-records">Create redo records<a class="anchor-link" href="#Create-redo-records">&#182;</a></h1><p>This Jupyter notebook shows how to create a Senzing "redo record". It assums a G2 database that is empty</p>
 
 </div>
 </div>
@@ -13112,7 +13107,7 @@ $( document ).ready(function(){
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Prepare-environment">Prepare environment<a class="anchor-link" href="#Prepare-environment">&#182;</a></h2>
+<h2 id="Prepare-Environment">Prepare Environment<a class="anchor-link" href="#Prepare-Environment">&#182;</a></h2>
 </div>
 </div>
 </div>
@@ -13121,8 +13116,13 @@ $( document ).ready(function(){
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-java"><pre><span></span><span class="kn">import</span> <span class="nn">com.senzing.g2.engine.G2Product</span><span class="p">;</span>
-<span class="kn">import</span> <span class="nn">com.senzing.g2.engine.G2ProductJNI</span><span class="p">;</span>
+<div class=" highlight hl-java"><pre><span></span><span class="kn">import</span> <span class="nn">com.senzing.g2.engine.G2Engine</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">com.senzing.g2.engine.G2JNI</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">com.senzing.g2.engine.G2ConfigMgr</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">com.senzing.g2.engine.G2ConfigMgrJNI</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">com.senzing.g2.engine.G2Config</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">com.senzing.g2.engine.G2ConfigJNI</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">com.senzing.g2.engine.Result</span><span class="p">;</span>
 </pre></div>
 
     </div>
@@ -13291,7 +13291,6 @@ This value is used when instantiating Senzing objects.</p>
    <span class="o">+</span> <span class="s">&quot;\&quot;SQL\&quot;: {&quot;</span>
    <span class="o">+</span>     <span class="s">&quot;\&quot;CONNECTION\&quot;: \&quot;&quot;</span> <span class="o">+</span> <span class="n">sqlConnection</span> <span class="o">+</span> <span class="s">&quot;\&quot;&quot;</span>
    <span class="o">+</span> <span class="s">&quot;}}&quot;</span><span class="p">;</span>
-   
 <span class="n">RenderJSON</span><span class="p">(</span><span class="n">senzingConfigJson</span><span class="p">);</span>
 </pre></div>
 
@@ -13303,14 +13302,15 @@ This value is used when instantiating Senzing objects.</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="G2Product">G2Product<a class="anchor-link" href="#G2Product">&#182;</a></h2>
+<h2 id="G2Engine">G2Engine<a class="anchor-link" href="#G2Engine">&#182;</a></h2>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Create-G2Product-instance">Create G2Product instance<a class="anchor-link" href="#Create-G2Product-instance">&#182;</a></h3>
+<h3 id="Senzing-initializaton">Senzing initializaton<a class="anchor-link" href="#Senzing-initializaton">&#182;</a></h3><p>Create an instance of G2Engine, Config, and ConfigMgr</p>
+
 </div>
 </div>
 </div>
@@ -13319,11 +13319,55 @@ This value is used when instantiating Senzing objects.</p>
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-java"><pre><span></span><span class="n">G2Product</span> <span class="n">g2product</span> <span class="o">=</span> <span class="k">new</span> <span class="n">G2ProductJNI</span><span class="p">();</span>
+<div class=" highlight hl-java"><pre><span></span><span class="n">G2Engine</span> <span class="n">g2engine</span> <span class="o">=</span> <span class="k">new</span> <span class="n">G2JNI</span><span class="p">();</span>
 
-<span class="n">String</span> <span class="n">moduleName</span> <span class="o">=</span> <span class="s">&quot;ExampleG2Config&quot;</span><span class="p">;</span>
+<span class="n">String</span> <span class="n">moduleName</span> <span class="o">=</span> <span class="s">&quot;ExampleG2Engine&quot;</span><span class="p">;</span>
 <span class="kt">boolean</span> <span class="n">verboseLogging</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
-<span class="kt">int</span> <span class="n">returnCode</span> <span class="o">=</span> <span class="n">g2product</span><span class="p">.</span><span class="na">initV2</span><span class="p">(</span><span class="n">moduleName</span><span class="p">,</span> <span class="n">senzingConfigJson</span><span class="p">,</span> <span class="n">verboseLogging</span><span class="p">);</span>
+<span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">initV2</span><span class="p">(</span><span class="n">moduleName</span><span class="p">,</span> <span class="n">senzingConfigJson</span><span class="p">,</span> <span class="n">verboseLogging</span><span class="p">);</span>
+<span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+<span class="k">else</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="n">String</span> <span class="n">moduleName</span> <span class="o">=</span> <span class="s">&quot;ExampleG2Config&quot;</span><span class="p">;</span>
+<span class="kt">boolean</span> <span class="n">verboseLogging</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+
+<span class="n">G2Config</span> <span class="n">g2config</span> <span class="o">=</span> <span class="k">new</span> <span class="n">G2ConfigJNI</span><span class="p">();</span>
+<span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">initV2</span><span class="p">(</span><span class="n">moduleName</span><span class="p">,</span> <span class="n">senzingConfigJson</span><span class="p">,</span> <span class="n">verboseLogging</span><span class="p">);</span>
+<span class="kt">long</span> <span class="n">config_handle</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">create</span><span class="p">();</span>
+<span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+<span class="k">else</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="n">G2ConfigMgr</span> <span class="n">g2ConfigMgr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">G2ConfigMgrJNI</span><span class="p">();</span>
+
+<span class="n">String</span> <span class="n">moduleName</span> <span class="o">=</span> <span class="s">&quot;ExampleG2ConfigMgr&quot;</span><span class="p">;</span>
+<span class="kt">boolean</span> <span class="n">verboseLogging</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">returnCode</span> <span class="o">=</span> <span class="n">g2ConfigMgr</span><span class="p">.</span><span class="na">initV2</span><span class="p">(</span><span class="n">moduleName</span><span class="p">,</span> <span class="n">senzingConfigJson</span><span class="p">,</span> <span class="n">verboseLogging</span><span class="p">);</span>
+<span class="n">g2ConfigMgr</span><span class="p">.</span><span class="na">getLastException</span><span class="p">();</span>
 <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">returnCode</span><span class="p">);</span>
 </pre></div>
 
@@ -13335,7 +13379,87 @@ This value is used when instantiating Senzing objects.</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="version()">version()<a class="anchor-link" href="#version()">&#182;</a></h3><p>Call G2Product's <code>version()</code> method and print the results.</p>
+<h3 id="Create-add-data-source-function">Create add data source function<a class="anchor-link" href="#Create-add-data-source-function">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">addDataSource</span><span class="p">(</span><span class="kt">int</span> <span class="n">dataSource_suff</span><span class="p">){</span>
+    <span class="n">String</span> <span class="n">dataSource_prefix</span> <span class="o">=</span> <span class="s">&quot;TEST_DATA_SOURCE_&quot;</span><span class="p">;</span>
+    <span class="n">String</span> <span class="n">dataSourceID</span> <span class="o">=</span> <span class="n">dataSource_prefix</span> <span class="o">+</span> <span class="n">dataSource_suff</span><span class="p">;</span>
+    <span class="n">String</span> <span class="n">config_comment</span> <span class="o">=</span> <span class="s">&quot;Added &quot;</span><span class="o">+</span><span class="n">dataSourceID</span><span class="p">;</span>
+    
+    <span class="n">g2config</span><span class="p">.</span><span class="na">addDataSource</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">dataSourceID</span><span class="p">);</span>
+    
+    <span class="n">StringBuffer</span> <span class="n">config_buffer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="p">();</span>
+    
+    <span class="n">g2config</span><span class="p">.</span><span class="na">save</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">config_buffer</span><span class="p">);</span>
+    
+    <span class="n">String</span> <span class="n">config_json</span> <span class="o">=</span> <span class="n">config_buffer</span><span class="p">.</span><span class="na">toString</span><span class="p">();</span>
+    <span class="n">Result</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">&gt;</span> <span class="n">configID</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Result</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">&gt;</span><span class="p">();</span>
+    
+    <span class="n">g2ConfigMgr</span><span class="p">.</span><span class="na">addConfig</span><span class="p">(</span><span class="n">config_json</span><span class="p">,</span> <span class="n">config_comment</span><span class="p">,</span> <span class="n">configID</span><span class="p">);</span>
+    <span class="n">g2engine</span><span class="p">.</span><span class="na">reinitV2</span><span class="p">(</span><span class="n">Long</span><span class="p">.</span><span class="na">parseLong</span><span class="p">(</span><span class="n">configID</span><span class="p">.</span><span class="na">getValue</span><span class="p">().</span><span class="na">toString</span><span class="p">()));</span>
+<span class="p">}</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="n">String</span> <span class="n">loadId</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">addRecord</span><span class="p">(</span><span class="kt">int</span> <span class="n">recordid_suff</span><span class="p">,</span> <span class="kt">int</span> <span class="n">datasource_suff</span><span class="p">){</span>
+    <span class="n">String</span> <span class="n">dataSourcePre</span> <span class="o">=</span> <span class="s">&quot;TEST_DATA_SOURCE_&quot;</span><span class="p">;</span>
+    <span class="n">String</span> <span class="n">recordIdPre</span> <span class="o">=</span> <span class="s">&quot;RECORD_&quot;</span><span class="p">;</span>
+    <span class="n">String</span> <span class="n">dataSourceId</span> <span class="o">=</span> <span class="n">dataSourcePre</span> <span class="o">+</span> <span class="n">datasource_suff</span><span class="p">;</span>
+    <span class="n">String</span> <span class="n">recordId</span> <span class="o">=</span> <span class="n">recordIdPre</span> <span class="o">+</span> <span class="n">recordid_suff</span><span class="p">;</span>
+    <span class="n">String</span> <span class="n">data</span> <span class="o">=</span> <span class="s">&quot;{\&quot;NAME_TYPE\&quot;: \&quot;PRIMARY\&quot;, \&quot;NAME_LAST\&quot;: \&quot;Smith\&quot;,\&quot;NAME_FIRST\&quot;: \&quot;John\&quot;, \&quot;NAME_MIDDLE\&quot;: \&quot;M\&quot;, \&quot;PASSPORT_NUMBER\&quot;: \&quot;PP11111\&quot;, \&quot;PASSPORT_COUNTRY\&quot;: \&quot;US\&quot;, \&quot;DRIVERS_LICENSE_NUMBER\&quot;: \&quot;DL1&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="mo">000</span><span class="o">+</span><span class="n">recordid_suff</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;\&quot;, \&quot;SSN_NUMBER\&quot;: \&quot;111-11-1111\&quot;}&quot;</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">return_code</span>  <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">addRecord</span><span class="p">(</span><span class="n">dataSourceId</span><span class="p">,</span> <span class="n">recordId</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">loadId</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+<span class="p">}</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="n">addDataSource</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">addRecord</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<span class="n">addRecord</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<span class="n">addDataSource</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="n">addRecord</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+<span class="n">addRecord</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+<span class="n">addDataSource</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="n">addRecord</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+<span class="n">addRecord</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Delete-record">Delete record<a class="anchor-link" href="#Delete-record">&#182;</a></h2><p>Deleting a record will create a "redo record".</p>
 
 </div>
 </div>
@@ -13345,9 +13469,48 @@ This value is used when instantiating Senzing objects.</p>
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-java"><pre><span></span><span class="n">String</span> <span class="n">version_string</span> <span class="o">=</span> <span class="n">g2product</span><span class="p">.</span><span class="na">version</span><span class="p">();</span>
+<div class=" highlight hl-java"><pre><span></span><span class="n">g2engine</span><span class="p">.</span><span class="na">deleteRecord</span><span class="p">(</span><span class="s">&quot;TEST_DATA_SOURCE_3&quot;</span><span class="p">,</span> <span class="s">&quot;RECORD_5&quot;</span><span class="p">,</span> <span class="n">loadId</span><span class="p">);</span>
+</pre></div>
 
-<span class="n">RenderJSON</span><span class="p">(</span><span class="n">version_string</span><span class="p">);</span>
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="kt">long</span> <span class="n">redoRecords</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">countRedoRecords</span><span class="p">();</span>
+<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="s">&quot;Number of redo records: &quot;</span><span class="o">+</span><span class="n">redoRecords</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Print-data-sources">Print data sources<a class="anchor-link" href="#Print-data-sources">&#182;</a></h3><p>Print the list of currently defined data sources</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="n">StringBuffer</span> <span class="n">datasources</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="p">();</span>
+
+<span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listDataSources</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">datasources</span><span class="p">);</span>
+<span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+<span class="k">else</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">datasources</span><span class="p">);</span>
 </pre></div>
 
     </div>
