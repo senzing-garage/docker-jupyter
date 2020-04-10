@@ -2,7 +2,7 @@
 <html>
 <head><meta charset="utf-8" />
 
-<title>senzing-G2Engine-stats</title>
+<title>senzing-create-redo-records</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13099,13 +13099,7 @@ $( document ).ready(function(){
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="G2Engine-Guide---Stats">G2Engine Guide - Stats<a class="anchor-link" href="#G2Engine-Guide---Stats">&#182;</a></h1><p>The <code>stats()</code> method creates a string with information about your Senzing workload.</p>
-<p>More information:</p>
-<ol>
-<li><a href="https://github.com/Senzing/docker-jupyter">GitHub repository</a></li>
-<li><a href="http://docs.senzing.com/?python#g2config">Senzing documentation</a></li>
-<li><a href="senzing-G2Engine-reference.ipynb">G2Engine Reference</a></li>
-</ol>
+<h1 id="Create-redo-records">Create redo records<a class="anchor-link" href="#Create-redo-records">&#182;</a></h1><p>This Jupyter notebook shows how to create a Senzing "redo record". It assums a G2 database that is empty</p>
 
 </div>
 </div>
@@ -13113,7 +13107,7 @@ $( document ).ready(function(){
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Prepare-environment">Prepare environment<a class="anchor-link" href="#Prepare-environment">&#182;</a></h2>
+<h2 id="Prepare-Environment">Prepare Environment<a class="anchor-link" href="#Prepare-Environment">&#182;</a></h2>
 </div>
 </div>
 </div>
@@ -13124,6 +13118,11 @@ $( document ).ready(function(){
     <div class="input_area">
 <div class=" highlight hl-java"><pre><span></span><span class="kn">import</span> <span class="nn">com.senzing.g2.engine.G2Engine</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">com.senzing.g2.engine.G2JNI</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">com.senzing.g2.engine.G2ConfigMgr</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">com.senzing.g2.engine.G2ConfigMgrJNI</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">com.senzing.g2.engine.G2Config</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">com.senzing.g2.engine.G2ConfigJNI</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">com.senzing.g2.engine.Result</span><span class="p">;</span>
 </pre></div>
 
     </div>
@@ -13246,8 +13245,8 @@ $( document ).ready(function(){
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Initialize-Senzing-configuration">Initialize Senzing configuration<a class="anchor-link" href="#Initialize-Senzing-configuration">&#182;</a></h3><p>Run <a href="senzing-G2ConfigMgr-reference.ipynb">senzing-G2ConfigMgr-reference.ipynb</a>
-to install a Senzing Engine configuration in the database.</p>
+<h3 id="Initialize-Senzing-configuration">Initialize Senzing configuration<a class="anchor-link" href="#Initialize-Senzing-configuration">&#182;</a></h3><p>Using environment variables and default values, create <code>senzingConfigJson</code>.
+This value is used when instantiating Senzing objects.</p>
 
 </div>
 </div>
@@ -13292,7 +13291,6 @@ to install a Senzing Engine configuration in the database.</p>
    <span class="o">+</span> <span class="s">&quot;\&quot;SQL\&quot;: {&quot;</span>
    <span class="o">+</span>     <span class="s">&quot;\&quot;CONNECTION\&quot;: \&quot;&quot;</span> <span class="o">+</span> <span class="n">sqlConnection</span> <span class="o">+</span> <span class="s">&quot;\&quot;&quot;</span>
    <span class="o">+</span> <span class="s">&quot;}}&quot;</span><span class="p">;</span>
-   
 <span class="n">RenderJSON</span><span class="p">(</span><span class="n">senzingConfigJson</span><span class="p">);</span>
 </pre></div>
 
@@ -13311,7 +13309,7 @@ to install a Senzing Engine configuration in the database.</p>
 
 
 <div class="output_html rendered_html output_subarea ">
-<div id="47c38ea7-bfe8-4eae-88d4-5aec16197bdf" style="height:100%; width:100%; background-color: LightCyan"></div>
+<div id="33593d45-cd98-4fc8-960f-c52e15c85786" style="height:100%; width:100%; background-color: LightCyan"></div>
 </div>
 
 </div>
@@ -13324,11 +13322,11 @@ to install a Senzing Engine configuration in the database.</p>
 
 
 
-<div id="7fde9b77-97ba-418f-88bd-6d3b5e05f607"></div>
+<div id="1b9825ba-b4c8-455e-ac65-466a1b93feee"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#7fde9b77-97ba-418f-88bd-6d3b5e05f607');
-require(["https://rawgit.com/caldwell/renderjson/master/renderjson.js"], function() {document.getElementById('47c38ea7-bfe8-4eae-88d4-5aec16197bdf').appendChild(renderjson({"PIPELINE":{"CONFIGPATH":"/etc/opt/senzing","SUPPORTPATH":"/opt/senzing/data","RESOURCEPATH":"/opt/senzing/g2/resources"},"SQL":{"CONNECTION":"postgresql://postgres:postgres@senzing-postgres:5432:G2/"}}))});
+var element = $('#1b9825ba-b4c8-455e-ac65-466a1b93feee');
+require(["https://rawgit.com/caldwell/renderjson/master/renderjson.js"], function() {document.getElementById('33593d45-cd98-4fc8-960f-c52e15c85786').appendChild(renderjson({"PIPELINE":{"CONFIGPATH":"/etc/opt/senzing","SUPPORTPATH":"/opt/senzing/data","RESOURCEPATH":"/opt/senzing/g2/resources"},"SQL":{"CONNECTION":"postgresql://postgres:postgres@senzing-postgres:5432:G2/"}}))});
 </script>
 </div>
 
@@ -13348,7 +13346,7 @@ require(["https://rawgit.com/caldwell/renderjson/master/renderjson.js"], functio
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Initialization">Initialization<a class="anchor-link" href="#Initialization">&#182;</a></h3><p>Details at <a href="senzing-G2Engine-reference.ipynb#G2Engine-initialization">G2Engine initialization</a>.</p>
+<h3 id="Senzing-initializaton">Senzing initializaton<a class="anchor-link" href="#Senzing-initializaton">&#182;</a></h3><p>Create an instance of G2Engine, Config, and ConfigMgr</p>
 
 </div>
 </div>
@@ -13362,7 +13360,85 @@ require(["https://rawgit.com/caldwell/renderjson/master/renderjson.js"], functio
 
 <span class="n">String</span> <span class="n">moduleName</span> <span class="o">=</span> <span class="s">&quot;ExampleG2Engine&quot;</span><span class="p">;</span>
 <span class="kt">boolean</span> <span class="n">verboseLogging</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
-<span class="kt">int</span> <span class="n">returnCode</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">initV2</span><span class="p">(</span><span class="n">moduleName</span><span class="p">,</span> <span class="n">senzingConfigJson</span><span class="p">,</span> <span class="n">verboseLogging</span><span class="p">);</span>
+<span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">initV2</span><span class="p">(</span><span class="n">moduleName</span><span class="p">,</span> <span class="n">senzingConfigJson</span><span class="p">,</span> <span class="n">verboseLogging</span><span class="p">);</span>
+<span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+<span class="k">else</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>0060E|The engine configuration does not match the records loaded into the repository:  errors[MISSING DATA_SOURCE TEST_DATA_SOURCE_1;MISSING DATA_SOURCE TEST_DATA_SOURCE_2;MISSING DATA_SOURCE TEST_DATA_SOURCE_3;MISSING ENTITY_TYPE TEST_DATA_SOURCE_1;MISSING ENTITY_TYPE TEST_DATA_SOURCE_2;MISSING ENTITY_TYPE TEST_DATA_SOURCE_3;].</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="n">String</span> <span class="n">moduleName</span> <span class="o">=</span> <span class="s">&quot;ExampleG2Config&quot;</span><span class="p">;</span>
+<span class="kt">boolean</span> <span class="n">verboseLogging</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+
+<span class="n">G2Config</span> <span class="n">g2config</span> <span class="o">=</span> <span class="k">new</span> <span class="n">G2ConfigJNI</span><span class="p">();</span>
+<span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">initV2</span><span class="p">(</span><span class="n">moduleName</span><span class="p">,</span> <span class="n">senzingConfigJson</span><span class="p">,</span> <span class="n">verboseLogging</span><span class="p">);</span>
+<span class="kt">long</span> <span class="n">config_handle</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">create</span><span class="p">();</span>
+<span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+<span class="k">else</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>0</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="n">G2ConfigMgr</span> <span class="n">g2ConfigMgr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">G2ConfigMgrJNI</span><span class="p">();</span>
+
+<span class="n">String</span> <span class="n">moduleName</span> <span class="o">=</span> <span class="s">&quot;ExampleG2ConfigMgr&quot;</span><span class="p">;</span>
+<span class="kt">boolean</span> <span class="n">verboseLogging</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">returnCode</span> <span class="o">=</span> <span class="n">g2ConfigMgr</span><span class="p">.</span><span class="na">initV2</span><span class="p">(</span><span class="n">moduleName</span><span class="p">,</span> <span class="n">senzingConfigJson</span><span class="p">,</span> <span class="n">verboseLogging</span><span class="p">);</span>
+<span class="n">g2ConfigMgr</span><span class="p">.</span><span class="na">getLastException</span><span class="p">();</span>
 <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">returnCode</span><span class="p">);</span>
 </pre></div>
 
@@ -13391,19 +13467,175 @@ require(["https://rawgit.com/caldwell/renderjson/master/renderjson.js"], functio
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Statistics">Statistics<a class="anchor-link" href="#Statistics">&#182;</a></h3><p>Call G2Engine's <code>stats()</code> method and print results.</p>
-<p>Details at <a href="senzing-G2Engine-reference.ipynb#stats">G2Engine.stats</a>.</p>
+<h3 id="Create-add-data-source-function">Create add data source function<a class="anchor-link" href="#Create-add-data-source-function">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">addDataSource</span><span class="p">(</span><span class="kt">int</span> <span class="n">dataSource_suff</span><span class="p">){</span>
+    <span class="n">String</span> <span class="n">dataSource_prefix</span> <span class="o">=</span> <span class="s">&quot;TEST_DATA_SOURCE_&quot;</span><span class="p">;</span>
+    <span class="n">String</span> <span class="n">dataSourceID</span> <span class="o">=</span> <span class="n">dataSource_prefix</span> <span class="o">+</span> <span class="n">dataSource_suff</span><span class="p">;</span>
+    <span class="n">String</span> <span class="n">config_comment</span> <span class="o">=</span> <span class="s">&quot;Added &quot;</span><span class="o">+</span><span class="n">dataSourceID</span><span class="p">;</span>
+    
+    <span class="n">g2config</span><span class="p">.</span><span class="na">addDataSource</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">dataSourceID</span><span class="p">);</span>
+    
+    <span class="n">StringBuffer</span> <span class="n">config_buffer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="p">();</span>
+    
+    <span class="n">g2config</span><span class="p">.</span><span class="na">save</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">config_buffer</span><span class="p">);</span>
+    
+    <span class="n">String</span> <span class="n">config_json</span> <span class="o">=</span> <span class="n">config_buffer</span><span class="p">.</span><span class="na">toString</span><span class="p">();</span>
+    <span class="n">Result</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">&gt;</span> <span class="n">configID</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Result</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">&gt;</span><span class="p">();</span>
+    
+    <span class="n">g2ConfigMgr</span><span class="p">.</span><span class="na">addConfig</span><span class="p">(</span><span class="n">config_json</span><span class="p">,</span> <span class="n">config_comment</span><span class="p">,</span> <span class="n">configID</span><span class="p">);</span>
+    <span class="n">g2engine</span><span class="p">.</span><span class="na">reinitV2</span><span class="p">(</span><span class="n">Long</span><span class="p">.</span><span class="na">parseLong</span><span class="p">(</span><span class="n">configID</span><span class="p">.</span><span class="na">getValue</span><span class="p">().</span><span class="na">toString</span><span class="p">()));</span>
+<span class="p">}</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="n">String</span> <span class="n">loadId</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">addRecord</span><span class="p">(</span><span class="kt">int</span> <span class="n">recordid_suff</span><span class="p">,</span> <span class="kt">int</span> <span class="n">datasource_suff</span><span class="p">){</span>
+    <span class="n">String</span> <span class="n">dataSourcePre</span> <span class="o">=</span> <span class="s">&quot;TEST_DATA_SOURCE_&quot;</span><span class="p">;</span>
+    <span class="n">String</span> <span class="n">recordIdPre</span> <span class="o">=</span> <span class="s">&quot;RECORD_&quot;</span><span class="p">;</span>
+    <span class="n">String</span> <span class="n">dataSourceId</span> <span class="o">=</span> <span class="n">dataSourcePre</span> <span class="o">+</span> <span class="n">datasource_suff</span><span class="p">;</span>
+    <span class="n">String</span> <span class="n">recordId</span> <span class="o">=</span> <span class="n">recordIdPre</span> <span class="o">+</span> <span class="n">recordid_suff</span><span class="p">;</span>
+    <span class="n">String</span> <span class="n">data</span> <span class="o">=</span> <span class="s">&quot;{\&quot;NAME_TYPE\&quot;: \&quot;PRIMARY\&quot;, \&quot;NAME_LAST\&quot;: \&quot;Smith\&quot;,\&quot;NAME_FIRST\&quot;: \&quot;John\&quot;, \&quot;NAME_MIDDLE\&quot;: \&quot;M\&quot;, \&quot;PASSPORT_NUMBER\&quot;: \&quot;PP11111\&quot;, \&quot;PASSPORT_COUNTRY\&quot;: \&quot;US\&quot;, \&quot;DRIVERS_LICENSE_NUMBER\&quot;: \&quot;DL1&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="mo">000</span><span class="o">+</span><span class="n">recordid_suff</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;\&quot;, \&quot;SSN_NUMBER\&quot;: \&quot;111-11-1111\&quot;}&quot;</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">return_code</span>  <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">addRecord</span><span class="p">(</span><span class="n">dataSourceId</span><span class="p">,</span> <span class="n">recordId</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">loadId</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+<span class="p">}</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="n">addDataSource</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">addRecord</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<span class="n">addRecord</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<span class="n">addDataSource</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="n">addRecord</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+<span class="n">addRecord</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+<span class="n">addDataSource</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="n">addRecord</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+<span class="n">addRecord</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Delete-record">Delete record<a class="anchor-link" href="#Delete-record">&#182;</a></h2><p>Deleting a record will create a "redo record".</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-java"><pre><span></span><span class="n">String</span> <span class="n">response</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">stats</span><span class="p">();</span>
-<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+<div class=" highlight hl-java"><pre><span></span><span class="n">g2engine</span><span class="p">.</span><span class="na">deleteRecord</span><span class="p">(</span><span class="s">&quot;TEST_DATA_SOURCE_3&quot;</span><span class="p">,</span> <span class="s">&quot;RECORD_5&quot;</span><span class="p">,</span> <span class="n">loadId</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[13]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="kt">long</span> <span class="n">redoRecords</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">countRedoRecords</span><span class="p">();</span>
+<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="s">&quot;Number of redo records: &quot;</span><span class="o">+</span><span class="n">redoRecords</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Number of redo records: 6</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Print-data-sources">Print data sources<a class="anchor-link" href="#Print-data-sources">&#182;</a></h3><p>Print the list of currently defined data sources</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="n">StringBuffer</span> <span class="n">datasources</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="p">();</span>
+
+<span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listDataSources</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">datasources</span><span class="p">);</span>
+<span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+<span class="k">else</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">datasources</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13421,7 +13653,7 @@ require(["https://rawgit.com/caldwell/renderjson/master/renderjson.js"], functio
 
 
 <div class="output_html rendered_html output_subarea ">
-<div id="695446c1-03ae-4c56-8663-242c57ba6794" style="height:100%; width:100%; background-color: LightCyan"></div>
+<div id="6e255178-c0be-49b8-b97e-fe7b010fd37a" style="height:100%; width:100%; background-color: LightCyan"></div>
 </div>
 
 </div>
@@ -13434,11 +13666,11 @@ require(["https://rawgit.com/caldwell/renderjson/master/renderjson.js"], functio
 
 
 
-<div id="7f7b43d6-7494-4640-9ee9-d17ccdccc2ee"></div>
+<div id="327a87ba-9ecf-4494-a297-71838fc4fab3"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#7f7b43d6-7494-4640-9ee9-d17ccdccc2ee');
-require(["https://rawgit.com/caldwell/renderjson/master/renderjson.js"], function() {document.getElementById('695446c1-03ae-4c56-8663-242c57ba6794').appendChild(renderjson({"workload":{"records":0,"loadedRecords":-1,"delete records":0,"reevaluations":0,"repairedEntities":0,"duration":0,"retries":0,"candidates":0,"actualAmbiguousTest":0,"cachedAmbiguousTest":0,"unresolveTest":0,"abortedUnresolve":0,"grouperKeyMatch":0,"busyWait":0,"longBusyWait":0,"gnrScorersUsed":0,"unresolveTriggers":{"normalResolve":0,"update":0,"relLink":0,"extensiveResolve":0,"prune":0,"ambiguousNoResolve":0,"ambiguousMultiResolve":0},"reresolveTriggers":{"abortRetry":0,"unresolveMovement":0,"multipleResolvableCandidates":0,"resolveNewFeatures":0,"newFeatureFTypes":[]},"expressedFeatureCalls":[],"expressedFeaturesCreated":[],"scoredPairs":[],"cacheHit":[],"cacheMiss":[],"redoTriggers":[],"latchContention":[],"highContentionFeat":[],"highContentionResEnt":[],"genericDetect":[],"candidateBuilders":[],"suppressedCandidateBuilders":[],"suppressedScoredFeatureType":[],"reducedScoredFeatureType":[]}}))});
+var element = $('#327a87ba-9ecf-4494-a297-71838fc4fab3');
+require(["https://rawgit.com/caldwell/renderjson/master/renderjson.js"], function() {document.getElementById('6e255178-c0be-49b8-b97e-fe7b010fd37a').appendChild(renderjson({"DSRC_CODE":["TEST","SEARCH","TEST_DATA_SOURCE_1","TEST_DATA_SOURCE_2","TEST_DATA_SOURCE_3"]}))});
 </script>
 </div>
 

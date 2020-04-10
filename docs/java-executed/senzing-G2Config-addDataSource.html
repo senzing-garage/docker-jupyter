@@ -13108,6 +13108,13 @@ $( document ).ready(function(){
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Prepare-Environment">Prepare Environment<a class="anchor-link" href="#Prepare-Environment">&#182;</a></h2>
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
@@ -13125,7 +13132,120 @@ $( document ).ready(function(){
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Initialize-Senzing-configuration">Initialize Senzing configuration<a class="anchor-link" href="#Initialize-Senzing-configuration">&#182;</a></h2><p>Using environment variables and default values, create <code>senzingConfigJson</code>.
+<h3 id="Helper-class-for-Json-Rendering">Helper class for Json Rendering<a class="anchor-link" href="#Helper-class-for-Json-Rendering">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="o">%%</span><span class="n">loadFromPOM</span>
+<span class="o">&lt;</span><span class="n">dependency</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">groupId</span><span class="o">&gt;</span><span class="n">org</span><span class="p">.</span><span class="na">glassfish</span><span class="o">&lt;/</span><span class="n">groupId</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">javax</span><span class="p">.</span><span class="na">json</span><span class="o">&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span><span class="mf">1.1.4</span><span class="o">&lt;/</span><span class="n">version</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">dependency</span><span class="o">&gt;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="kn">import</span> <span class="nn">javax.json.*</span><span class="p">;</span>
+<span class="kn">import static</span> <span class="nn">java.util.Collections.*</span><span class="p">;</span>
+<span class="kn">import static</span> <span class="nn">javax.json.stream.JsonGenerator.PRETTY_PRINTING</span><span class="p">;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">JsonUtil</span> <span class="p">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">JsonWriterFactory</span> <span class="n">PRETTY_FACTORY</span>
+        <span class="o">=</span> <span class="n">Json</span><span class="p">.</span><span class="na">createWriterFactory</span><span class="p">(</span><span class="n">singletonMap</span><span class="p">(</span><span class="n">PRETTY_PRINTING</span><span class="p">,</span> <span class="kc">true</span><span class="p">));</span>
+        
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">JsonWriterFactory</span> <span class="n">UGLY_FACTORY</span>
+        <span class="o">=</span> <span class="n">Json</span><span class="p">.</span><span class="na">createWriterFactory</span><span class="p">(</span><span class="n">emptyMap</span><span class="p">());</span>
+    
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">toJsonText</span><span class="p">(</span><span class="n">JsonValue</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">toJsonText</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">toJsonText</span><span class="p">(</span><span class="n">JsonValue</span> <span class="n">val</span><span class="p">,</span> <span class="kt">boolean</span> <span class="n">prettyPrint</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">JsonWriterFactory</span> <span class="n">factory</span> <span class="o">=</span> <span class="p">(</span><span class="n">prettyPrint</span><span class="p">)</span> <span class="o">?</span> <span class="n">PRETTY_FACTORY</span> <span class="p">:</span> <span class="n">UGLY_FACTORY</span><span class="p">;</span>
+        <span class="n">StringWriter</span> <span class="n">sw</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringWriter</span><span class="p">();</span>
+        <span class="n">JsonWriter</span> <span class="n">writer</span> <span class="o">=</span> <span class="n">factory</span><span class="p">.</span><span class="na">createWriter</span><span class="p">(</span><span class="n">sw</span><span class="p">);</span>
+        <span class="n">writer</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="n">val</span><span class="p">);</span>
+        <span class="n">sw</span><span class="p">.</span><span class="na">flush</span><span class="p">();</span>
+        <span class="k">return</span> <span class="n">sw</span><span class="p">.</span><span class="na">toString</span><span class="p">();</span>
+    <span class="p">}</span>
+    
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">JsonObject</span> <span class="nf">parseJsonObject</span><span class="p">(</span><span class="n">String</span> <span class="n">jsonText</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">jsonText</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+        <span class="n">StringReader</span> <span class="n">sr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringReader</span><span class="p">(</span><span class="n">jsonText</span><span class="p">);</span>
+        <span class="n">JsonReader</span> <span class="n">jsonReader</span> <span class="o">=</span> <span class="n">Json</span><span class="p">.</span><span class="na">createReader</span><span class="p">(</span><span class="n">sr</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">jsonReader</span><span class="p">.</span><span class="na">readObject</span><span class="p">();</span>
+  <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">JsonArray</span> <span class="nf">parseJsonArray</span><span class="p">(</span><span class="n">String</span> <span class="n">jsonText</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">jsonText</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+        <span class="n">StringReader</span> <span class="n">sr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringReader</span><span class="p">(</span><span class="n">jsonText</span><span class="p">);</span>
+        <span class="n">JsonReader</span> <span class="n">jsonReader</span> <span class="o">=</span> <span class="n">Json</span><span class="p">.</span><span class="na">createReader</span><span class="p">(</span><span class="n">sr</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">jsonReader</span><span class="p">.</span><span class="na">readArray</span><span class="p">();</span>
+  <span class="p">}</span>
+    
+    
+<span class="p">}</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="kn">import</span> <span class="nn">java.util.UUID</span><span class="p">;</span>
+<span class="n">String</span> <span class="n">str</span><span class="p">;</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">RenderJSON</span><span class="p">(</span><span class="n">Object</span> <span class="n">obj</span><span class="p">){</span>
+    <span class="n">str</span> <span class="o">=</span> <span class="n">obj</span><span class="p">.</span><span class="na">toString</span><span class="p">();</span>
+    <span class="n">JsonObject</span> <span class="n">json</span> <span class="o">=</span> <span class="n">JsonUtil</span><span class="p">.</span><span class="na">parseJsonObject</span><span class="p">(</span><span class="n">str</span><span class="p">);</span>
+    <span class="n">String</span> <span class="n">Config</span> <span class="o">=</span> <span class="n">JsonUtil</span><span class="p">.</span><span class="na">toJsonText</span><span class="p">(</span><span class="n">json</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+    <span class="n">UUID</span> <span class="n">id</span> <span class="o">=</span> <span class="n">UUID</span><span class="p">.</span><span class="na">randomUUID</span><span class="p">();</span>
+    <span class="n">String</span> <span class="n">uuid</span> <span class="o">=</span> <span class="n">id</span><span class="p">.</span><span class="na">toString</span><span class="p">();</span>
+    <span class="n">String</span> <span class="n">div</span> <span class="o">=</span> <span class="s">&quot;&lt;div id=\&quot;&quot;</span><span class="o">+</span> <span class="n">uuid</span> <span class="o">+</span><span class="s">&quot;\&quot; style=\&quot;height:100%; width:100%; background-color: LightCyan\&quot;&gt;&lt;/div&gt;&quot;</span><span class="p">;</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">div</span><span class="p">,</span> <span class="s">&quot;text/html&quot;</span><span class="p">);</span>
+    <span class="n">String</span> <span class="n">jav</span> <span class="o">=</span> <span class="s">&quot;require([\&quot;https://rawgit.com/caldwell/renderjson/master/renderjson.js\&quot;], function() {document.getElementById(\&#39;&quot;</span><span class="o">+</span> <span class="n">uuid</span> <span class="o">+</span><span class="s">&quot;\&#39;).appendChild(renderjson(&quot;</span><span class="o">+</span><span class="n">json</span><span class="o">+</span><span class="s">&quot;))});&quot;</span><span class="p">;</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">jav</span><span class="p">,</span> <span class="s">&quot;application/javascript&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Initialize-Senzing-configuration">Initialize Senzing configuration<a class="anchor-link" href="#Initialize-Senzing-configuration">&#182;</a></h3><p>Using environment variables and default values, create <code>senzingConfigJson</code>.
 This value is used when instantiating Senzing objects.</p>
 
 </div>
@@ -13133,7 +13253,7 @@ This value is used when instantiating Senzing objects.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-java"><pre><span></span><span class="c1">// Get variables used in constructing Senzing Engine configuration.</span>
@@ -13172,7 +13292,7 @@ This value is used when instantiating Senzing objects.</p>
    <span class="o">+</span>     <span class="s">&quot;\&quot;CONNECTION\&quot;: \&quot;&quot;</span> <span class="o">+</span> <span class="n">sqlConnection</span> <span class="o">+</span> <span class="s">&quot;\&quot;&quot;</span>
    <span class="o">+</span> <span class="s">&quot;}}&quot;</span><span class="p">;</span>
    
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">senzingConfigJson</span><span class="p">);</span>
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">senzingConfigJson</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13188,10 +13308,29 @@ This value is used when instantiating Senzing objects.</p>
     <div class="prompt"></div>
 
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>{&#34;PIPELINE&#34;: {&#34;CONFIGPATH&#34;: &#34;/etc/opt/senzing&#34;,&#34;SUPPORTPATH&#34;: &#34;/opt/senzing/data&#34;,&#34;RESOURCEPATH&#34;: &#34;/opt/senzing/g2/resources&#34;},&#34;SQL&#34;: {&#34;CONNECTION&#34;: &#34;postgresql://postgres:postgres@senzing-postgres:5432:G2/&#34;}}
-</pre>
+
+<div class="output_html rendered_html output_subarea ">
+<div id="efd7ba5b-ff7a-415f-806e-85b6085376ce" style="height:100%; width:100%; background-color: LightCyan"></div>
 </div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+
+<div id="66553822-088f-456b-9cfe-dc37d9d9a110"></div>
+<div class="output_subarea output_javascript ">
+<script type="text/javascript">
+var element = $('#66553822-088f-456b-9cfe-dc37d9d9a110');
+require(["https://rawgit.com/caldwell/renderjson/master/renderjson.js"], function() {document.getElementById('efd7ba5b-ff7a-415f-806e-85b6085376ce').appendChild(renderjson({"PIPELINE":{"CONFIGPATH":"/etc/opt/senzing","SUPPORTPATH":"/opt/senzing/data","RESOURCEPATH":"/opt/senzing/g2/resources"},"SQL":{"CONNECTION":"postgresql://postgres:postgres@senzing-postgres:5432:G2/"}}))});
+</script>
+</div>
+
 </div>
 
 </div>
@@ -13229,7 +13368,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-java"><pre><span></span><span class="n">String</span> <span class="n">moduleName</span> <span class="o">=</span> <span class="s">&quot;ExampleG2Engine&quot;</span><span class="p">;</span>
@@ -13268,7 +13407,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-java"><pre><span></span><span class="kt">long</span> <span class="n">config_handle</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">create</span><span class="p">()</span>
@@ -13289,7 +13428,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-java"><pre><span></span><span class="n">StringBuffer</span> <span class="n">response</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="p">();</span>
@@ -13299,7 +13438,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13315,9 +13454,29 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
     <div class="prompt"></div>
 
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>{&#34;DATA_SOURCES&#34;:[{&#34;DSRC_ID&#34;:1,&#34;DSRC_CODE&#34;:&#34;TEST&#34;},{&#34;DSRC_ID&#34;:2,&#34;DSRC_CODE&#34;:&#34;SEARCH&#34;}]}</pre>
+
+<div class="output_html rendered_html output_subarea ">
+<div id="08e05282-c796-4585-b61a-4d1ffc6c6b52" style="height:100%; width:100%; background-color: LightCyan"></div>
 </div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+
+<div id="6cda2995-dd44-414e-ba37-8971e4f986fe"></div>
+<div class="output_subarea output_javascript ">
+<script type="text/javascript">
+var element = $('#6cda2995-dd44-414e-ba37-8971e4f986fe');
+require(["https://rawgit.com/caldwell/renderjson/master/renderjson.js"], function() {document.getElementById('08e05282-c796-4585-b61a-4d1ffc6c6b52').appendChild(renderjson({"DATA_SOURCES":[{"DSRC_ID":1,"DSRC_CODE":"TEST"},{"DSRC_ID":2,"DSRC_CODE":"SEARCH"}]}))});
+</script>
+</div>
+
 </div>
 
 </div>
@@ -13334,7 +13493,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-java"><pre><span></span><span class="n">String</span> <span class="n">dataSource</span> <span class="o">=</span> <span class="s">&quot;{\&quot;DSRC_CODE\&quot;: \&quot;CUSTOMER\&quot;}&quot;</span><span class="p">;</span>
@@ -13346,7 +13505,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13362,9 +13521,29 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
     <div class="prompt"></div>
 
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>{&#34;DSRC_ID&#34;:1001}</pre>
+
+<div class="output_html rendered_html output_subarea ">
+<div id="bd8d4553-828c-4d39-a9e6-7aadf0b02b21" style="height:100%; width:100%; background-color: LightCyan"></div>
 </div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+
+<div id="231804c3-e7a5-48fc-85ad-1b4c3e922427"></div>
+<div class="output_subarea output_javascript ">
+<script type="text/javascript">
+var element = $('#231804c3-e7a5-48fc-85ad-1b4c3e922427');
+require(["https://rawgit.com/caldwell/renderjson/master/renderjson.js"], function() {document.getElementById('bd8d4553-828c-4d39-a9e6-7aadf0b02b21').appendChild(renderjson({"DSRC_ID":1001}))});
+</script>
+</div>
+
 </div>
 
 </div>
@@ -13381,7 +13560,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-java"><pre><span></span><span class="n">StringBuffer</span> <span class="n">response</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="p">();</span>
@@ -13391,7 +13570,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13407,9 +13586,29 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
     <div class="prompt"></div>
 
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>{&#34;DATA_SOURCES&#34;:[{&#34;DSRC_ID&#34;:1,&#34;DSRC_CODE&#34;:&#34;TEST&#34;},{&#34;DSRC_ID&#34;:2,&#34;DSRC_CODE&#34;:&#34;SEARCH&#34;},{&#34;DSRC_ID&#34;:1001,&#34;DSRC_CODE&#34;:&#34;CUSTOMER&#34;}]}</pre>
+
+<div class="output_html rendered_html output_subarea ">
+<div id="4fe16dd8-63c7-4c8e-a7f8-d72adae3d724" style="height:100%; width:100%; background-color: LightCyan"></div>
 </div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+
+<div id="d3b18d21-eda8-4a5e-b7cd-81221100fa08"></div>
+<div class="output_subarea output_javascript ">
+<script type="text/javascript">
+var element = $('#d3b18d21-eda8-4a5e-b7cd-81221100fa08');
+require(["https://rawgit.com/caldwell/renderjson/master/renderjson.js"], function() {document.getElementById('4fe16dd8-63c7-4c8e-a7f8-d72adae3d724').appendChild(renderjson({"DATA_SOURCES":[{"DSRC_ID":1,"DSRC_CODE":"TEST"},{"DSRC_ID":2,"DSRC_CODE":"SEARCH"},{"DSRC_ID":1001,"DSRC_CODE":"CUSTOMER"}]}))});
+</script>
+</div>
+
 </div>
 
 </div>
@@ -13425,7 +13624,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-java"><pre><span></span><span class="n">g2config</span><span class="p">.</span><span class="na">close</span><span class="p">(</span><span class="n">config_handle</span><span class="p">);</span>

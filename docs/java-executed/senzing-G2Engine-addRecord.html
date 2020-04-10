@@ -13113,9 +13113,7 @@ $( document ).ready(function(){
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Initialize-Senzing-configuration">Initialize Senzing configuration<a class="anchor-link" href="#Initialize-Senzing-configuration">&#182;</a></h2><p>Using environment variables and default values, create <code>senzingConfigJson</code>.
-This value is used when instantiating Senzing objects.</p>
-
+<h2 id="Prepare-Environment">Prepare Environment<a class="anchor-link" href="#Prepare-Environment">&#182;</a></h2>
 </div>
 </div>
 </div>
@@ -13134,9 +13132,129 @@ This value is used when instantiating Senzing objects.</p>
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Helper-class-for-Json-Rendering">Helper class for Json Rendering<a class="anchor-link" href="#Helper-class-for-Json-Rendering">&#182;</a></h3>
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="o">%%</span><span class="n">loadFromPOM</span>
+<span class="o">&lt;</span><span class="n">dependency</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">groupId</span><span class="o">&gt;</span><span class="n">org</span><span class="p">.</span><span class="na">glassfish</span><span class="o">&lt;/</span><span class="n">groupId</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">artifactId</span><span class="o">&gt;</span><span class="n">javax</span><span class="p">.</span><span class="na">json</span><span class="o">&lt;/</span><span class="n">artifactId</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">version</span><span class="o">&gt;</span><span class="mf">1.1.4</span><span class="o">&lt;/</span><span class="n">version</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">dependency</span><span class="o">&gt;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="kn">import</span> <span class="nn">javax.json.*</span><span class="p">;</span>
+<span class="kn">import static</span> <span class="nn">java.util.Collections.*</span><span class="p">;</span>
+<span class="kn">import static</span> <span class="nn">javax.json.stream.JsonGenerator.PRETTY_PRINTING</span><span class="p">;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">JsonUtil</span> <span class="p">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">JsonWriterFactory</span> <span class="n">PRETTY_FACTORY</span>
+        <span class="o">=</span> <span class="n">Json</span><span class="p">.</span><span class="na">createWriterFactory</span><span class="p">(</span><span class="n">singletonMap</span><span class="p">(</span><span class="n">PRETTY_PRINTING</span><span class="p">,</span> <span class="kc">true</span><span class="p">));</span>
+        
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">JsonWriterFactory</span> <span class="n">UGLY_FACTORY</span>
+        <span class="o">=</span> <span class="n">Json</span><span class="p">.</span><span class="na">createWriterFactory</span><span class="p">(</span><span class="n">emptyMap</span><span class="p">());</span>
+    
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">toJsonText</span><span class="p">(</span><span class="n">JsonValue</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">toJsonText</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">toJsonText</span><span class="p">(</span><span class="n">JsonValue</span> <span class="n">val</span><span class="p">,</span> <span class="kt">boolean</span> <span class="n">prettyPrint</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">JsonWriterFactory</span> <span class="n">factory</span> <span class="o">=</span> <span class="p">(</span><span class="n">prettyPrint</span><span class="p">)</span> <span class="o">?</span> <span class="n">PRETTY_FACTORY</span> <span class="p">:</span> <span class="n">UGLY_FACTORY</span><span class="p">;</span>
+        <span class="n">StringWriter</span> <span class="n">sw</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringWriter</span><span class="p">();</span>
+        <span class="n">JsonWriter</span> <span class="n">writer</span> <span class="o">=</span> <span class="n">factory</span><span class="p">.</span><span class="na">createWriter</span><span class="p">(</span><span class="n">sw</span><span class="p">);</span>
+        <span class="n">writer</span><span class="p">.</span><span class="na">write</span><span class="p">(</span><span class="n">val</span><span class="p">);</span>
+        <span class="n">sw</span><span class="p">.</span><span class="na">flush</span><span class="p">();</span>
+        <span class="k">return</span> <span class="n">sw</span><span class="p">.</span><span class="na">toString</span><span class="p">();</span>
+    <span class="p">}</span>
+    
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">JsonObject</span> <span class="nf">parseJsonObject</span><span class="p">(</span><span class="n">String</span> <span class="n">jsonText</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">jsonText</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+        <span class="n">StringReader</span> <span class="n">sr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringReader</span><span class="p">(</span><span class="n">jsonText</span><span class="p">);</span>
+        <span class="n">JsonReader</span> <span class="n">jsonReader</span> <span class="o">=</span> <span class="n">Json</span><span class="p">.</span><span class="na">createReader</span><span class="p">(</span><span class="n">sr</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">jsonReader</span><span class="p">.</span><span class="na">readObject</span><span class="p">();</span>
+  <span class="p">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">JsonArray</span> <span class="nf">parseJsonArray</span><span class="p">(</span><span class="n">String</span> <span class="n">jsonText</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">jsonText</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+        <span class="n">StringReader</span> <span class="n">sr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringReader</span><span class="p">(</span><span class="n">jsonText</span><span class="p">);</span>
+        <span class="n">JsonReader</span> <span class="n">jsonReader</span> <span class="o">=</span> <span class="n">Json</span><span class="p">.</span><span class="na">createReader</span><span class="p">(</span><span class="n">sr</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">jsonReader</span><span class="p">.</span><span class="na">readArray</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="kn">import</span> <span class="nn">java.util.UUID</span><span class="p">;</span>
+<span class="n">String</span> <span class="n">str</span><span class="p">;</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">RenderJSON</span><span class="p">(</span><span class="n">Object</span> <span class="n">obj</span><span class="p">){</span>
+    <span class="n">str</span> <span class="o">=</span> <span class="n">obj</span><span class="p">.</span><span class="na">toString</span><span class="p">();</span>
+    <span class="n">JsonObject</span> <span class="n">json</span> <span class="o">=</span> <span class="n">JsonUtil</span><span class="p">.</span><span class="na">parseJsonObject</span><span class="p">(</span><span class="n">str</span><span class="p">);</span>
+    <span class="n">String</span> <span class="n">Config</span> <span class="o">=</span> <span class="n">JsonUtil</span><span class="p">.</span><span class="na">toJsonText</span><span class="p">(</span><span class="n">json</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+    <span class="n">UUID</span> <span class="n">id</span> <span class="o">=</span> <span class="n">UUID</span><span class="p">.</span><span class="na">randomUUID</span><span class="p">();</span>
+    <span class="n">String</span> <span class="n">uuid</span> <span class="o">=</span> <span class="n">id</span><span class="p">.</span><span class="na">toString</span><span class="p">();</span>
+    <span class="n">String</span> <span class="n">div</span> <span class="o">=</span> <span class="s">&quot;&lt;div id=\&quot;&quot;</span><span class="o">+</span> <span class="n">uuid</span> <span class="o">+</span><span class="s">&quot;\&quot; style=\&quot;height:100%; width:100%; background-color: LightCyan\&quot;&gt;&lt;/div&gt;&quot;</span><span class="p">;</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">div</span><span class="p">,</span> <span class="s">&quot;text/html&quot;</span><span class="p">);</span>
+    <span class="n">String</span> <span class="n">jav</span> <span class="o">=</span> <span class="s">&quot;require([\&quot;https://rawgit.com/caldwell/renderjson/master/renderjson.js\&quot;], function() {document.getElementById(\&#39;&quot;</span><span class="o">+</span> <span class="n">uuid</span> <span class="o">+</span><span class="s">&quot;\&#39;).appendChild(renderjson(&quot;</span><span class="o">+</span><span class="n">json</span><span class="o">+</span><span class="s">&quot;))});&quot;</span><span class="p">;</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">jav</span><span class="p">,</span> <span class="s">&quot;application/javascript&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Initialize-Senzing-configuration">Initialize Senzing configuration<a class="anchor-link" href="#Initialize-Senzing-configuration">&#182;</a></h3><p>Using environment variables and default values, create <code>senzingConfigJson</code>.
+This value is used when instantiating Senzing objects.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-java"><pre><span></span><span class="c1">// Get variables used in constructing Senzing Engine configuration.</span>
@@ -13175,7 +13293,7 @@ This value is used when instantiating Senzing objects.</p>
    <span class="o">+</span>     <span class="s">&quot;\&quot;CONNECTION\&quot;: \&quot;&quot;</span> <span class="o">+</span> <span class="n">sqlConnection</span> <span class="o">+</span> <span class="s">&quot;\&quot;&quot;</span>
    <span class="o">+</span> <span class="s">&quot;}}&quot;</span><span class="p">;</span>
    
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">senzingConfigJson</span><span class="p">);</span>
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">senzingConfigJson</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13191,10 +13309,29 @@ This value is used when instantiating Senzing objects.</p>
     <div class="prompt"></div>
 
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>{&#34;PIPELINE&#34;: {&#34;CONFIGPATH&#34;: &#34;/etc/opt/senzing&#34;,&#34;SUPPORTPATH&#34;: &#34;/opt/senzing/data&#34;,&#34;RESOURCEPATH&#34;: &#34;/opt/senzing/g2/resources&#34;},&#34;SQL&#34;: {&#34;CONNECTION&#34;: &#34;postgresql://postgres:postgres@senzing-postgres:5432:G2/&#34;}}
-</pre>
+
+<div class="output_html rendered_html output_subarea ">
+<div id="aebb7b31-7165-4d93-a4e5-6ccb93ff1c16" style="height:100%; width:100%; background-color: LightCyan"></div>
 </div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+
+<div id="854c4966-f35f-42be-a2a3-ef409ce0ef9e"></div>
+<div class="output_subarea output_javascript ">
+<script type="text/javascript">
+var element = $('#854c4966-f35f-42be-a2a3-ef409ce0ef9e');
+require(["https://rawgit.com/caldwell/renderjson/master/renderjson.js"], function() {document.getElementById('aebb7b31-7165-4d93-a4e5-6ccb93ff1c16').appendChild(renderjson({"PIPELINE":{"CONFIGPATH":"/etc/opt/senzing","SUPPORTPATH":"/opt/senzing/data","RESOURCEPATH":"/opt/senzing/g2/resources"},"SQL":{"CONNECTION":"postgresql://postgres:postgres@senzing-postgres:5432:G2/"}}))});
+</script>
+</div>
+
 </div>
 
 </div>
@@ -13229,7 +13366,7 @@ can be returned here.</li>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-java"><pre><span></span><span class="n">G2Engine</span> <span class="n">g2engine</span> <span class="o">=</span> <span class="k">new</span> <span class="n">G2JNI</span><span class="p">();</span>
@@ -13278,7 +13415,7 @@ can be returned here.</li>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-java"><pre><span></span><span class="n">String</span> <span class="n">dataSourceCode</span> <span class="o">=</span> <span class="s">&quot;TEST&quot;</span><span class="p">;</span>
@@ -13293,14 +13430,14 @@ can be returned here.</li>
 <span class="n">StringBuffer</span> <span class="n">recordID2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="p">();</span>
 <span class="kt">int</span> <span class="n">ret2</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">addRecordWithReturnedRecordID</span><span class="p">(</span><span class="n">dataSourceCode</span><span class="p">,</span> <span class="n">recordID2</span><span class="p">,</span> <span class="n">jsonData</span><span class="p">,</span> <span class="n">loadID</span><span class="p">);</span>
 
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;New Record ID: &quot;</span> <span class="o">+</span> <span class="n">recordID2</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
+<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="s">&quot;New Record ID: &quot;</span> <span class="o">+</span> <span class="n">recordID2</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
 
 <span class="cm">/** addRecordWithInfo */</span>
 <span class="n">StringBuffer</span> <span class="n">responseBuffer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="p">();</span>
 <span class="kt">int</span> <span class="n">flags</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 <span class="kt">int</span> <span class="n">ret3</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">addRecordWithInfo</span><span class="p">(</span><span class="n">dataSourceCode</span><span class="p">,</span> <span class="n">recordID</span><span class="p">,</span> <span class="n">jsonData</span><span class="p">,</span> <span class="n">loadID</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">responseBuffer</span><span class="p">);</span>
 
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Modified Entities: &quot;</span> <span class="o">+</span> <span class="n">responseBuffer</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">responseBuffer</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13317,10 +13454,38 @@ can be returned here.</li>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>New Record ID: E8DCD9E0D0494ADCA1A83C035F85ECFA62CE4DB4
-Modified Entities: {&#34;DATA_SOURCE&#34;:&#34;TEST&#34;,&#34;RECORD_ID&#34;:&#34;1&#34;,&#34;AFFECTED_ENTITIES&#34;:[{&#34;ENTITY_ID&#34;:1,&#34;LENS_CODE&#34;:&#34;DEFAULT&#34;}],&#34;INTERESTING_ENTITIES&#34;:[]}
-</pre>
+<pre>New Record ID: E8DCD9E0D0494ADCA1A83C035F85ECFA62CE4DB4</pre>
 </div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+<div class="output_html rendered_html output_subarea ">
+<div id="24aa2fb4-9cc4-4237-ad60-bd77f27cb65a" style="height:100%; width:100%; background-color: LightCyan"></div>
+</div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+
+<div id="4d8fe568-73b6-44ce-bc41-9c1f887a1b0a"></div>
+<div class="output_subarea output_javascript ">
+<script type="text/javascript">
+var element = $('#4d8fe568-73b6-44ce-bc41-9c1f887a1b0a');
+require(["https://rawgit.com/caldwell/renderjson/master/renderjson.js"], function() {document.getElementById('24aa2fb4-9cc4-4237-ad60-bd77f27cb65a').appendChild(renderjson({"DATA_SOURCE":"TEST","RECORD_ID":"1","AFFECTED_ENTITIES":[{"ENTITY_ID":1,"LENS_CODE":"DEFAULT"}],"INTERESTING_ENTITIES":[]}))});
+</script>
+</div>
+
 </div>
 
 </div>
@@ -13342,7 +13507,7 @@ Modified Entities: {&#34;DATA_SOURCE&#34;:&#34;TEST&#34;,&#34;RECORD_ID&#34;:&#3
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-java"><pre><span></span><span class="kt">int</span> <span class="n">flags</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
@@ -13352,9 +13517,9 @@ Modified Entities: {&#34;DATA_SOURCE&#34;:&#34;TEST&#34;,&#34;RECORD_ID&#34;:&#3
 <span class="kt">int</span> <span class="n">return_code</span><span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">getRecordV2</span><span class="p">(</span><span class="n">dataSourceCode</span><span class="p">,</span> <span class="n">recordID</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13370,10 +13535,29 @@ Modified Entities: {&#34;DATA_SOURCE&#34;:&#34;TEST&#34;,&#34;RECORD_ID&#34;:&#3
     <div class="prompt"></div>
 
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>{&#34;JSON_DATA&#34;:{&#34;NAME_TYPE&#34;:&#34;PRIMARY&#34;,&#34;NAME_FIRST&#34;:&#34;JANE&#34;,&#34;NAME_LAST&#34;:&#34;SMITH&#34;,&#34;ADDR_TYPE&#34;:&#34;HOME&#34;,&#34;ADDR_LINE1&#34;:&#34;653 STATE ROUTE 7&#34;,&#34;ADDR_CITY&#34;:&#34;FRESNO&#34;,&#34;ADDR_STATE&#34;:&#34;CA&#34;,&#34;ADDR_POSTAL_CODE&#34;:&#34;55073-1234&#34;,&#34;DATA_SOURCE&#34;:&#34;TEST&#34;,&#34;ENTITY_TYPE&#34;:&#34;TEST&#34;,&#34;DSRC_ACTION&#34;:&#34;A&#34;,&#34;LENS_CODE&#34;:&#34;DEFAULT&#34;,&#34;RECORD_ID&#34;:&#34;1&#34;},&#34;NAME_DATA&#34;:[&#34;PRIMARY: SMITH JANE&#34;],&#34;ATTRIBUTE_DATA&#34;:[],&#34;IDENTIFIER_DATA&#34;:[],&#34;ADDRESS_DATA&#34;:[&#34;HOME: 653 STATE ROUTE 7 FRESNO CA 55073-1234&#34;],&#34;PHONE_DATA&#34;:[],&#34;RELATIONSHIP_DATA&#34;:[],&#34;ENTITY_DATA&#34;:[],&#34;OTHER_DATA&#34;:[],&#34;DATA_SOURCE&#34;:&#34;TEST&#34;,&#34;RECORD_ID&#34;:&#34;1&#34;,&#34;ENTITY_TYPE&#34;:&#34;TEST&#34;,&#34;ENTITY_KEY&#34;:&#34;97E5F9E96060CA35AB3C14D532E2B6EAEBAA99BD&#34;,&#34;OBS_ENT_HASH&#34;:&#34;97E5F9E96060CA35AB3C14D532E2B6EAEBAA99BD&#34;,&#34;LAST_SEEN_DT&#34;:&#34;2020-03-27 17:13:17.103&#34;}
-</pre>
+
+<div class="output_html rendered_html output_subarea ">
+<div id="d1191050-c29a-4735-a5ac-3f9c09465d9d" style="height:100%; width:100%; background-color: LightCyan"></div>
 </div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+
+<div id="02adda30-ed13-4bf7-8fe4-6dfc96a8f382"></div>
+<div class="output_subarea output_javascript ">
+<script type="text/javascript">
+var element = $('#02adda30-ed13-4bf7-8fe4-6dfc96a8f382');
+require(["https://rawgit.com/caldwell/renderjson/master/renderjson.js"], function() {document.getElementById('d1191050-c29a-4735-a5ac-3f9c09465d9d').appendChild(renderjson({"JSON_DATA":{"NAME_TYPE":"PRIMARY","NAME_FIRST":"JANE","NAME_LAST":"SMITH","ADDR_TYPE":"HOME","ADDR_LINE1":"653 STATE ROUTE 7","ADDR_CITY":"FRESNO","ADDR_STATE":"CA","ADDR_POSTAL_CODE":"55073-1234","DATA_SOURCE":"TEST","ENTITY_TYPE":"TEST","DSRC_ACTION":"A","LENS_CODE":"DEFAULT","RECORD_ID":"1"},"NAME_DATA":["PRIMARY: SMITH JANE"],"ATTRIBUTE_DATA":[],"IDENTIFIER_DATA":[],"ADDRESS_DATA":["HOME: 653 STATE ROUTE 7 FRESNO CA 55073-1234"],"PHONE_DATA":[],"RELATIONSHIP_DATA":[],"ENTITY_DATA":[],"OTHER_DATA":[],"DATA_SOURCE":"TEST","RECORD_ID":"1","ENTITY_TYPE":"TEST","ENTITY_KEY":"97E5F9E96060CA35AB3C14D532E2B6EAEBAA99BD","OBS_ENT_HASH":"97E5F9E96060CA35AB3C14D532E2B6EAEBAA99BD","LAST_SEEN_DT":"2020-04-10 15:33:15.839"}))});
+</script>
+</div>
+
 </div>
 
 </div>
@@ -13404,7 +13588,7 @@ entity to retrieve.</li>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-java"><pre><span></span><span class="n">String</span> <span class="n">dataSourceCode</span> <span class="o">=</span> <span class="s">&quot;TEST&quot;</span><span class="p">;</span>
@@ -13413,12 +13597,12 @@ entity to retrieve.</li>
 <span class="n">StringBuffer</span> <span class="n">response</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="p">();</span>
 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">getEntityByRecordIDV2</span><span class="p">(</span><span class="n">dataSourceCode</span><span class="p">,</span> <span class="n">recordID</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;GET Entity: &quot;</span> <span class="o">+</span> <span class="n">response</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
-<span class="kt">int</span> <span class="n">start</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="na">indexOf</span><span class="p">(</span><span class="s">&quot;\&quot;ENTITY_ID\&quot;:&quot;</span><span class="p">)</span><span class="o">+</span><span class="mi">12</span><span class="p">;</span>
-<span class="kt">int</span> <span class="n">end</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="na">indexOf</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">);</span>
-<span class="kt">long</span> <span class="n">entityID</span><span class="o">=</span><span class="n">Integer</span><span class="p">.</span><span class="na">parseInt</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="na">substring</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">));</span>
+<span class="n">JsonObject</span> <span class="n">jsonObject</span> <span class="o">=</span> <span class="n">JsonUtil</span><span class="p">.</span><span class="na">parseJsonObject</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
+<span class="kt">long</span> <span class="n">entityID</span> <span class="o">=</span> <span class="n">jsonObject</span><span class="p">.</span><span class="na">getJsonObject</span><span class="p">(</span><span class="s">&quot;RESOLVED_ENTITY&quot;</span><span class="p">).</span><span class="na">getJsonNumber</span><span class="p">(</span><span class="s">&quot;ENTITY_ID&quot;</span><span class="p">).</span><span class="na">longValue</span><span class="p">();</span>
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+<span class="k">else</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13434,10 +13618,29 @@ entity to retrieve.</li>
     <div class="prompt"></div>
 
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>GET Entity: {&#34;RESOLVED_ENTITY&#34;:{&#34;ENTITY_ID&#34;:1,&#34;LENS_CODE&#34;:&#34;DEFAULT&#34;,&#34;ENTITY_NAME&#34;:&#34;JANE SMITH&#34;,&#34;FEATURES&#34;:{&#34;ADDRESS&#34;:[{&#34;FEAT_DESC&#34;:&#34;653 STATE ROUTE 7 FRESNO CA 55073-1234&#34;,&#34;LIB_FEAT_ID&#34;:2,&#34;UTYPE_CODE&#34;:&#34;HOME&#34;,&#34;FEAT_DESC_VALUES&#34;:[{&#34;FEAT_DESC&#34;:&#34;653 STATE ROUTE 7 FRESNO CA 55073-1234&#34;,&#34;LIB_FEAT_ID&#34;:2}]}],&#34;NAME&#34;:[{&#34;FEAT_DESC&#34;:&#34;JANE SMITH&#34;,&#34;LIB_FEAT_ID&#34;:1,&#34;UTYPE_CODE&#34;:&#34;PRIMARY&#34;,&#34;FEAT_DESC_VALUES&#34;:[{&#34;FEAT_DESC&#34;:&#34;JANE SMITH&#34;,&#34;LIB_FEAT_ID&#34;:1}]}]},&#34;RECORD_SUMMARY&#34;:[{&#34;DATA_SOURCE&#34;:&#34;TEST&#34;,&#34;RECORD_COUNT&#34;:2,&#34;FIRST_SEEN_DT&#34;:&#34;2020-03-27 17:13:09.305&#34;,&#34;LAST_SEEN_DT&#34;:&#34;2020-03-27 17:13:17.103&#34;}],&#34;LAST_SEEN_DT&#34;:&#34;2020-03-27 17:13:17.103&#34;,&#34;RECORDS&#34;:[{&#34;JSON_DATA&#34;:{&#34;NAME_TYPE&#34;:&#34;PRIMARY&#34;,&#34;NAME_FIRST&#34;:&#34;JANE&#34;,&#34;NAME_LAST&#34;:&#34;SMITH&#34;,&#34;ADDR_TYPE&#34;:&#34;HOME&#34;,&#34;ADDR_LINE1&#34;:&#34;653 STATE ROUTE 7&#34;,&#34;ADDR_CITY&#34;:&#34;FRESNO&#34;,&#34;ADDR_STATE&#34;:&#34;CA&#34;,&#34;ADDR_POSTAL_CODE&#34;:&#34;55073-1234&#34;,&#34;DATA_SOURCE&#34;:&#34;TEST&#34;,&#34;ENTITY_TYPE&#34;:&#34;TEST&#34;,&#34;DSRC_ACTION&#34;:&#34;A&#34;,&#34;LENS_CODE&#34;:&#34;DEFAULT&#34;,&#34;RECORD_ID&#34;:&#34;1&#34;},&#34;DATA_SOURCE&#34;:&#34;TEST&#34;,&#34;ENTITY_TYPE&#34;:&#34;TEST&#34;,&#34;ENTITY_KEY&#34;:&#34;97E5F9E96060CA35AB3C14D532E2B6EAEBAA99BD&#34;,&#34;ENTITY_NAME&#34;:&#34;JANE SMITH&#34;,&#34;RECORD_ID&#34;:&#34;1&#34;,&#34;MATCH_KEY&#34;:&#34;&#34;,&#34;MATCH_SCORE&#34;:&#34;&#34;,&#34;ERRULE_CODE&#34;:&#34;&#34;,&#34;REF_SCORE&#34;:0,&#34;MATCH_LEVEL&#34;:0,&#34;MATCH_LEVEL_CODE&#34;:&#34;&#34;,&#34;LAST_SEEN_DT&#34;:&#34;2020-03-27 17:13:17.103&#34;,&#34;NAME_DATA&#34;:[&#34;PRIMARY: SMITH JANE&#34;],&#34;ATTRIBUTE_DATA&#34;:[],&#34;IDENTIFIER_DATA&#34;:[],&#34;ADDRESS_DATA&#34;:[&#34;HOME: 653 STATE ROUTE 7 FRESNO CA 55073-1234&#34;],&#34;PHONE_DATA&#34;:[],&#34;RELATIONSHIP_DATA&#34;:[],&#34;ENTITY_DATA&#34;:[],&#34;OTHER_DATA&#34;:[],&#34;INTERNAL_ID&#34;:1,&#34;FEATURES&#34;:[{&#34;LIB_FEAT_ID&#34;:1,&#34;UTYPE_CODE&#34;:&#34;PRIMARY&#34;},{&#34;LIB_FEAT_ID&#34;:2,&#34;UTYPE_CODE&#34;:&#34;HOME&#34;},{&#34;LIB_FEAT_ID&#34;:3},{&#34;LIB_FEAT_ID&#34;:4},{&#34;LIB_FEAT_ID&#34;:5},{&#34;LIB_FEAT_ID&#34;:6}]},{&#34;JSON_DATA&#34;:{&#34;NAME_TYPE&#34;:&#34;PRIMARY&#34;,&#34;NAME_FIRST&#34;:&#34;JANE&#34;,&#34;NAME_LAST&#34;:&#34;SMITH&#34;,&#34;ADDR_TYPE&#34;:&#34;HOME&#34;,&#34;ADDR_LINE1&#34;:&#34;653 STATE ROUTE 7&#34;,&#34;ADDR_CITY&#34;:&#34;FRESNO&#34;,&#34;ADDR_STATE&#34;:&#34;CA&#34;,&#34;ADDR_POSTAL_CODE&#34;:&#34;55073-1234&#34;,&#34;DATA_SOURCE&#34;:&#34;TEST&#34;,&#34;ENTITY_TYPE&#34;:&#34;TEST&#34;,&#34;DSRC_ACTION&#34;:&#34;A&#34;,&#34;LENS_CODE&#34;:&#34;DEFAULT&#34;},&#34;DATA_SOURCE&#34;:&#34;TEST&#34;,&#34;ENTITY_TYPE&#34;:&#34;TEST&#34;,&#34;ENTITY_KEY&#34;:&#34;97E5F9E96060CA35AB3C14D532E2B6EAEBAA99BD&#34;,&#34;ENTITY_NAME&#34;:&#34;JANE SMITH&#34;,&#34;RECORD_ID&#34;:&#34;E8DCD9E0D0494ADCA1A83C035F85ECFA62CE4DB4&#34;,&#34;MATCH_KEY&#34;:&#34;EXACTLY_SAME&#34;,&#34;MATCH_SCORE&#34;:&#34;&#34;,&#34;ERRULE_CODE&#34;:&#34;&#34;,&#34;REF_SCORE&#34;:0,&#34;MATCH_LEVEL&#34;:0,&#34;MATCH_LEVEL_CODE&#34;:&#34;&#34;,&#34;LAST_SEEN_DT&#34;:&#34;2020-03-27 17:13:16.970&#34;,&#34;NAME_DATA&#34;:[&#34;PRIMARY: SMITH JANE&#34;],&#34;ATTRIBUTE_DATA&#34;:[],&#34;IDENTIFIER_DATA&#34;:[],&#34;ADDRESS_DATA&#34;:[&#34;HOME: 653 STATE ROUTE 7 FRESNO CA 55073-1234&#34;],&#34;PHONE_DATA&#34;:[],&#34;RELATIONSHIP_DATA&#34;:[],&#34;ENTITY_DATA&#34;:[],&#34;OTHER_DATA&#34;:[],&#34;INTERNAL_ID&#34;:1,&#34;FEATURES&#34;:[{&#34;LIB_FEAT_ID&#34;:1,&#34;UTYPE_CODE&#34;:&#34;PRIMARY&#34;},{&#34;LIB_FEAT_ID&#34;:2,&#34;UTYPE_CODE&#34;:&#34;HOME&#34;},{&#34;LIB_FEAT_ID&#34;:3},{&#34;LIB_FEAT_ID&#34;:4},{&#34;LIB_FEAT_ID&#34;:5},{&#34;LIB_FEAT_ID&#34;:6}]}]},&#34;RELATED_ENTITIES&#34;:[]}
-</pre>
+
+<div class="output_html rendered_html output_subarea ">
+<div id="f1d1fc02-5a75-4f9f-bedc-53d1f80d5c30" style="height:100%; width:100%; background-color: LightCyan"></div>
 </div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+
+<div id="fc8690dc-c8d2-4c34-bcb9-8ebc303c6304"></div>
+<div class="output_subarea output_javascript ">
+<script type="text/javascript">
+var element = $('#fc8690dc-c8d2-4c34-bcb9-8ebc303c6304');
+require(["https://rawgit.com/caldwell/renderjson/master/renderjson.js"], function() {document.getElementById('f1d1fc02-5a75-4f9f-bedc-53d1f80d5c30').appendChild(renderjson({"RESOLVED_ENTITY":{"ENTITY_ID":1,"LENS_CODE":"DEFAULT","ENTITY_NAME":"JANE SMITH","FEATURES":{"ADDRESS":[{"FEAT_DESC":"653 STATE ROUTE 7 FRESNO CA 55073-1234","LIB_FEAT_ID":2,"UTYPE_CODE":"HOME","FEAT_DESC_VALUES":[{"FEAT_DESC":"653 STATE ROUTE 7 FRESNO CA 55073-1234","LIB_FEAT_ID":2}]}],"NAME":[{"FEAT_DESC":"JANE SMITH","LIB_FEAT_ID":1,"UTYPE_CODE":"PRIMARY","FEAT_DESC_VALUES":[{"FEAT_DESC":"JANE SMITH","LIB_FEAT_ID":1}]}]},"RECORD_SUMMARY":[{"DATA_SOURCE":"TEST","RECORD_COUNT":2,"FIRST_SEEN_DT":"2020-04-10 15:33:00.168","LAST_SEEN_DT":"2020-04-10 15:33:15.839"}],"LAST_SEEN_DT":"2020-04-10 15:33:15.839","RECORDS":[{"JSON_DATA":{"NAME_TYPE":"PRIMARY","NAME_FIRST":"JANE","NAME_LAST":"SMITH","ADDR_TYPE":"HOME","ADDR_LINE1":"653 STATE ROUTE 7","ADDR_CITY":"FRESNO","ADDR_STATE":"CA","ADDR_POSTAL_CODE":"55073-1234","DATA_SOURCE":"TEST","ENTITY_TYPE":"TEST","DSRC_ACTION":"A","LENS_CODE":"DEFAULT","RECORD_ID":"1"},"DATA_SOURCE":"TEST","ENTITY_TYPE":"TEST","ENTITY_KEY":"97E5F9E96060CA35AB3C14D532E2B6EAEBAA99BD","ENTITY_NAME":"JANE SMITH","RECORD_ID":"1","MATCH_KEY":"","MATCH_SCORE":"","ERRULE_CODE":"","REF_SCORE":0,"MATCH_LEVEL":0,"MATCH_LEVEL_CODE":"","LAST_SEEN_DT":"2020-04-10 15:33:15.839","NAME_DATA":["PRIMARY: SMITH JANE"],"ATTRIBUTE_DATA":[],"IDENTIFIER_DATA":[],"ADDRESS_DATA":["HOME: 653 STATE ROUTE 7 FRESNO CA 55073-1234"],"PHONE_DATA":[],"RELATIONSHIP_DATA":[],"ENTITY_DATA":[],"OTHER_DATA":[],"INTERNAL_ID":1,"FEATURES":[{"LIB_FEAT_ID":1,"UTYPE_CODE":"PRIMARY"},{"LIB_FEAT_ID":2,"UTYPE_CODE":"HOME"},{"LIB_FEAT_ID":3},{"LIB_FEAT_ID":4},{"LIB_FEAT_ID":5},{"LIB_FEAT_ID":6}]},{"JSON_DATA":{"NAME_TYPE":"PRIMARY","NAME_FIRST":"JANE","NAME_LAST":"SMITH","ADDR_TYPE":"HOME","ADDR_LINE1":"653 STATE ROUTE 7","ADDR_CITY":"FRESNO","ADDR_STATE":"CA","ADDR_POSTAL_CODE":"55073-1234","DATA_SOURCE":"TEST","ENTITY_TYPE":"TEST","DSRC_ACTION":"A","LENS_CODE":"DEFAULT"},"DATA_SOURCE":"TEST","ENTITY_TYPE":"TEST","ENTITY_KEY":"97E5F9E96060CA35AB3C14D532E2B6EAEBAA99BD","ENTITY_NAME":"JANE SMITH","RECORD_ID":"E8DCD9E0D0494ADCA1A83C035F85ECFA62CE4DB4","MATCH_KEY":"EXACTLY_SAME","MATCH_SCORE":"","ERRULE_CODE":"","REF_SCORE":0,"MATCH_LEVEL":0,"MATCH_LEVEL_CODE":"","LAST_SEEN_DT":"2020-04-10 15:33:15.598","NAME_DATA":["PRIMARY: SMITH JANE"],"ATTRIBUTE_DATA":[],"IDENTIFIER_DATA":[],"ADDRESS_DATA":["HOME: 653 STATE ROUTE 7 FRESNO CA 55073-1234"],"PHONE_DATA":[],"RELATIONSHIP_DATA":[],"ENTITY_DATA":[],"OTHER_DATA":[],"INTERNAL_ID":1,"FEATURES":[{"LIB_FEAT_ID":1,"UTYPE_CODE":"PRIMARY"},{"LIB_FEAT_ID":2,"UTYPE_CODE":"HOME"},{"LIB_FEAT_ID":3},{"LIB_FEAT_ID":4},{"LIB_FEAT_ID":5},{"LIB_FEAT_ID":6}]}]},"RELATED_ENTITIES":[]}))});
+</script>
+</div>
+
 </div>
 
 </div>
@@ -13471,13 +13674,13 @@ document; if an error occurred, an error response is stored here.</li>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-java"><pre><span></span><span class="n">response</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="p">();</span>
 
 <span class="kt">int</span> <span class="n">ret2</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">getEntityByEntityIDV2</span><span class="p">(</span><span class="n">entityID</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;GET Entity: &quot;</span> <span class="o">+</span> <span class="n">response</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13493,10 +13696,29 @@ document; if an error occurred, an error response is stored here.</li>
     <div class="prompt"></div>
 
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>GET Entity: {&#34;RESOLVED_ENTITY&#34;:{&#34;ENTITY_ID&#34;:1,&#34;LENS_CODE&#34;:&#34;DEFAULT&#34;,&#34;ENTITY_NAME&#34;:&#34;JANE SMITH&#34;,&#34;FEATURES&#34;:{&#34;ADDRESS&#34;:[{&#34;FEAT_DESC&#34;:&#34;653 STATE ROUTE 7 FRESNO CA 55073-1234&#34;,&#34;LIB_FEAT_ID&#34;:2,&#34;UTYPE_CODE&#34;:&#34;HOME&#34;,&#34;FEAT_DESC_VALUES&#34;:[{&#34;FEAT_DESC&#34;:&#34;653 STATE ROUTE 7 FRESNO CA 55073-1234&#34;,&#34;LIB_FEAT_ID&#34;:2}]}],&#34;NAME&#34;:[{&#34;FEAT_DESC&#34;:&#34;JANE SMITH&#34;,&#34;LIB_FEAT_ID&#34;:1,&#34;UTYPE_CODE&#34;:&#34;PRIMARY&#34;,&#34;FEAT_DESC_VALUES&#34;:[{&#34;FEAT_DESC&#34;:&#34;JANE SMITH&#34;,&#34;LIB_FEAT_ID&#34;:1}]}]},&#34;RECORD_SUMMARY&#34;:[{&#34;DATA_SOURCE&#34;:&#34;TEST&#34;,&#34;RECORD_COUNT&#34;:2,&#34;FIRST_SEEN_DT&#34;:&#34;2020-03-27 17:13:09.305&#34;,&#34;LAST_SEEN_DT&#34;:&#34;2020-03-27 17:13:17.103&#34;}],&#34;LAST_SEEN_DT&#34;:&#34;2020-03-27 17:13:17.103&#34;,&#34;RECORDS&#34;:[{&#34;JSON_DATA&#34;:{&#34;NAME_TYPE&#34;:&#34;PRIMARY&#34;,&#34;NAME_FIRST&#34;:&#34;JANE&#34;,&#34;NAME_LAST&#34;:&#34;SMITH&#34;,&#34;ADDR_TYPE&#34;:&#34;HOME&#34;,&#34;ADDR_LINE1&#34;:&#34;653 STATE ROUTE 7&#34;,&#34;ADDR_CITY&#34;:&#34;FRESNO&#34;,&#34;ADDR_STATE&#34;:&#34;CA&#34;,&#34;ADDR_POSTAL_CODE&#34;:&#34;55073-1234&#34;,&#34;DATA_SOURCE&#34;:&#34;TEST&#34;,&#34;ENTITY_TYPE&#34;:&#34;TEST&#34;,&#34;DSRC_ACTION&#34;:&#34;A&#34;,&#34;LENS_CODE&#34;:&#34;DEFAULT&#34;,&#34;RECORD_ID&#34;:&#34;1&#34;},&#34;DATA_SOURCE&#34;:&#34;TEST&#34;,&#34;ENTITY_TYPE&#34;:&#34;TEST&#34;,&#34;ENTITY_KEY&#34;:&#34;97E5F9E96060CA35AB3C14D532E2B6EAEBAA99BD&#34;,&#34;ENTITY_NAME&#34;:&#34;JANE SMITH&#34;,&#34;RECORD_ID&#34;:&#34;1&#34;,&#34;MATCH_KEY&#34;:&#34;&#34;,&#34;MATCH_SCORE&#34;:&#34;&#34;,&#34;ERRULE_CODE&#34;:&#34;&#34;,&#34;REF_SCORE&#34;:0,&#34;MATCH_LEVEL&#34;:0,&#34;MATCH_LEVEL_CODE&#34;:&#34;&#34;,&#34;LAST_SEEN_DT&#34;:&#34;2020-03-27 17:13:17.103&#34;,&#34;NAME_DATA&#34;:[&#34;PRIMARY: SMITH JANE&#34;],&#34;ATTRIBUTE_DATA&#34;:[],&#34;IDENTIFIER_DATA&#34;:[],&#34;ADDRESS_DATA&#34;:[&#34;HOME: 653 STATE ROUTE 7 FRESNO CA 55073-1234&#34;],&#34;PHONE_DATA&#34;:[],&#34;RELATIONSHIP_DATA&#34;:[],&#34;ENTITY_DATA&#34;:[],&#34;OTHER_DATA&#34;:[],&#34;INTERNAL_ID&#34;:1,&#34;FEATURES&#34;:[{&#34;LIB_FEAT_ID&#34;:1,&#34;UTYPE_CODE&#34;:&#34;PRIMARY&#34;},{&#34;LIB_FEAT_ID&#34;:2,&#34;UTYPE_CODE&#34;:&#34;HOME&#34;},{&#34;LIB_FEAT_ID&#34;:3},{&#34;LIB_FEAT_ID&#34;:4},{&#34;LIB_FEAT_ID&#34;:5},{&#34;LIB_FEAT_ID&#34;:6}]},{&#34;JSON_DATA&#34;:{&#34;NAME_TYPE&#34;:&#34;PRIMARY&#34;,&#34;NAME_FIRST&#34;:&#34;JANE&#34;,&#34;NAME_LAST&#34;:&#34;SMITH&#34;,&#34;ADDR_TYPE&#34;:&#34;HOME&#34;,&#34;ADDR_LINE1&#34;:&#34;653 STATE ROUTE 7&#34;,&#34;ADDR_CITY&#34;:&#34;FRESNO&#34;,&#34;ADDR_STATE&#34;:&#34;CA&#34;,&#34;ADDR_POSTAL_CODE&#34;:&#34;55073-1234&#34;,&#34;DATA_SOURCE&#34;:&#34;TEST&#34;,&#34;ENTITY_TYPE&#34;:&#34;TEST&#34;,&#34;DSRC_ACTION&#34;:&#34;A&#34;,&#34;LENS_CODE&#34;:&#34;DEFAULT&#34;},&#34;DATA_SOURCE&#34;:&#34;TEST&#34;,&#34;ENTITY_TYPE&#34;:&#34;TEST&#34;,&#34;ENTITY_KEY&#34;:&#34;97E5F9E96060CA35AB3C14D532E2B6EAEBAA99BD&#34;,&#34;ENTITY_NAME&#34;:&#34;JANE SMITH&#34;,&#34;RECORD_ID&#34;:&#34;E8DCD9E0D0494ADCA1A83C035F85ECFA62CE4DB4&#34;,&#34;MATCH_KEY&#34;:&#34;EXACTLY_SAME&#34;,&#34;MATCH_SCORE&#34;:&#34;&#34;,&#34;ERRULE_CODE&#34;:&#34;&#34;,&#34;REF_SCORE&#34;:0,&#34;MATCH_LEVEL&#34;:0,&#34;MATCH_LEVEL_CODE&#34;:&#34;&#34;,&#34;LAST_SEEN_DT&#34;:&#34;2020-03-27 17:13:16.970&#34;,&#34;NAME_DATA&#34;:[&#34;PRIMARY: SMITH JANE&#34;],&#34;ATTRIBUTE_DATA&#34;:[],&#34;IDENTIFIER_DATA&#34;:[],&#34;ADDRESS_DATA&#34;:[&#34;HOME: 653 STATE ROUTE 7 FRESNO CA 55073-1234&#34;],&#34;PHONE_DATA&#34;:[],&#34;RELATIONSHIP_DATA&#34;:[],&#34;ENTITY_DATA&#34;:[],&#34;OTHER_DATA&#34;:[],&#34;INTERNAL_ID&#34;:1,&#34;FEATURES&#34;:[{&#34;LIB_FEAT_ID&#34;:1,&#34;UTYPE_CODE&#34;:&#34;PRIMARY&#34;},{&#34;LIB_FEAT_ID&#34;:2,&#34;UTYPE_CODE&#34;:&#34;HOME&#34;},{&#34;LIB_FEAT_ID&#34;:3},{&#34;LIB_FEAT_ID&#34;:4},{&#34;LIB_FEAT_ID&#34;:5},{&#34;LIB_FEAT_ID&#34;:6}]}]},&#34;RELATED_ENTITIES&#34;:[]}
-</pre>
+
+<div class="output_html rendered_html output_subarea ">
+<div id="ef233302-0443-411e-81cf-9da58d677892" style="height:100%; width:100%; background-color: LightCyan"></div>
 </div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+
+<div id="eef2e282-66b7-4384-859d-d017e87e3d55"></div>
+<div class="output_subarea output_javascript ">
+<script type="text/javascript">
+var element = $('#eef2e282-66b7-4384-859d-d017e87e3d55');
+require(["https://rawgit.com/caldwell/renderjson/master/renderjson.js"], function() {document.getElementById('ef233302-0443-411e-81cf-9da58d677892').appendChild(renderjson({"RESOLVED_ENTITY":{"ENTITY_ID":1,"LENS_CODE":"DEFAULT","ENTITY_NAME":"JANE SMITH","FEATURES":{"ADDRESS":[{"FEAT_DESC":"653 STATE ROUTE 7 FRESNO CA 55073-1234","LIB_FEAT_ID":2,"UTYPE_CODE":"HOME","FEAT_DESC_VALUES":[{"FEAT_DESC":"653 STATE ROUTE 7 FRESNO CA 55073-1234","LIB_FEAT_ID":2}]}],"NAME":[{"FEAT_DESC":"JANE SMITH","LIB_FEAT_ID":1,"UTYPE_CODE":"PRIMARY","FEAT_DESC_VALUES":[{"FEAT_DESC":"JANE SMITH","LIB_FEAT_ID":1}]}]},"RECORD_SUMMARY":[{"DATA_SOURCE":"TEST","RECORD_COUNT":2,"FIRST_SEEN_DT":"2020-04-10 15:33:00.168","LAST_SEEN_DT":"2020-04-10 15:33:15.839"}],"LAST_SEEN_DT":"2020-04-10 15:33:15.839","RECORDS":[{"JSON_DATA":{"NAME_TYPE":"PRIMARY","NAME_FIRST":"JANE","NAME_LAST":"SMITH","ADDR_TYPE":"HOME","ADDR_LINE1":"653 STATE ROUTE 7","ADDR_CITY":"FRESNO","ADDR_STATE":"CA","ADDR_POSTAL_CODE":"55073-1234","DATA_SOURCE":"TEST","ENTITY_TYPE":"TEST","DSRC_ACTION":"A","LENS_CODE":"DEFAULT","RECORD_ID":"1"},"DATA_SOURCE":"TEST","ENTITY_TYPE":"TEST","ENTITY_KEY":"97E5F9E96060CA35AB3C14D532E2B6EAEBAA99BD","ENTITY_NAME":"JANE SMITH","RECORD_ID":"1","MATCH_KEY":"","MATCH_SCORE":"","ERRULE_CODE":"","REF_SCORE":0,"MATCH_LEVEL":0,"MATCH_LEVEL_CODE":"","LAST_SEEN_DT":"2020-04-10 15:33:15.839","NAME_DATA":["PRIMARY: SMITH JANE"],"ATTRIBUTE_DATA":[],"IDENTIFIER_DATA":[],"ADDRESS_DATA":["HOME: 653 STATE ROUTE 7 FRESNO CA 55073-1234"],"PHONE_DATA":[],"RELATIONSHIP_DATA":[],"ENTITY_DATA":[],"OTHER_DATA":[],"INTERNAL_ID":1,"FEATURES":[{"LIB_FEAT_ID":1,"UTYPE_CODE":"PRIMARY"},{"LIB_FEAT_ID":2,"UTYPE_CODE":"HOME"},{"LIB_FEAT_ID":3},{"LIB_FEAT_ID":4},{"LIB_FEAT_ID":5},{"LIB_FEAT_ID":6}]},{"JSON_DATA":{"NAME_TYPE":"PRIMARY","NAME_FIRST":"JANE","NAME_LAST":"SMITH","ADDR_TYPE":"HOME","ADDR_LINE1":"653 STATE ROUTE 7","ADDR_CITY":"FRESNO","ADDR_STATE":"CA","ADDR_POSTAL_CODE":"55073-1234","DATA_SOURCE":"TEST","ENTITY_TYPE":"TEST","DSRC_ACTION":"A","LENS_CODE":"DEFAULT"},"DATA_SOURCE":"TEST","ENTITY_TYPE":"TEST","ENTITY_KEY":"97E5F9E96060CA35AB3C14D532E2B6EAEBAA99BD","ENTITY_NAME":"JANE SMITH","RECORD_ID":"E8DCD9E0D0494ADCA1A83C035F85ECFA62CE4DB4","MATCH_KEY":"EXACTLY_SAME","MATCH_SCORE":"","ERRULE_CODE":"","REF_SCORE":0,"MATCH_LEVEL":0,"MATCH_LEVEL_CODE":"","LAST_SEEN_DT":"2020-04-10 15:33:15.598","NAME_DATA":["PRIMARY: SMITH JANE"],"ATTRIBUTE_DATA":[],"IDENTIFIER_DATA":[],"ADDRESS_DATA":["HOME: 653 STATE ROUTE 7 FRESNO CA 55073-1234"],"PHONE_DATA":[],"RELATIONSHIP_DATA":[],"ENTITY_DATA":[],"OTHER_DATA":[],"INTERNAL_ID":1,"FEATURES":[{"LIB_FEAT_ID":1,"UTYPE_CODE":"PRIMARY"},{"LIB_FEAT_ID":2,"UTYPE_CODE":"HOME"},{"LIB_FEAT_ID":3},{"LIB_FEAT_ID":4},{"LIB_FEAT_ID":5},{"LIB_FEAT_ID":6}]}]},"RELATED_ENTITIES":[]}))});
+</script>
+</div>
+
 </div>
 
 </div>
@@ -13517,7 +13739,7 @@ document; if an error occurred, an error response is stored here.</li>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-java"><pre><span></span><span class="n">String</span> <span class="n">dataSourceCode</span> <span class="o">=</span> <span class="s">&quot;TEST&quot;</span><span class="p">;</span>
@@ -13526,9 +13748,10 @@ document; if an error occurred, an error response is stored here.</li>
 <span class="n">response</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="p">();</span>
 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">searchByAttributesV2</span><span class="p">(</span><span class="n">jsonData</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
-<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;GET Entity: &quot;</span> <span class="o">+</span> <span class="n">response</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+<span class="k">else</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13544,10 +13767,29 @@ document; if an error occurred, an error response is stored here.</li>
     <div class="prompt"></div>
 
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>GET Entity: {&#34;RESOLVED_ENTITIES&#34;:[{&#34;MATCH_INFO&#34;:{&#34;MATCH_LEVEL&#34;:1,&#34;MATCH_LEVEL_CODE&#34;:&#34;RESOLVED&#34;,&#34;MATCH_KEY&#34;:&#34;+NAME+ADDRESS&#34;,&#34;MATCH_SCORE&#34;:&#34;12&#34;,&#34;ERRULE_CODE&#34;:&#34;CNAME_CFF&#34;,&#34;REF_SCORE&#34;:6,&#34;FEATURE_SCORES&#34;:{&#34;ADDRESS&#34;:[{&#34;INBOUND_FEAT&#34;:&#34;653 STATE ROUTE 7 FRESNO CA 55073-1234&#34;,&#34;CANDIDATE_FEAT&#34;:&#34;653 STATE ROUTE 7 FRESNO CA 55073-1234&#34;,&#34;FULL_SCORE&#34;:100}],&#34;NAME&#34;:[{&#34;INBOUND_FEAT&#34;:&#34;JANE SMITH&#34;,&#34;CANDIDATE_FEAT&#34;:&#34;JANE SMITH&#34;,&#34;GNR_FN&#34;:100,&#34;GNR_SN&#34;:100,&#34;GNR_GN&#34;:100,&#34;GENERATION_MATCH&#34;:-1,&#34;GNR_ON&#34;:-1}]}},&#34;ENTITY&#34;:{&#34;RESOLVED_ENTITY&#34;:{&#34;ENTITY_ID&#34;:1,&#34;LENS_CODE&#34;:&#34;DEFAULT&#34;,&#34;ENTITY_NAME&#34;:&#34;JANE SMITH&#34;,&#34;FEATURES&#34;:{&#34;ADDRESS&#34;:[{&#34;FEAT_DESC&#34;:&#34;653 STATE ROUTE 7 FRESNO CA 55073-1234&#34;,&#34;LIB_FEAT_ID&#34;:2,&#34;UTYPE_CODE&#34;:&#34;HOME&#34;,&#34;FEAT_DESC_VALUES&#34;:[{&#34;FEAT_DESC&#34;:&#34;653 STATE ROUTE 7 FRESNO CA 55073-1234&#34;,&#34;LIB_FEAT_ID&#34;:2}]}],&#34;NAME&#34;:[{&#34;FEAT_DESC&#34;:&#34;JANE SMITH&#34;,&#34;LIB_FEAT_ID&#34;:1,&#34;UTYPE_CODE&#34;:&#34;PRIMARY&#34;,&#34;FEAT_DESC_VALUES&#34;:[{&#34;FEAT_DESC&#34;:&#34;JANE SMITH&#34;,&#34;LIB_FEAT_ID&#34;:1}]}]},&#34;RECORD_SUMMARY&#34;:[{&#34;DATA_SOURCE&#34;:&#34;TEST&#34;,&#34;RECORD_COUNT&#34;:2,&#34;FIRST_SEEN_DT&#34;:&#34;2020-03-27 17:13:09.305&#34;,&#34;LAST_SEEN_DT&#34;:&#34;2020-03-27 17:13:17.103&#34;}],&#34;LAST_SEEN_DT&#34;:&#34;2020-03-27 17:13:17.103&#34;,&#34;RECORDS&#34;:[{&#34;JSON_DATA&#34;:{&#34;NAME_TYPE&#34;:&#34;PRIMARY&#34;,&#34;NAME_FIRST&#34;:&#34;JANE&#34;,&#34;NAME_LAST&#34;:&#34;SMITH&#34;,&#34;ADDR_TYPE&#34;:&#34;HOME&#34;,&#34;ADDR_LINE1&#34;:&#34;653 STATE ROUTE 7&#34;,&#34;ADDR_CITY&#34;:&#34;FRESNO&#34;,&#34;ADDR_STATE&#34;:&#34;CA&#34;,&#34;ADDR_POSTAL_CODE&#34;:&#34;55073-1234&#34;,&#34;DATA_SOURCE&#34;:&#34;TEST&#34;,&#34;ENTITY_TYPE&#34;:&#34;TEST&#34;,&#34;DSRC_ACTION&#34;:&#34;A&#34;,&#34;LENS_CODE&#34;:&#34;DEFAULT&#34;,&#34;RECORD_ID&#34;:&#34;1&#34;},&#34;DATA_SOURCE&#34;:&#34;TEST&#34;,&#34;ENTITY_TYPE&#34;:&#34;TEST&#34;,&#34;ENTITY_KEY&#34;:&#34;97E5F9E96060CA35AB3C14D532E2B6EAEBAA99BD&#34;,&#34;ENTITY_NAME&#34;:&#34;JANE SMITH&#34;,&#34;RECORD_ID&#34;:&#34;1&#34;,&#34;MATCH_KEY&#34;:&#34;&#34;,&#34;MATCH_SCORE&#34;:&#34;&#34;,&#34;ERRULE_CODE&#34;:&#34;&#34;,&#34;REF_SCORE&#34;:0,&#34;MATCH_LEVEL&#34;:0,&#34;MATCH_LEVEL_CODE&#34;:&#34;&#34;,&#34;LAST_SEEN_DT&#34;:&#34;2020-03-27 17:13:17.103&#34;,&#34;NAME_DATA&#34;:[&#34;PRIMARY: SMITH JANE&#34;],&#34;ATTRIBUTE_DATA&#34;:[],&#34;IDENTIFIER_DATA&#34;:[],&#34;ADDRESS_DATA&#34;:[&#34;HOME: 653 STATE ROUTE 7 FRESNO CA 55073-1234&#34;],&#34;PHONE_DATA&#34;:[],&#34;RELATIONSHIP_DATA&#34;:[],&#34;ENTITY_DATA&#34;:[],&#34;OTHER_DATA&#34;:[],&#34;INTERNAL_ID&#34;:1,&#34;FEATURES&#34;:[{&#34;LIB_FEAT_ID&#34;:1,&#34;UTYPE_CODE&#34;:&#34;PRIMARY&#34;},{&#34;LIB_FEAT_ID&#34;:2,&#34;UTYPE_CODE&#34;:&#34;HOME&#34;},{&#34;LIB_FEAT_ID&#34;:3},{&#34;LIB_FEAT_ID&#34;:4},{&#34;LIB_FEAT_ID&#34;:5},{&#34;LIB_FEAT_ID&#34;:6}]},{&#34;JSON_DATA&#34;:{&#34;NAME_TYPE&#34;:&#34;PRIMARY&#34;,&#34;NAME_FIRST&#34;:&#34;JANE&#34;,&#34;NAME_LAST&#34;:&#34;SMITH&#34;,&#34;ADDR_TYPE&#34;:&#34;HOME&#34;,&#34;ADDR_LINE1&#34;:&#34;653 STATE ROUTE 7&#34;,&#34;ADDR_CITY&#34;:&#34;FRESNO&#34;,&#34;ADDR_STATE&#34;:&#34;CA&#34;,&#34;ADDR_POSTAL_CODE&#34;:&#34;55073-1234&#34;,&#34;DATA_SOURCE&#34;:&#34;TEST&#34;,&#34;ENTITY_TYPE&#34;:&#34;TEST&#34;,&#34;DSRC_ACTION&#34;:&#34;A&#34;,&#34;LENS_CODE&#34;:&#34;DEFAULT&#34;},&#34;DATA_SOURCE&#34;:&#34;TEST&#34;,&#34;ENTITY_TYPE&#34;:&#34;TEST&#34;,&#34;ENTITY_KEY&#34;:&#34;97E5F9E96060CA35AB3C14D532E2B6EAEBAA99BD&#34;,&#34;ENTITY_NAME&#34;:&#34;JANE SMITH&#34;,&#34;RECORD_ID&#34;:&#34;E8DCD9E0D0494ADCA1A83C035F85ECFA62CE4DB4&#34;,&#34;MATCH_KEY&#34;:&#34;EXACTLY_SAME&#34;,&#34;MATCH_SCORE&#34;:&#34;&#34;,&#34;ERRULE_CODE&#34;:&#34;&#34;,&#34;REF_SCORE&#34;:0,&#34;MATCH_LEVEL&#34;:0,&#34;MATCH_LEVEL_CODE&#34;:&#34;&#34;,&#34;LAST_SEEN_DT&#34;:&#34;2020-03-27 17:13:16.970&#34;,&#34;NAME_DATA&#34;:[&#34;PRIMARY: SMITH JANE&#34;],&#34;ATTRIBUTE_DATA&#34;:[],&#34;IDENTIFIER_DATA&#34;:[],&#34;ADDRESS_DATA&#34;:[&#34;HOME: 653 STATE ROUTE 7 FRESNO CA 55073-1234&#34;],&#34;PHONE_DATA&#34;:[],&#34;RELATIONSHIP_DATA&#34;:[],&#34;ENTITY_DATA&#34;:[],&#34;OTHER_DATA&#34;:[],&#34;INTERNAL_ID&#34;:1,&#34;FEATURES&#34;:[{&#34;LIB_FEAT_ID&#34;:1,&#34;UTYPE_CODE&#34;:&#34;PRIMARY&#34;},{&#34;LIB_FEAT_ID&#34;:2,&#34;UTYPE_CODE&#34;:&#34;HOME&#34;},{&#34;LIB_FEAT_ID&#34;:3},{&#34;LIB_FEAT_ID&#34;:4},{&#34;LIB_FEAT_ID&#34;:5},{&#34;LIB_FEAT_ID&#34;:6}]}]},&#34;RELATED_ENTITIES&#34;:[]}}]}
-</pre>
+
+<div class="output_html rendered_html output_subarea ">
+<div id="f1b0dbae-91af-493e-bd64-05a42b65bf8e" style="height:100%; width:100%; background-color: LightCyan"></div>
 </div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+
+<div id="2a1a5540-d286-468e-85ae-881b1de66133"></div>
+<div class="output_subarea output_javascript ">
+<script type="text/javascript">
+var element = $('#2a1a5540-d286-468e-85ae-881b1de66133');
+require(["https://rawgit.com/caldwell/renderjson/master/renderjson.js"], function() {document.getElementById('f1b0dbae-91af-493e-bd64-05a42b65bf8e').appendChild(renderjson({"RESOLVED_ENTITIES":[{"MATCH_INFO":{"MATCH_LEVEL":1,"MATCH_LEVEL_CODE":"RESOLVED","MATCH_KEY":"+NAME+ADDRESS","MATCH_SCORE":"12","ERRULE_CODE":"CNAME_CFF","REF_SCORE":6,"FEATURE_SCORES":{"ADDRESS":[{"INBOUND_FEAT":"653 STATE ROUTE 7 FRESNO CA 55073-1234","CANDIDATE_FEAT":"653 STATE ROUTE 7 FRESNO CA 55073-1234","FULL_SCORE":100}],"NAME":[{"INBOUND_FEAT":"JANE SMITH","CANDIDATE_FEAT":"JANE SMITH","GNR_FN":100,"GNR_SN":100,"GNR_GN":100,"GENERATION_MATCH":-1,"GNR_ON":-1}]}},"ENTITY":{"RESOLVED_ENTITY":{"ENTITY_ID":1,"LENS_CODE":"DEFAULT","ENTITY_NAME":"JANE SMITH","FEATURES":{"ADDRESS":[{"FEAT_DESC":"653 STATE ROUTE 7 FRESNO CA 55073-1234","LIB_FEAT_ID":2,"UTYPE_CODE":"HOME","FEAT_DESC_VALUES":[{"FEAT_DESC":"653 STATE ROUTE 7 FRESNO CA 55073-1234","LIB_FEAT_ID":2}]}],"NAME":[{"FEAT_DESC":"JANE SMITH","LIB_FEAT_ID":1,"UTYPE_CODE":"PRIMARY","FEAT_DESC_VALUES":[{"FEAT_DESC":"JANE SMITH","LIB_FEAT_ID":1}]}]},"RECORD_SUMMARY":[{"DATA_SOURCE":"TEST","RECORD_COUNT":2,"FIRST_SEEN_DT":"2020-04-10 15:33:00.168","LAST_SEEN_DT":"2020-04-10 15:33:15.839"}],"LAST_SEEN_DT":"2020-04-10 15:33:15.839","RECORDS":[{"JSON_DATA":{"NAME_TYPE":"PRIMARY","NAME_FIRST":"JANE","NAME_LAST":"SMITH","ADDR_TYPE":"HOME","ADDR_LINE1":"653 STATE ROUTE 7","ADDR_CITY":"FRESNO","ADDR_STATE":"CA","ADDR_POSTAL_CODE":"55073-1234","DATA_SOURCE":"TEST","ENTITY_TYPE":"TEST","DSRC_ACTION":"A","LENS_CODE":"DEFAULT","RECORD_ID":"1"},"DATA_SOURCE":"TEST","ENTITY_TYPE":"TEST","ENTITY_KEY":"97E5F9E96060CA35AB3C14D532E2B6EAEBAA99BD","ENTITY_NAME":"JANE SMITH","RECORD_ID":"1","MATCH_KEY":"","MATCH_SCORE":"","ERRULE_CODE":"","REF_SCORE":0,"MATCH_LEVEL":0,"MATCH_LEVEL_CODE":"","LAST_SEEN_DT":"2020-04-10 15:33:15.839","NAME_DATA":["PRIMARY: SMITH JANE"],"ATTRIBUTE_DATA":[],"IDENTIFIER_DATA":[],"ADDRESS_DATA":["HOME: 653 STATE ROUTE 7 FRESNO CA 55073-1234"],"PHONE_DATA":[],"RELATIONSHIP_DATA":[],"ENTITY_DATA":[],"OTHER_DATA":[],"INTERNAL_ID":1,"FEATURES":[{"LIB_FEAT_ID":1,"UTYPE_CODE":"PRIMARY"},{"LIB_FEAT_ID":2,"UTYPE_CODE":"HOME"},{"LIB_FEAT_ID":3},{"LIB_FEAT_ID":4},{"LIB_FEAT_ID":5},{"LIB_FEAT_ID":6}]},{"JSON_DATA":{"NAME_TYPE":"PRIMARY","NAME_FIRST":"JANE","NAME_LAST":"SMITH","ADDR_TYPE":"HOME","ADDR_LINE1":"653 STATE ROUTE 7","ADDR_CITY":"FRESNO","ADDR_STATE":"CA","ADDR_POSTAL_CODE":"55073-1234","DATA_SOURCE":"TEST","ENTITY_TYPE":"TEST","DSRC_ACTION":"A","LENS_CODE":"DEFAULT"},"DATA_SOURCE":"TEST","ENTITY_TYPE":"TEST","ENTITY_KEY":"97E5F9E96060CA35AB3C14D532E2B6EAEBAA99BD","ENTITY_NAME":"JANE SMITH","RECORD_ID":"E8DCD9E0D0494ADCA1A83C035F85ECFA62CE4DB4","MATCH_KEY":"EXACTLY_SAME","MATCH_SCORE":"","ERRULE_CODE":"","REF_SCORE":0,"MATCH_LEVEL":0,"MATCH_LEVEL_CODE":"","LAST_SEEN_DT":"2020-04-10 15:33:15.598","NAME_DATA":["PRIMARY: SMITH JANE"],"ATTRIBUTE_DATA":[],"IDENTIFIER_DATA":[],"ADDRESS_DATA":["HOME: 653 STATE ROUTE 7 FRESNO CA 55073-1234"],"PHONE_DATA":[],"RELATIONSHIP_DATA":[],"ENTITY_DATA":[],"OTHER_DATA":[],"INTERNAL_ID":1,"FEATURES":[{"LIB_FEAT_ID":1,"UTYPE_CODE":"PRIMARY"},{"LIB_FEAT_ID":2,"UTYPE_CODE":"HOME"},{"LIB_FEAT_ID":3},{"LIB_FEAT_ID":4},{"LIB_FEAT_ID":5},{"LIB_FEAT_ID":6}]}]},"RELATED_ENTITIES":[]}}]}))});
+</script>
+</div>
+
 </div>
 
 </div>
@@ -13571,12 +13813,12 @@ document; if an error occurred, an error response is stored here.</li>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-java"><pre><span></span><span class="kt">int</span> <span class="n">return_code</span><span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">purgeRepository</span><span class="p">();</span>
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2engine</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">)</span>
 </pre></div>
@@ -13613,7 +13855,7 @@ document; if an error occurred, an error response is stored here.</li>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-java"><pre><span></span><span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2engine</span><span class="p">.</span><span class="na">destroy</span><span class="p">();</span>
