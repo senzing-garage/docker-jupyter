@@ -122,7 +122,9 @@ RUN chmod -R ug+rw /home/$NB_USER
 # Install nbextensions
  RUN conda install -c conda-forge jupyter_contrib_nbextensions
  RUN jupyter contrib nbextension install --system
- RUN jupyter nbextension enable toc2/main --system
+ RUN jupyter nbextension enable toc2/main --system \
+  && jupyter nbextension enable collapsible_headings/main --system
+
 
 #############################################
 ## User environment setting
