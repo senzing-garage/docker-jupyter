@@ -13312,6 +13312,58 @@ but helps visualize JSON.</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="save">save<a class="anchor-link" href="#save">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">response_bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
+    <span class="n">g2_config</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response_bytearray</span><span class="p">)</span>
+    
+<span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+    
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="load">load<a class="anchor-link" href="#load">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="c1"># example using the saved config from the `save()` method</span>
+    <span class="n">g2_config</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">response_bytearray</span><span class="p">)</span>
+    
+<span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Datasources">Datasources<a class="anchor-link" href="#Datasources">&#182;</a></h2>
 </div>
 </div>
@@ -13319,7 +13371,7 @@ but helps visualize JSON.</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="listDataSources">listDataSources<a class="anchor-link" href="#listDataSources">&#182;</a></h3><p>Call G2Config's <code>listDataSources()</code> method and pretty-printsresults.</p>
+<h3 id="listDataSourcesV2">listDataSourcesV2<a class="anchor-link" href="#listDataSourcesV2">&#182;</a></h3><p>Call G2Config's <code>listDataSourcesV2()</code> method and pretty-printsresults.</p>
 <p>Details at <a href="senzing-G2Config-reference.ipynb#listDataSources">G2Config.listDataSources</a>.</p>
 
 </div>
@@ -13334,11 +13386,11 @@ but helps visualize JSON.</p>
     <span class="n">response_bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
 
     <span class="n">g2_config</span><span class="o">.</span><span class="n">listDataSourcesV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response_bytearray</span><span class="p">)</span>
-
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="p">)</span>
     
 <span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13349,7 +13401,7 @@ but helps visualize JSON.</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="addDataSource">addDataSource<a class="anchor-link" href="#addDataSource">&#182;</a></h3><p>Call G2Config's <code>addDataSource()</code> method and pretty-prints results.</p>
+<h3 id="addDataSourceV2">addDataSourceV2<a class="anchor-link" href="#addDataSourceV2">&#182;</a></h3><p>Call G2Config's <code>addDataSourceV2()</code> method and pretty-prints results.</p>
 <p>Details at <a href="senzing-G2Config-reference.ipynb#addDataSource">G2Config.addDataSource</a>.</p>
 
 </div>
@@ -13369,6 +13421,8 @@ but helps visualize JSON.</p>
     
 <span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13379,7 +13433,37 @@ but helps visualize JSON.</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="listDataSources-again">listDataSources again<a class="anchor-link" href="#listDataSources-again">&#182;</a></h3><p>Call G2Config's <code>listDataSources()</code> method and pretty-prints results.
+<h3 id="addDataSourceWithID">addDataSourceWithID<a class="anchor-link" href="#addDataSourceWithID">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">datasource_json</span> <span class="o">=</span> <span class="s2">&quot;{</span><span class="se">\&quot;</span><span class="s2">DSRC_CODE</span><span class="se">\&quot;</span><span class="s2">: </span><span class="se">\&quot;</span><span class="s2">CUSTOMER</span><span class="se">\&quot;</span><span class="s2">}&quot;</span> 
+
+    <span class="n">response_bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
+    
+    <span class="nb">id</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="n">g2_config</span><span class="o">.</span><span class="n">addDataSourceWithID</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">datasource_json</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span>
+    
+<span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="listDataSources-again">listDataSources again<a class="anchor-link" href="#listDataSources-again">&#182;</a></h3><p>Call G2Config's <code>listDataSourcesV2()</code> method and pretty-prints results.
 Notice that the list now contains the newly added datasource_code of "CUSTOMER".</p>
 <p>Details at <a href="senzing-G2Config-reference.ipynb#listDataSources">G2Config.listDataSources</a>.</p>
 
@@ -13415,7 +13499,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="listEntityClasses">listEntityClasses<a class="anchor-link" href="#listEntityClasses">&#182;</a></h3><p>Calls G2Config's <code>listEntityClassesV2()</code> method and pretty-prints results.</p>
+<h3 id="listEntityClassesV2">listEntityClassesV2<a class="anchor-link" href="#listEntityClassesV2">&#182;</a></h3><p>Calls G2Config's <code>listEntityClassesV2()</code> method and pretty-prints results.</p>
 
 </div>
 </div>
@@ -13429,11 +13513,11 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
     <span class="n">response_bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
 
     <span class="n">g2_config</span><span class="o">.</span><span class="n">listEntityClassesV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response_bytearray</span><span class="p">)</span>
-
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
     
 <span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+    
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -13444,7 +13528,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="listEntityTypes">listEntityTypes<a class="anchor-link" href="#listEntityTypes">&#182;</a></h3><p>Calls G2Config's <code>listEntityTypesV2()</code> method and pretty-prints results.</p>
+<h3 id="listEntityTypesV2">listEntityTypesV2<a class="anchor-link" href="#listEntityTypesV2">&#182;</a></h3><p>Calls G2Config's <code>listEntityTypesV2()</code> method and pretty-prints results.</p>
 
 </div>
 </div>
@@ -13458,11 +13542,11 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
     <span class="n">response_bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
 
     <span class="n">g2_config</span><span class="o">.</span><span class="n">listEntityTypesV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response_bytearray</span><span class="p">)</span>
-
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
     
 <span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+    
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -13473,7 +13557,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="addEntityClass">addEntityClass<a class="anchor-link" href="#addEntityClass">&#182;</a></h3>
+<h3 id="addEntityClassV2">addEntityClassV2<a class="anchor-link" href="#addEntityClassV2">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -13487,11 +13571,11 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
     <span class="n">response_bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
 
     <span class="n">g2_config</span><span class="o">.</span><span class="n">addEntityClassV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">entityclass_json</span><span class="p">,</span> <span class="n">response_bytearray</span><span class="p">)</span>
-
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
     
 <span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+    
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -13516,7 +13600,6 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 
     <span class="n">g2_config</span><span class="o">.</span><span class="n">listEntityClassesV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response_bytearray</span><span class="p">)</span>
 
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
     
 <span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
@@ -13530,7 +13613,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="addEntityType">addEntityType<a class="anchor-link" href="#addEntityType">&#182;</a></h3>
+<h3 id="addEntityTypeV2">addEntityTypeV2<a class="anchor-link" href="#addEntityTypeV2">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -13544,11 +13627,11 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
     <span class="n">response_bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
 
     <span class="n">g2_config</span><span class="o">.</span><span class="n">addEntityTypeV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">entitytype_json</span><span class="p">,</span> <span class="n">response_bytearray</span><span class="p">)</span>
-
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
     
 <span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+    
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -13572,11 +13655,11 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
     <span class="n">response_bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
 
     <span class="n">g2_config</span><span class="o">.</span><span class="n">listEntityTypesV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response_bytearray</span><span class="p">)</span>
-
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
     
 <span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+    
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -13587,7 +13670,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="deleteEntityClasses">deleteEntityClasses<a class="anchor-link" href="#deleteEntityClasses">&#182;</a></h3>
+<h3 id="deleteEntityClassesV2">deleteEntityClassesV2<a class="anchor-link" href="#deleteEntityClassesV2">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -13613,7 +13696,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="deleteEntityTypes">deleteEntityTypes<a class="anchor-link" href="#deleteEntityTypes">&#182;</a></h3>
+<h3 id="deleteEntityTypesV2">deleteEntityTypesV2<a class="anchor-link" href="#deleteEntityTypesV2">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -13646,7 +13729,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="listFeatureElements">listFeatureElements<a class="anchor-link" href="#listFeatureElements">&#182;</a></h3>
+<h3 id="listFeatureElementsV2">listFeatureElementsV2<a class="anchor-link" href="#listFeatureElementsV2">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -13659,11 +13742,11 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
     <span class="n">response_bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
 
     <span class="n">g2_config</span><span class="o">.</span><span class="n">listFeatureElementsV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response_bytearray</span><span class="p">)</span>
-
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
     
 <span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+    
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -13674,7 +13757,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="getFeatureElement">getFeatureElement<a class="anchor-link" href="#getFeatureElement">&#182;</a></h3>
+<h3 id="getFeatureElementV2">getFeatureElementV2<a class="anchor-link" href="#getFeatureElementV2">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -13688,11 +13771,11 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
     <span class="n">featureElm_json</span><span class="o">=</span><span class="s2">&quot;{</span><span class="se">\&quot;</span><span class="s2">FELEM_CODE</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="s2">GIVEN_NAME</span><span class="se">\&quot;</span><span class="s2">}&quot;</span>
 
     <span class="n">g2_config</span><span class="o">.</span><span class="n">getFeatureElementV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureElm_json</span><span class="p">,</span> <span class="n">response_bytearray</span><span class="p">)</span>
-
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
     
 <span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+    
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -13703,7 +13786,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="addFeatureElement">addFeatureElement<a class="anchor-link" href="#addFeatureElement">&#182;</a></h3>
+<h3 id="addFeatureElementV2">addFeatureElementV2<a class="anchor-link" href="#addFeatureElementV2">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -13717,11 +13800,11 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
     <span class="n">featureElm_json</span> <span class="o">=</span> <span class="s2">&quot;{</span><span class="se">\&quot;</span><span class="s2">FELEM_CODE</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="s2">myNewFelem</span><span class="se">\&quot;</span><span class="s2">,</span><span class="se">\&quot;</span><span class="s2">FELEM_ID</span><span class="se">\&quot;</span><span class="s2">:789,</span><span class="se">\&quot;</span><span class="s2">TOKENIZE</span><span class="se">\&quot;</span><span class="s2">:1,</span><span class="se">\&quot;</span><span class="s2">DATA_TYPE</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="s2">string</span><span class="se">\&quot;</span><span class="s2">}&quot;</span>
 
     <span class="n">g2_config</span><span class="o">.</span><span class="n">addFeatureElementV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureElm_json</span><span class="p">,</span> <span class="n">response_bytearray</span><span class="p">)</span>
-
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
     
 <span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+    
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -13732,7 +13815,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="deleteFeatureElement">deleteFeatureElement<a class="anchor-link" href="#deleteFeatureElement">&#182;</a></h3>
+<h3 id="deleteFeatureElementV2">deleteFeatureElementV2<a class="anchor-link" href="#deleteFeatureElementV2">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -13757,7 +13840,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="listFeatureClasses">listFeatureClasses<a class="anchor-link" href="#listFeatureClasses">&#182;</a></h3>
+<h3 id="listFeatureClassesV2">listFeatureClassesV2<a class="anchor-link" href="#listFeatureClassesV2">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -13770,11 +13853,11 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
     <span class="n">response_bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
 
     <span class="n">g2_config</span><span class="o">.</span><span class="n">listFeatureClassesV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response_bytearray</span><span class="p">)</span>
-
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
     
 <span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+    
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -13785,7 +13868,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="listFeatures">listFeatures<a class="anchor-link" href="#listFeatures">&#182;</a></h3>
+<h3 id="listFeaturesV2">listFeaturesV2<a class="anchor-link" href="#listFeaturesV2">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -13798,11 +13881,11 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
     <span class="n">response_bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
 
     <span class="n">g2_config</span><span class="o">.</span><span class="n">listFeaturesV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response_bytearray</span><span class="p">)</span>
-
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
     
 <span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+    
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -13813,7 +13896,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="getFeature">getFeature<a class="anchor-link" href="#getFeature">&#182;</a></h3>
+<h3 id="getFeatureV2">getFeatureV2<a class="anchor-link" href="#getFeatureV2">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -13826,11 +13909,11 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
     <span class="n">response_bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
     <span class="n">feature_json</span> <span class="o">=</span>  <span class="s2">&quot;{</span><span class="se">\&quot;</span><span class="s2">FTYPE_CODE</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="s2">name</span><span class="se">\&quot;</span><span class="s2">}&quot;</span>
     <span class="n">g2_config</span><span class="o">.</span><span class="n">getFeatureV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">feature_json</span><span class="p">,</span> <span class="n">response_bytearray</span><span class="p">)</span>
-
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
     
 <span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+    
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -13841,7 +13924,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="addFeature">addFeature<a class="anchor-link" href="#addFeature">&#182;</a></h3>
+<h3 id="addFeatureV2">addFeatureV2<a class="anchor-link" href="#addFeatureV2">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -13855,11 +13938,11 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
     <span class="n">feature_json</span> <span class="o">=</span> <span class="s2">&quot;{</span><span class="se">\&quot;</span><span class="s2">FTYPE_CODE</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="s2">myNewFtype</span><span class="se">\&quot;</span><span class="s2">,</span><span class="se">\&quot;</span><span class="s2">FTYPE_ID</span><span class="se">\&quot;</span><span class="s2">:789,</span><span class="se">\&quot;</span><span class="s2">FCLASS_CODE</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="s2">ELECTED_ID</span><span class="se">\&quot;</span><span class="s2">,</span><span class="se">\&quot;</span><span class="s2">FTYPE_FREQ</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="s2">FF</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">FEATURE_ELEMENTS</span><span class="se">\&quot;</span><span class="s2">:[{</span><span class="se">\&quot;</span><span class="s2">FELEM_CODE</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="s2">expression</span><span class="se">\&quot;</span><span class="s2">}]}&quot;</span>
 
     <span class="n">g2_config</span><span class="o">.</span><span class="n">addFeatureV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">feature_json</span><span class="p">,</span> <span class="n">response_bytearray</span><span class="p">)</span>
-
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
     
 <span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+    
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -13870,7 +13953,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="deleteFeature">deleteFeature<a class="anchor-link" href="#deleteFeature">&#182;</a></h3>
+<h3 id="deleteFeatureV2">deleteFeatureV2<a class="anchor-link" href="#deleteFeatureV2">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -13895,7 +13978,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="addElementToFeature">addElementToFeature<a class="anchor-link" href="#addElementToFeature">&#182;</a></h3>
+<h3 id="addElementToFeatureV2">addElementToFeatureV2<a class="anchor-link" href="#addElementToFeatureV2">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -13920,7 +14003,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="deleteElementFromFeature">deleteElementFromFeature<a class="anchor-link" href="#deleteElementFromFeature">&#182;</a></h3>
+<h3 id="deleteElementFromFeatureV2">deleteElementFromFeatureV2<a class="anchor-link" href="#deleteElementFromFeatureV2">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -13953,7 +14036,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="listFeatureStandardizationFunctions">listFeatureStandardizationFunctions<a class="anchor-link" href="#listFeatureStandardizationFunctions">&#182;</a></h4>
+<h4 id="listFeatureStandardizationFunctionsV2">listFeatureStandardizationFunctionsV2<a class="anchor-link" href="#listFeatureStandardizationFunctionsV2">&#182;</a></h4>
 </div>
 </div>
 </div>
@@ -13966,11 +14049,11 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
     <span class="n">response_bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
 
     <span class="n">g2_config</span><span class="o">.</span><span class="n">listFeatureStandardizationFunctionsV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response_bytearray</span><span class="p">)</span>
-
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
     
 <span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+    
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -13981,7 +14064,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="listFeaturesStandardizationFunctionCalls">listFeaturesStandardizationFunctionCalls<a class="anchor-link" href="#listFeaturesStandardizationFunctionCalls">&#182;</a></h4>
+<h4 id="listFeaturesStandardizationFunctionCallsV2">listFeaturesStandardizationFunctionCallsV2<a class="anchor-link" href="#listFeaturesStandardizationFunctionCallsV2">&#182;</a></h4>
 </div>
 </div>
 </div>
@@ -13994,11 +14077,11 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
     <span class="n">response_bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
 
     <span class="n">g2_config</span><span class="o">.</span><span class="n">listFeatureStandardizationFunctionCallsV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response_bytearray</span><span class="p">)</span>
-
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
     
 <span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+    
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -14009,7 +14092,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="getFeatureStandardizationFunctionCall">getFeatureStandardizationFunctionCall<a class="anchor-link" href="#getFeatureStandardizationFunctionCall">&#182;</a></h4>
+<h4 id="getFeatureStandardizationFunctionCallV2">getFeatureStandardizationFunctionCallV2<a class="anchor-link" href="#getFeatureStandardizationFunctionCallV2">&#182;</a></h4>
 </div>
 </div>
 </div>
@@ -14022,11 +14105,11 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
     <span class="n">response_bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
     <span class="n">featureStandard_json</span> <span class="o">=</span> <span class="s2">&quot;{</span><span class="se">\&quot;</span><span class="s2">SFCALL_ID</span><span class="se">\&quot;</span><span class="s2">:4}&quot;</span>
     <span class="n">g2_config</span><span class="o">.</span><span class="n">getFeatureStandardizationFunctionCallV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureStandard_json</span><span class="p">,</span> <span class="n">response_bytearray</span><span class="p">)</span>
-
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
     
 <span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+    
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -14037,7 +14120,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="addFeatureStandardizationFunctionCall">addFeatureStandardizationFunctionCall<a class="anchor-link" href="#addFeatureStandardizationFunctionCall">&#182;</a></h4>
+<h4 id="addFeatureStandardizationFunctionCallV2">addFeatureStandardizationFunctionCallV2<a class="anchor-link" href="#addFeatureStandardizationFunctionCallV2">&#182;</a></h4>
 </div>
 </div>
 </div>
@@ -14050,11 +14133,11 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
     <span class="n">response_bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
     <span class="n">featureStandard_json</span> <span class="o">=</span> <span class="s2">&quot;{</span><span class="se">\&quot;</span><span class="s2">FTYPE_CODE</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="s2">veh_vin</span><span class="se">\&quot;</span><span class="s2">,</span><span class="se">\&quot;</span><span class="s2">SFCALL_ID</span><span class="se">\&quot;</span><span class="s2">:789,</span><span class="se">\&quot;</span><span class="s2">SFUNC_CODE</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="s2">PARSE_ID</span><span class="se">\&quot;</span><span class="s2">,</span><span class="se">\&quot;</span><span class="s2">EXEC_ORDER</span><span class="se">\&quot;</span><span class="s2">:15}&quot;</span>
     <span class="n">g2_config</span><span class="o">.</span><span class="n">addFeatureStandardizationFunctionCallV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureStandard_json</span><span class="p">,</span> <span class="n">response_bytearray</span><span class="p">)</span>
-
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
     
 <span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+    
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -14065,7 +14148,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="deleteFeatureStandardizationFunctionCall">deleteFeatureStandardizationFunctionCall<a class="anchor-link" href="#deleteFeatureStandardizationFunctionCall">&#182;</a></h4>
+<h4 id="deleteFeatureStandardizationFunctionCallV2">deleteFeatureStandardizationFunctionCallV2<a class="anchor-link" href="#deleteFeatureStandardizationFunctionCallV2">&#182;</a></h4>
 </div>
 </div>
 </div>
@@ -14098,7 +14181,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="listFeatureExpressionFunctions">listFeatureExpressionFunctions<a class="anchor-link" href="#listFeatureExpressionFunctions">&#182;</a></h4>
+<h4 id="listFeatureExpressionFunctionsV2">listFeatureExpressionFunctionsV2<a class="anchor-link" href="#listFeatureExpressionFunctionsV2">&#182;</a></h4>
 </div>
 </div>
 </div>
@@ -14110,11 +14193,11 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">try</span><span class="p">:</span>
     <span class="n">response_bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
     <span class="n">g2_config</span><span class="o">.</span><span class="n">listFeatureExpressionFunctionsV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response_bytearray</span><span class="p">)</span>
-
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
     
 <span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+    
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -14125,7 +14208,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="listFeatureExpressionFunctionCalls">listFeatureExpressionFunctionCalls<a class="anchor-link" href="#listFeatureExpressionFunctionCalls">&#182;</a></h4>
+<h4 id="listFeatureExpressionFunctionCallsV2">listFeatureExpressionFunctionCallsV2<a class="anchor-link" href="#listFeatureExpressionFunctionCallsV2">&#182;</a></h4>
 </div>
 </div>
 </div>
@@ -14138,11 +14221,11 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
     <span class="n">response_bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
 
     <span class="n">g2_config</span><span class="o">.</span><span class="n">listFeatureExpressionFunctionCallsV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response_bytearray</span><span class="p">)</span>
-
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
     
 <span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+    
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -14153,7 +14236,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="getFeatureExpressionFunctionCall">getFeatureExpressionFunctionCall<a class="anchor-link" href="#getFeatureExpressionFunctionCall">&#182;</a></h4>
+<h4 id="getFeatureExpressionFunctionCallV2">getFeatureExpressionFunctionCallV2<a class="anchor-link" href="#getFeatureExpressionFunctionCallV2">&#182;</a></h4>
 </div>
 </div>
 </div>
@@ -14166,11 +14249,11 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
     <span class="n">response_bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
     <span class="n">featureExpress_json</span> <span class="o">=</span> <span class="s2">&quot;{</span><span class="se">\&quot;</span><span class="s2">EFCALL_ID</span><span class="se">\&quot;</span><span class="s2">:1}&quot;</span>
     <span class="n">g2_config</span><span class="o">.</span><span class="n">getFeatureExpressionFunctionCallV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureExpress_json</span><span class="p">,</span> <span class="n">response_bytearray</span><span class="p">)</span>
-
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
     
 <span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+    
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -14181,7 +14264,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="addFeatureExpressionFunctionCall">addFeatureExpressionFunctionCall<a class="anchor-link" href="#addFeatureExpressionFunctionCall">&#182;</a></h4>
+<h4 id="addFeatureExpressionFunctionCallV2">addFeatureExpressionFunctionCallV2<a class="anchor-link" href="#addFeatureExpressionFunctionCallV2">&#182;</a></h4>
 </div>
 </div>
 </div>
@@ -14194,11 +14277,11 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
     <span class="n">response_bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
     <span class="n">featureExpress_json</span> <span class="o">=</span> <span class="s2">&quot;{</span><span class="se">\&quot;</span><span class="s2">FTYPE_CODE</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="s2">veh_vin</span><span class="se">\&quot;</span><span class="s2">,</span><span class="se">\&quot;</span><span class="s2">EFCALL_ID</span><span class="se">\&quot;</span><span class="s2">:789,</span><span class="se">\&quot;</span><span class="s2">EFUNC_CODE</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="s2">EXPRESS_ID</span><span class="se">\&quot;</span><span class="s2">,</span><span class="se">\&quot;</span><span class="s2">EXEC_ORDER</span><span class="se">\&quot;</span><span class="s2">:15, </span><span class="se">\&quot;</span><span class="s2">BOM_ELEMENTS</span><span class="se">\&quot;</span><span class="s2">:[{</span><span class="se">\&quot;</span><span class="s2">FTYPE_CODE</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="s2">veh_vin</span><span class="se">\&quot;</span><span class="s2">,</span><span class="se">\&quot;</span><span class="s2">FELEM_CODE</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="s2">id_num</span><span class="se">\&quot;</span><span class="s2">,</span><span class="se">\&quot;</span><span class="s2">REQUIRED</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="s2">Yes</span><span class="se">\&quot;</span><span class="s2">}]}&quot;</span>
     <span class="n">g2_config</span><span class="o">.</span><span class="n">addFeatureExpressionFunctionCallV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureExpress_json</span><span class="p">,</span> <span class="n">response_bytearray</span><span class="p">)</span>
-
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
     
 <span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+    
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -14209,7 +14292,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="addFeatureExpressionFunctionCallElement">addFeatureExpressionFunctionCallElement<a class="anchor-link" href="#addFeatureExpressionFunctionCallElement">&#182;</a></h4>
+<h4 id="addFeatureExpressionFunctionCallElementV2">addFeatureExpressionFunctionCallElementV2<a class="anchor-link" href="#addFeatureExpressionFunctionCallElementV2">&#182;</a></h4>
 </div>
 </div>
 </div>
@@ -14234,7 +14317,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="deleteFeatureExpressionFunctionCallElement">deleteFeatureExpressionFunctionCallElement<a class="anchor-link" href="#deleteFeatureExpressionFunctionCallElement">&#182;</a></h4>
+<h4 id="deleteFeatureExpressionFunctionCallElementV2">deleteFeatureExpressionFunctionCallElementV2<a class="anchor-link" href="#deleteFeatureExpressionFunctionCallElementV2">&#182;</a></h4>
 </div>
 </div>
 </div>
@@ -14259,7 +14342,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="deleteFeatureExpressionFunctionCall">deleteFeatureExpressionFunctionCall<a class="anchor-link" href="#deleteFeatureExpressionFunctionCall">&#182;</a></h4>
+<h4 id="deleteFeatureExpressionFunctionCallV2">deleteFeatureExpressionFunctionCallV2<a class="anchor-link" href="#deleteFeatureExpressionFunctionCallV2">&#182;</a></h4>
 </div>
 </div>
 </div>
@@ -14292,7 +14375,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="listFeatureComparisonFunctions">listFeatureComparisonFunctions<a class="anchor-link" href="#listFeatureComparisonFunctions">&#182;</a></h4>
+<h4 id="listFeatureComparisonFunctionsV2">listFeatureComparisonFunctionsV2<a class="anchor-link" href="#listFeatureComparisonFunctionsV2">&#182;</a></h4>
 </div>
 </div>
 </div>
@@ -14306,10 +14389,10 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 
     <span class="n">g2_config</span><span class="o">.</span><span class="n">listFeatureComparisonFunctionsV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response_bytearray</span><span class="p">)</span>
 
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
-
 <span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+    
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -14320,7 +14403,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="listFeatureComparisonFunctionCalls">listFeatureComparisonFunctionCalls<a class="anchor-link" href="#listFeatureComparisonFunctionCalls">&#182;</a></h4>
+<h4 id="listFeatureComparisonFunctionCallsV2">listFeatureComparisonFunctionCallsV2<a class="anchor-link" href="#listFeatureComparisonFunctionCallsV2">&#182;</a></h4>
 </div>
 </div>
 </div>
@@ -14333,11 +14416,11 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
     <span class="n">response_bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
 
     <span class="n">g2_config</span><span class="o">.</span><span class="n">listFeatureComparisonFunctionCallsV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response_bytearray</span><span class="p">)</span>
-
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
     
 <span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+    
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -14348,7 +14431,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="getFeatureComparisonFunctionCall">getFeatureComparisonFunctionCall<a class="anchor-link" href="#getFeatureComparisonFunctionCall">&#182;</a></h4>
+<h4 id="getFeatureComparisonFunctionCallV2">getFeatureComparisonFunctionCallV2<a class="anchor-link" href="#getFeatureComparisonFunctionCallV2">&#182;</a></h4>
 </div>
 </div>
 </div>
@@ -14361,11 +14444,11 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
     <span class="n">response_bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
     <span class="n">featureCompFunc_json</span> <span class="o">=</span> <span class="s2">&quot;{</span><span class="se">\&quot;</span><span class="s2">CFCALL_ID</span><span class="se">\&quot;</span><span class="s2">:2}&quot;</span>
     <span class="n">g2_config</span><span class="o">.</span><span class="n">getFeatureComparisonFunctionCallV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureCompFunc_json</span><span class="p">,</span> <span class="n">response_bytearray</span><span class="p">)</span>
-
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
     
 <span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+    
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -14376,7 +14459,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="addFeatureComparisonFunctionCall">addFeatureComparisonFunctionCall<a class="anchor-link" href="#addFeatureComparisonFunctionCall">&#182;</a></h4>
+<h4 id="addFeatureComparisonFunctionCallV2">addFeatureComparisonFunctionCallV2<a class="anchor-link" href="#addFeatureComparisonFunctionCallV2">&#182;</a></h4>
 </div>
 </div>
 </div>
@@ -14389,11 +14472,11 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
     <span class="n">response_bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
     <span class="n">featureCompFunc_json</span> <span class="o">=</span> <span class="s2">&quot;{</span><span class="se">\&quot;</span><span class="s2">FTYPE_CODE</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="s2">name_key</span><span class="se">\&quot;</span><span class="s2">,</span><span class="se">\&quot;</span><span class="s2">CFCALL_ID</span><span class="se">\&quot;</span><span class="s2">:789,</span><span class="se">\&quot;</span><span class="s2">CFUNC_CODE</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="s2">ID_COMP</span><span class="se">\&quot;</span><span class="s2">,</span><span class="se">\&quot;</span><span class="s2">EXEC_ORDER</span><span class="se">\&quot;</span><span class="s2">:15, </span><span class="se">\&quot;</span><span class="s2">BOM_ELEMENTS</span><span class="se">\&quot;</span><span class="s2">:[{</span><span class="se">\&quot;</span><span class="s2">FELEM_CODE</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="s2">expression</span><span class="se">\&quot;</span><span class="s2">}]}&quot;</span>
     <span class="n">g2_config</span><span class="o">.</span><span class="n">addFeatureComparisonFunctionCallV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureCompFunc_json</span><span class="p">,</span> <span class="n">response_bytearray</span><span class="p">)</span>
-
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
     
 <span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+    
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -14404,7 +14487,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="deleteFeatureComparisonFunctionCall">deleteFeatureComparisonFunctionCall<a class="anchor-link" href="#deleteFeatureComparisonFunctionCall">&#182;</a></h4>
+<h4 id="deleteFeatureComparisonFunctionCallV2">deleteFeatureComparisonFunctionCallV2<a class="anchor-link" href="#deleteFeatureComparisonFunctionCallV2">&#182;</a></h4>
 </div>
 </div>
 </div>
@@ -14430,7 +14513,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="addFeatureComparsionFunctionCallElement">addFeatureComparsionFunctionCallElement<a class="anchor-link" href="#addFeatureComparsionFunctionCallElement">&#182;</a></h4>
+<h4 id="addFeatureComparsionFunctionCallElementV2">addFeatureComparsionFunctionCallElementV2<a class="anchor-link" href="#addFeatureComparsionFunctionCallElementV2">&#182;</a></h4>
 </div>
 </div>
 </div>
@@ -14455,7 +14538,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="deleteFeatureComparsionFunctionCallElement">deleteFeatureComparsionFunctionCallElement<a class="anchor-link" href="#deleteFeatureComparsionFunctionCallElement">&#182;</a></h4>
+<h4 id="deleteFeatureComparsionFunctionCallElementV2">deleteFeatureComparsionFunctionCallElementV2<a class="anchor-link" href="#deleteFeatureComparsionFunctionCallElementV2">&#182;</a></h4>
 </div>
 </div>
 </div>
@@ -14487,7 +14570,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="listFeatureDistinctFunctions">listFeatureDistinctFunctions<a class="anchor-link" href="#listFeatureDistinctFunctions">&#182;</a></h4>
+<h4 id="listFeatureDistinctFunctionsV2">listFeatureDistinctFunctionsV2<a class="anchor-link" href="#listFeatureDistinctFunctionsV2">&#182;</a></h4>
 </div>
 </div>
 </div>
@@ -14500,11 +14583,11 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
     <span class="n">response_bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
 
     <span class="n">g2_config</span><span class="o">.</span><span class="n">listFeatureDistinctFunctionsV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response_bytearray</span><span class="p">)</span>
-
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
     
 <span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+    
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -14515,7 +14598,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="listFeatureDistinctFunctionCalls">listFeatureDistinctFunctionCalls<a class="anchor-link" href="#listFeatureDistinctFunctionCalls">&#182;</a></h4>
+<h4 id="listFeatureDistinctFunctionCallsV2">listFeatureDistinctFunctionCallsV2<a class="anchor-link" href="#listFeatureDistinctFunctionCallsV2">&#182;</a></h4>
 </div>
 </div>
 </div>
@@ -14528,11 +14611,11 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
     <span class="n">response_bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
 
     <span class="n">g2_config</span><span class="o">.</span><span class="n">listFeatureDistinctFunctionCallsV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response_bytearray</span><span class="p">)</span>
-
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
     
 <span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+    
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -14543,7 +14626,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="getFeatureDistinctFunctionCall">getFeatureDistinctFunctionCall<a class="anchor-link" href="#getFeatureDistinctFunctionCall">&#182;</a></h4>
+<h4 id="getFeatureDistinctFunctionCallV2">getFeatureDistinctFunctionCallV2<a class="anchor-link" href="#getFeatureDistinctFunctionCallV2">&#182;</a></h4>
 </div>
 </div>
 </div>
@@ -14556,11 +14639,11 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
     <span class="n">response_bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
     <span class="n">featureFunc_json</span> <span class="o">=</span>  <span class="s2">&quot;{</span><span class="se">\&quot;</span><span class="s2">DFCALL_ID</span><span class="se">\&quot;</span><span class="s2">:2}&quot;</span>
     <span class="n">g2_config</span><span class="o">.</span><span class="n">getFeatureDistinctFunctionCallV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureFunc_json</span><span class="p">,</span> <span class="n">response_bytearray</span><span class="p">)</span>
-
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
     
 <span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+    
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -14571,7 +14654,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="addFeatureDistinctFunctionCall">addFeatureDistinctFunctionCall<a class="anchor-link" href="#addFeatureDistinctFunctionCall">&#182;</a></h4>
+<h4 id="addFeatureDistinctFunctionCallV2">addFeatureDistinctFunctionCallV2<a class="anchor-link" href="#addFeatureDistinctFunctionCallV2">&#182;</a></h4>
 </div>
 </div>
 </div>
@@ -14584,11 +14667,11 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
     <span class="n">response_bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
     <span class="n">featureFunc_json</span> <span class="o">=</span> <span class="s2">&quot;{</span><span class="se">\&quot;</span><span class="s2">FTYPE_CODE</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="s2">name_key</span><span class="se">\&quot;</span><span class="s2">,</span><span class="se">\&quot;</span><span class="s2">DFCALL_ID</span><span class="se">\&quot;</span><span class="s2">:789,</span><span class="se">\&quot;</span><span class="s2">DFUNC_CODE</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="s2">FELEM_STRICT_SUBSET</span><span class="se">\&quot;</span><span class="s2">,</span><span class="se">\&quot;</span><span class="s2">EXEC_ORDER</span><span class="se">\&quot;</span><span class="s2">:15, </span><span class="se">\&quot;</span><span class="s2">BOM_ELEMENTS</span><span class="se">\&quot;</span><span class="s2">:[{</span><span class="se">\&quot;</span><span class="s2">FELEM_CODE</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="s2">expression</span><span class="se">\&quot;</span><span class="s2">}]}&quot;</span>
     <span class="n">g2_config</span><span class="o">.</span><span class="n">addFeatureDistinctFunctionCallV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureFunc_json</span><span class="p">,</span> <span class="n">response_bytearray</span><span class="p">)</span>
-
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
     
 <span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+    
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -14599,7 +14682,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="deleteFeatureDistinctFunctionCall">deleteFeatureDistinctFunctionCall<a class="anchor-link" href="#deleteFeatureDistinctFunctionCall">&#182;</a></h4>
+<h4 id="deleteFeatureDistinctFunctionCallV2">deleteFeatureDistinctFunctionCallV2<a class="anchor-link" href="#deleteFeatureDistinctFunctionCallV2">&#182;</a></h4>
 </div>
 </div>
 </div>
@@ -14624,7 +14707,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="addFeatureDistinctFunctionCallElement">addFeatureDistinctFunctionCallElement<a class="anchor-link" href="#addFeatureDistinctFunctionCallElement">&#182;</a></h4>
+<h4 id="addFeatureDistinctFunctionCallElementV2">addFeatureDistinctFunctionCallElementV2<a class="anchor-link" href="#addFeatureDistinctFunctionCallElementV2">&#182;</a></h4>
 </div>
 </div>
 </div>
@@ -14649,7 +14732,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="deleteFeatureDistinctFunctionCallElement">deleteFeatureDistinctFunctionCallElement<a class="anchor-link" href="#deleteFeatureDistinctFunctionCallElement">&#182;</a></h4>
+<h4 id="deleteFeatureDistinctFunctionCallElementV2">deleteFeatureDistinctFunctionCallElementV2<a class="anchor-link" href="#deleteFeatureDistinctFunctionCallElementV2">&#182;</a></h4>
 </div>
 </div>
 </div>
@@ -14681,7 +14764,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="listAttributeClasses">listAttributeClasses<a class="anchor-link" href="#listAttributeClasses">&#182;</a></h3>
+<h3 id="listAttributeClassesV2">listAttributeClassesV2<a class="anchor-link" href="#listAttributeClassesV2">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -14694,11 +14777,11 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
     <span class="n">response_bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
 
     <span class="n">g2_config</span><span class="o">.</span><span class="n">listAttributeClassesV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response_bytearray</span><span class="p">)</span>
-
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
     
 <span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+    
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -14709,7 +14792,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="listAttributes">listAttributes<a class="anchor-link" href="#listAttributes">&#182;</a></h3>
+<h3 id="listAttributesV2">listAttributesV2<a class="anchor-link" href="#listAttributesV2">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -14722,11 +14805,11 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
     <span class="n">response_bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
 
     <span class="n">g2_config</span><span class="o">.</span><span class="n">listAttributesV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response_bytearray</span><span class="p">)</span>
-
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
     
 <span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+    
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -14737,7 +14820,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="getAttribute">getAttribute<a class="anchor-link" href="#getAttribute">&#182;</a></h3>
+<h3 id="getAttributeV2">getAttributeV2<a class="anchor-link" href="#getAttributeV2">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -14750,11 +14833,11 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
     <span class="n">response_bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
     <span class="n">input_json</span> <span class="o">=</span> <span class="s2">&quot;{</span><span class="se">\&quot;</span><span class="s2">ATTR_CODE</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="s2">DATA_SOURCE</span><span class="se">\&quot;</span><span class="s2">}&quot;</span>
     <span class="n">g2_config</span><span class="o">.</span><span class="n">getAttributeV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">input_json</span><span class="p">,</span> <span class="n">response_bytearray</span><span class="p">)</span>
-
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
     
 <span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+    
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -14765,7 +14848,7 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="addAttribute">addAttribute<a class="anchor-link" href="#addAttribute">&#182;</a></h3>
+<h3 id="addAttributeV2">addAttributeV2<a class="anchor-link" href="#addAttributeV2">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -14778,8 +14861,33 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
     <span class="n">response_bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
     <span class="n">attr_json</span> <span class="o">=</span> <span class="s2">&quot;{</span><span class="se">\&quot;</span><span class="s2">ATTR_CODE</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="s2">myNewAttr</span><span class="se">\&quot;</span><span class="s2">,</span><span class="se">\&quot;</span><span class="s2">ATTR_ID</span><span class="se">\&quot;</span><span class="s2">:789,</span><span class="se">\&quot;</span><span class="s2">ATTR_CLASS</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="s2">attribute</span><span class="se">\&quot;</span><span class="s2">,</span><span class="se">\&quot;</span><span class="s2">FTYPE_CODE</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="s2">name_key</span><span class="se">\&quot;</span><span class="s2">,</span><span class="se">\&quot;</span><span class="s2">FELEM_CODE</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="s2">latitude</span><span class="se">\&quot;</span><span class="s2">,</span><span class="se">\&quot;</span><span class="s2">FELEM_REQ</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="s2">myReqValue</span><span class="se">\&quot;</span><span class="s2">,</span><span class="se">\&quot;</span><span class="s2">DEFAULT_VALUE</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="s2">myDefault</span><span class="se">\&quot;</span><span class="s2">,</span><span class="se">\&quot;</span><span class="s2">ADVANCED</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="s2">Y</span><span class="se">\&quot;</span><span class="s2">,</span><span class="se">\&quot;</span><span class="s2">INTERNAL</span><span class="se">\&quot;</span><span class="s2">:1}&quot;</span>
     <span class="n">g2_config</span><span class="o">.</span><span class="n">addAttributeV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">attr_json</span><span class="p">,</span> <span class="n">response_bytearray</span><span class="p">)</span>
+    
+<span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+    
+<span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
+</pre></div>
 
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response_bytearray</span><span class="o">.</span><span class="n">decode</span><span class="p">())</span>
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="deleteAttributeV2">deleteAttributeV2<a class="anchor-link" href="#deleteAttributeV2">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">input_json</span> <span class="o">=</span> <span class="s2">&quot;{</span><span class="se">\&quot;</span><span class="s2">ATTR_CODE</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="s2">NAME_FIRST</span><span class="se">\&quot;</span><span class="s2">}&quot;</span>
+    <span class="n">g2_config</span><span class="o">.</span><span class="n">deleteAttributeV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">input_json</span><span class="p">)</span>
     
 <span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
@@ -14793,7 +14901,34 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="deleteAttribute">deleteAttribute<a class="anchor-link" href="#deleteAttribute">&#182;</a></h3>
+<h2 id="Cleanup">Cleanup<a class="anchor-link" href="#Cleanup">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="getLastException">getLastException<a class="anchor-link" href="#getLastException">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="clearLastException">clearLastException<a class="anchor-link" href="#clearLastException">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -14803,9 +14938,56 @@ Notice that the list now contains the newly added datasource_code of "CUSTOMER".
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">try</span><span class="p">:</span>
-    <span class="n">input_json</span> <span class="o">=</span> <span class="s2">&quot;{</span><span class="se">\&quot;</span><span class="s2">ATTR_CODE</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="s2">NAME_FIRST</span><span class="se">\&quot;</span><span class="s2">}&quot;</span>
-    <span class="n">g2_config</span><span class="o">.</span><span class="n">deleteAttributeV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">input_json</span><span class="p">)</span>
-    
+    <span class="n">g2_config</span><span class="o">.</span><span class="n">clearLastException</span><span class="p">()</span>
+
+<span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="close">close<a class="anchor-link" href="#close">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">g2_config</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">config_handle</span><span class="p">)</span>
+
+<span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="destroy">destroy<a class="anchor-link" href="#destroy">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">g2_config</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+
 <span class="k">except</span> <span class="n">G2Exception</span><span class="o">.</span><span class="n">G2ModuleGenericException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g2_config</span><span class="o">.</span><span class="n">getLastException</span><span class="p">())</span>
 </pre></div>
