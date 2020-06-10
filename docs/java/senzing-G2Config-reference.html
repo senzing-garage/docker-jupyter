@@ -13341,7 +13341,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">initV2</span><span class="p">(</span><span class="n">moduleName</span><span class="p">,</span> <span class="n">senzingConfigJson</span><span class="p">,</span> <span class="n">verboseLogging</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 </pre></div>
@@ -13374,6 +13374,54 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="save">save<a class="anchor-link" href="#save">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="n">StringBuffer</span> <span class="n">response</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="p">();</span>
+
+<span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">save</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
+
+<span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+<span class="k">else</span>
+    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="load">load<a class="anchor-link" href="#load">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="c1">// example using the saved config from the `save()` method</span>
+<span class="kt">long</span> <span class="n">configHandle</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">load</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Datasources">Datasources<a class="anchor-link" href="#Datasources">&#182;</a></h2>
 </div>
 </div>
@@ -13381,7 +13429,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="listDataSources">listDataSources<a class="anchor-link" href="#listDataSources">&#182;</a></h3><p>Call G2Config's <code>listDataSourcesV2()</code> method and print results.</p>
+<h3 id="listDataSourcesV2">listDataSourcesV2<a class="anchor-link" href="#listDataSourcesV2">&#182;</a></h3><p>Call G2Config's <code>listDataSourcesV2()</code> method and print results.</p>
 
 </div>
 </div>
@@ -13396,7 +13444,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listDataSourcesV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
@@ -13409,7 +13457,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="addDataSource">addDataSource<a class="anchor-link" href="#addDataSource">&#182;</a></h3><p>Call G2Config's <code>addDataSourceV2()</code> method and print results</p>
+<h3 id="addDataSourceV2">addDataSourceV2<a class="anchor-link" href="#addDataSourceV2">&#182;</a></h3><p>Call G2Config's <code>addDataSourceV2()</code> method and print results</p>
 
 </div>
 </div>
@@ -13426,9 +13474,37 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">addDataSourceV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">dataSource</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="addDataSourceWithID">addDataSourceWithID<a class="anchor-link" href="#addDataSourceWithID">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="n">String</span> <span class="n">dataSource</span> <span class="o">=</span> <span class="s">&quot;COMPANY&quot;</span><span class="p">;</span>
+
+<span class="n">StringBuffer</span> <span class="n">response</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="p">();</span>
+
+<span class="kt">int</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">addDataSourceWithID</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">dataSource</span><span class="p">,</span> <span class="n">id</span><span class="p">);</span>
+
+<span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 </pre></div>
 
     </div>
@@ -13454,9 +13530,34 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listDataSourcesV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="deleteDataSourceV2">deleteDataSourceV2<a class="anchor-link" href="#deleteDataSourceV2">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="n">String</span> <span class="n">dataSource</span> <span class="o">=</span> <span class="s">&quot;{\&quot;DSRC_CODE\&quot;: \&quot;COMPANY\&quot;}&quot;</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">deleteDataSourceV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">dataSource</span><span class="p">);</span>
+
+<span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 </pre></div>
 
     </div>
@@ -13474,7 +13575,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="listEntityClasses">listEntityClasses<a class="anchor-link" href="#listEntityClasses">&#182;</a></h3><p>Call G2Config's <code>listEntityClassesV2()</code> method and print results.</p>
+<h3 id="listEntityClassesV2">listEntityClassesV2<a class="anchor-link" href="#listEntityClassesV2">&#182;</a></h3><p>Call G2Config's <code>listEntityClassesV2()</code> method and print results.</p>
 
 </div>
 </div>
@@ -13489,7 +13590,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listEntityTypesV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
@@ -13502,7 +13603,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="listEntityTypes">listEntityTypes<a class="anchor-link" href="#listEntityTypes">&#182;</a></h3><p>Call G2Config's <code>listEntityTypesV2()</code> method and print results.</p>
+<h3 id="listEntityTypesV2">listEntityTypesV2<a class="anchor-link" href="#listEntityTypesV2">&#182;</a></h3><p>Call G2Config's <code>listEntityTypesV2()</code> method and print results.</p>
 
 </div>
 </div>
@@ -13517,7 +13618,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listEntityTypesV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
@@ -13530,7 +13631,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="addEntityClass">addEntityClass<a class="anchor-link" href="#addEntityClass">&#182;</a></h3><p>Call G2Config's <code>addEntityClassV2()</code> method and print results</p>
+<h3 id="addEntityClassV2">addEntityClassV2<a class="anchor-link" href="#addEntityClassV2">&#182;</a></h3><p>Call G2Config's <code>addEntityClassV2()</code> method and print results</p>
 
 </div>
 </div>
@@ -13546,7 +13647,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">addEntityClassV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">entityClass</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
@@ -13574,7 +13675,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listEntityClassesV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
@@ -13587,7 +13688,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="addEntityType">addEntityType<a class="anchor-link" href="#addEntityType">&#182;</a></h3><p>Call G2Config's <code>addEntityTypeV2()</code> method and print results.</p>
+<h3 id="addEntityTypeV2">addEntityTypeV2<a class="anchor-link" href="#addEntityTypeV2">&#182;</a></h3><p>Call G2Config's <code>addEntityTypeV2()</code> method and print results.</p>
 
 </div>
 </div>
@@ -13603,7 +13704,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">addEntityTypeV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">entityType</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
@@ -13631,7 +13732,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listEntityTypesV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
@@ -13644,7 +13745,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="deleteEntityClass">deleteEntityClass<a class="anchor-link" href="#deleteEntityClass">&#182;</a></h3><p>Call G2Config's <code>deleteEntityClassV2()</code> method. Returns 0 on success</p>
+<h3 id="deleteEntityClassV2">deleteEntityClassV2<a class="anchor-link" href="#deleteEntityClassV2">&#182;</a></h3><p>Call G2Config's <code>deleteEntityClassV2()</code> method. Returns 0 on success</p>
 
 </div>
 </div>
@@ -13659,7 +13760,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">deleteEntityClassV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">entityClass</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 </pre></div>
@@ -13672,7 +13773,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="deleteEntityType">deleteEntityType<a class="anchor-link" href="#deleteEntityType">&#182;</a></h3><p>Call G2Config's <code>deleteEntityTypeV2()</code> method. Returns 0 on success</p>
+<h3 id="deleteEntityTypeV2">deleteEntityTypeV2<a class="anchor-link" href="#deleteEntityTypeV2">&#182;</a></h3><p>Call G2Config's <code>deleteEntityTypeV2()</code> method. Returns 0 on success</p>
 
 </div>
 </div>
@@ -13687,7 +13788,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">deleteEntityTypeV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">entityType</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 </pre></div>
@@ -13707,7 +13808,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="listFeatureElements">listFeatureElements<a class="anchor-link" href="#listFeatureElements">&#182;</a></h3><p>Call G2Config's <code>listFeatureElementsV2()</code> method and print results.</p>
+<h3 id="listFeatureElementsV2">listFeatureElementsV2<a class="anchor-link" href="#listFeatureElementsV2">&#182;</a></h3><p>Call G2Config's <code>listFeatureElementsV2()</code> method and print results.</p>
 
 </div>
 </div>
@@ -13722,7 +13823,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listFeatureElementsV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
@@ -13735,7 +13836,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="getFeatureElement">getFeatureElement<a class="anchor-link" href="#getFeatureElement">&#182;</a></h3><p>Call G2Config's <code>getFeatureElementV2()</code> method and print results.</p>
+<h3 id="getFeatureElementV2">getFeatureElementV2<a class="anchor-link" href="#getFeatureElementV2">&#182;</a></h3><p>Call G2Config's <code>getFeatureElementV2()</code> method and print results.</p>
 
 </div>
 </div>
@@ -13751,7 +13852,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">getFeatureElementV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureElm</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
@@ -13764,7 +13865,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="addFeatureElement">addFeatureElement<a class="anchor-link" href="#addFeatureElement">&#182;</a></h3><p>Call G2Config's <code>addFeatureElementV2()</code> method and print results.</p>
+<h3 id="addFeatureElementV2">addFeatureElementV2<a class="anchor-link" href="#addFeatureElementV2">&#182;</a></h3><p>Call G2Config's <code>addFeatureElementV2()</code> method and print results.</p>
 
 </div>
 </div>
@@ -13780,7 +13881,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">addFeatureElementV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureElm</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
@@ -13793,7 +13894,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="deleteFeatureElement">deleteFeatureElement<a class="anchor-link" href="#deleteFeatureElement">&#182;</a></h3><p>Call G2Config's <code>deleteFeatureElementV2()</code> method. Returns 0 on success</p>
+<h3 id="deleteFeatureElementV2">deleteFeatureElementV2<a class="anchor-link" href="#deleteFeatureElementV2">&#182;</a></h3><p>Call G2Config's <code>deleteFeatureElementV2()</code> method. Returns 0 on success</p>
 
 </div>
 </div>
@@ -13808,7 +13909,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">deleteFeatureElementV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureElm</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 </pre></div>
@@ -13821,7 +13922,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="listFeatureClasses">listFeatureClasses<a class="anchor-link" href="#listFeatureClasses">&#182;</a></h3><p>Call G2Config's <code>listFeatureClassesV2()</code> method and print results.</p>
+<h3 id="listFeatureClassesV2">listFeatureClassesV2<a class="anchor-link" href="#listFeatureClassesV2">&#182;</a></h3><p>Call G2Config's <code>listFeatureClassesV2()</code> method and print results.</p>
 
 </div>
 </div>
@@ -13836,7 +13937,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listFeatureClassesV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
@@ -13849,7 +13950,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="listFeatures">listFeatures<a class="anchor-link" href="#listFeatures">&#182;</a></h3><p>Call G2Config's <code>listFeaturesV2()</code> method and print results.</p>
+<h3 id="listFeaturesV2">listFeaturesV2<a class="anchor-link" href="#listFeaturesV2">&#182;</a></h3><p>Call G2Config's <code>listFeaturesV2()</code> method and print results.</p>
 
 </div>
 </div>
@@ -13864,7 +13965,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listFeaturesV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
@@ -13877,7 +13978,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="getFeature">getFeature<a class="anchor-link" href="#getFeature">&#182;</a></h3><p>Call G2Config's <code>getFeatureV2()</code> method and print results.</p>
+<h3 id="getFeatureV2">getFeatureV2<a class="anchor-link" href="#getFeatureV2">&#182;</a></h3><p>Call G2Config's <code>getFeatureV2()</code> method and print results.</p>
 
 </div>
 </div>
@@ -13893,7 +13994,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">getFeatureV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">feature</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
@@ -13906,7 +14007,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="addFeature">addFeature<a class="anchor-link" href="#addFeature">&#182;</a></h3><p>Call G2Config's <code>addFeatureV2()</code> method and print results.</p>
+<h3 id="addFeatureV2">addFeatureV2<a class="anchor-link" href="#addFeatureV2">&#182;</a></h3><p>Call G2Config's <code>addFeatureV2()</code> method and print results.</p>
 
 </div>
 </div>
@@ -13922,7 +14023,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">addFeatureV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">feature</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
@@ -13935,7 +14036,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="deleteFeature">deleteFeature<a class="anchor-link" href="#deleteFeature">&#182;</a></h3><p>Call G2Config's <code>deleteFeatureV2()</code> method. Returns 0 on success.</p>
+<h3 id="deleteFeatureV2">deleteFeatureV2<a class="anchor-link" href="#deleteFeatureV2">&#182;</a></h3><p>Call G2Config's <code>deleteFeatureV2()</code> method. Returns 0 on success.</p>
 
 </div>
 </div>
@@ -13950,7 +14051,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">deleteFeatureV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">feature</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 </pre></div>
@@ -13963,7 +14064,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="addElementToFeature">addElementToFeature<a class="anchor-link" href="#addElementToFeature">&#182;</a></h3><p>Call G2Config's <code>addElementToFeatureV2()</code> method. Returns 0 on success</p>
+<h3 id="addElementToFeatureV2">addElementToFeatureV2<a class="anchor-link" href="#addElementToFeatureV2">&#182;</a></h3><p>Call G2Config's <code>addElementToFeatureV2()</code> method. Returns 0 on success</p>
 
 </div>
 </div>
@@ -13978,7 +14079,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">addElementToFeatureV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">elmnt</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 </pre></div>
@@ -13991,7 +14092,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="deleteElementFromFeature">deleteElementFromFeature<a class="anchor-link" href="#deleteElementFromFeature">&#182;</a></h3><p>Call G2Config's <code>deleteElementFromFeatureV2()</code> method. Returns 0 on success</p>
+<h3 id="deleteElementFromFeatureV2">deleteElementFromFeatureV2<a class="anchor-link" href="#deleteElementFromFeatureV2">&#182;</a></h3><p>Call G2Config's <code>deleteElementFromFeatureV2()</code> method. Returns 0 on success</p>
 
 </div>
 </div>
@@ -14006,7 +14107,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">deleteElementFromFeatureV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">elmnt</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 </pre></div>
@@ -14026,7 +14127,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="listFeatureStandardizationFunctions">listFeatureStandardizationFunctions<a class="anchor-link" href="#listFeatureStandardizationFunctions">&#182;</a></h4><p>Call G2Config's <code>listFeatureStandardizationFunctionsV2()</code> method and print results.</p>
+<h4 id="listFeatureStandardizationFunctionsV2">listFeatureStandardizationFunctionsV2<a class="anchor-link" href="#listFeatureStandardizationFunctionsV2">&#182;</a></h4><p>Call G2Config's <code>listFeatureStandardizationFunctionsV2()</code> method and print results.</p>
 
 </div>
 </div>
@@ -14041,7 +14142,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listFeatureStandardizationFunctionsV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
@@ -14054,7 +14155,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="listFeaturesStandardizationFunctionCalls">listFeaturesStandardizationFunctionCalls<a class="anchor-link" href="#listFeaturesStandardizationFunctionCalls">&#182;</a></h4><p>Call G2Config's <code>listFeatureStandardizationFunctionCallsV2()</code> method and print results.</p>
+<h4 id="listFeaturesStandardizationFunctionCallsV2">listFeaturesStandardizationFunctionCallsV2<a class="anchor-link" href="#listFeaturesStandardizationFunctionCallsV2">&#182;</a></h4><p>Call G2Config's <code>listFeatureStandardizationFunctionCallsV2()</code> method and print results.</p>
 
 </div>
 </div>
@@ -14069,7 +14170,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listFeatureStandardizationFunctionCallsV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
@@ -14082,7 +14183,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="getFeatureStandardizationFunctionCalls">getFeatureStandardizationFunctionCalls<a class="anchor-link" href="#getFeatureStandardizationFunctionCalls">&#182;</a></h4><p>Call G2Config's <code>getFeatureStandardizationFunctionCallV2()</code> method and print results.</p>
+<h4 id="getFeatureStandardizationFunctionCallsV2">getFeatureStandardizationFunctionCallsV2<a class="anchor-link" href="#getFeatureStandardizationFunctionCallsV2">&#182;</a></h4><p>Call G2Config's <code>getFeatureStandardizationFunctionCallV2()</code> method and print results.</p>
 
 </div>
 </div>
@@ -14098,7 +14199,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">getFeatureStandardizationFunctionCallV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureStandard</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
@@ -14111,7 +14212,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="addFeatureStandardizationFunctionCalls">addFeatureStandardizationFunctionCalls<a class="anchor-link" href="#addFeatureStandardizationFunctionCalls">&#182;</a></h4><p>Call G2Config's <code>addFeatureStandardizationFunctionCallV2()</code> method and print results.</p>
+<h4 id="addFeatureStandardizationFunctionCallsV2">addFeatureStandardizationFunctionCallsV2<a class="anchor-link" href="#addFeatureStandardizationFunctionCallsV2">&#182;</a></h4><p>Call G2Config's <code>addFeatureStandardizationFunctionCallV2()</code> method and print results.</p>
 
 </div>
 </div>
@@ -14127,7 +14228,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">addFeatureStandardizationFunctionCallV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureStandard</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
@@ -14140,7 +14241,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="deleteFeatureStandardizationFunctionCall">deleteFeatureStandardizationFunctionCall<a class="anchor-link" href="#deleteFeatureStandardizationFunctionCall">&#182;</a></h4><p>Call G2Config's <code>deleteFeatureStandardizationFunctionCallV2()</code> method. Returns 0 on success</p>
+<h4 id="deleteFeatureStandardizationFunctionCallV2">deleteFeatureStandardizationFunctionCallV2<a class="anchor-link" href="#deleteFeatureStandardizationFunctionCallV2">&#182;</a></h4><p>Call G2Config's <code>deleteFeatureStandardizationFunctionCallV2()</code> method. Returns 0 on success</p>
 
 </div>
 </div>
@@ -14155,7 +14256,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">deleteFeatureStandardizationFunctionCallV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureStandard</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 </pre></div>
@@ -14175,7 +14276,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="listFeatureExpressionFunctions">listFeatureExpressionFunctions<a class="anchor-link" href="#listFeatureExpressionFunctions">&#182;</a></h4><p>Call G2Config's <code>listFeatureExpressionFunctionsV2()</code> method and print results.</p>
+<h4 id="listFeatureExpressionFunctionsV2">listFeatureExpressionFunctionsV2<a class="anchor-link" href="#listFeatureExpressionFunctionsV2">&#182;</a></h4><p>Call G2Config's <code>listFeatureExpressionFunctionsV2()</code> method and print results.</p>
 
 </div>
 </div>
@@ -14190,7 +14291,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listFeatureExpressionFunctionsV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
@@ -14203,7 +14304,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="listFeatureExpressionFunctionCalls">listFeatureExpressionFunctionCalls<a class="anchor-link" href="#listFeatureExpressionFunctionCalls">&#182;</a></h4><p>Call G2Config's <code>listFeatureExpressionFunctionCallsV2()</code> method and print results.</p>
+<h4 id="listFeatureExpressionFunctionCallsV2">listFeatureExpressionFunctionCallsV2<a class="anchor-link" href="#listFeatureExpressionFunctionCallsV2">&#182;</a></h4><p>Call G2Config's <code>listFeatureExpressionFunctionCallsV2()</code> method and print results.</p>
 
 </div>
 </div>
@@ -14218,7 +14319,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listFeatureExpressionFunctionCallsV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
@@ -14231,7 +14332,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="getFeatureExpressionFunctionCalls">getFeatureExpressionFunctionCalls<a class="anchor-link" href="#getFeatureExpressionFunctionCalls">&#182;</a></h4><p>Call G2Config's <code>getFeatureExpressionFunctionCallV2()</code> method and print results.</p>
+<h4 id="getFeatureExpressionFunctionCallsV2">getFeatureExpressionFunctionCallsV2<a class="anchor-link" href="#getFeatureExpressionFunctionCallsV2">&#182;</a></h4><p>Call G2Config's <code>getFeatureExpressionFunctionCallV2()</code> method and print results.</p>
 
 </div>
 </div>
@@ -14247,7 +14348,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">getFeatureExpressionFunctionCallV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureExpress</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
@@ -14260,7 +14361,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="addFeatureExpressionFunctionCall">addFeatureExpressionFunctionCall<a class="anchor-link" href="#addFeatureExpressionFunctionCall">&#182;</a></h4><p>Call G2Config's <code>addFeatureExpressionFunctionCallV2()</code> method and print results.</p>
+<h4 id="addFeatureExpressionFunctionCallV2">addFeatureExpressionFunctionCallV2<a class="anchor-link" href="#addFeatureExpressionFunctionCallV2">&#182;</a></h4><p>Call G2Config's <code>addFeatureExpressionFunctionCallV2()</code> method and print results.</p>
 
 </div>
 </div>
@@ -14276,7 +14377,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">addFeatureExpressionFunctionCallV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureExpress</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
@@ -14289,7 +14390,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="addFeatureExpressionFunctionCallElement">addFeatureExpressionFunctionCallElement<a class="anchor-link" href="#addFeatureExpressionFunctionCallElement">&#182;</a></h4><p>Call G2Config's <code>addFeatureExpressionFunctionCallElementV2()</code> method. Returns 0 on success.</p>
+<h4 id="addFeatureExpressionFunctionCallElementV2">addFeatureExpressionFunctionCallElementV2<a class="anchor-link" href="#addFeatureExpressionFunctionCallElementV2">&#182;</a></h4><p>Call G2Config's <code>addFeatureExpressionFunctionCallElementV2()</code> method. Returns 0 on success.</p>
 
 </div>
 </div>
@@ -14304,7 +14405,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">addFeatureExpressionFunctionCallElementV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureExpressElm</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 </pre></div>
@@ -14317,7 +14418,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="deleteFeatureExpressionFunctionCallElement">deleteFeatureExpressionFunctionCallElement<a class="anchor-link" href="#deleteFeatureExpressionFunctionCallElement">&#182;</a></h4><p>Call G2Config's <code>deleteFeatureExpressionFunctionCallElementV2()</code> method. Returns 0 on success.</p>
+<h4 id="deleteFeatureExpressionFunctionCallElementV2">deleteFeatureExpressionFunctionCallElementV2<a class="anchor-link" href="#deleteFeatureExpressionFunctionCallElementV2">&#182;</a></h4><p>Call G2Config's <code>deleteFeatureExpressionFunctionCallElementV2()</code> method. Returns 0 on success.</p>
 
 </div>
 </div>
@@ -14332,7 +14433,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">deleteFeatureExpressionFunctionCallElementV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureExpressElm</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 </pre></div>
@@ -14345,7 +14446,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="deleteFeatureExpressionFunctionCall">deleteFeatureExpressionFunctionCall<a class="anchor-link" href="#deleteFeatureExpressionFunctionCall">&#182;</a></h4><p>Call G2Config's <code>deleteFeatureExpressionFunctionCallV2()</code> method. Returns 0 on success</p>
+<h4 id="deleteFeatureExpressionFunctionCallV2">deleteFeatureExpressionFunctionCallV2<a class="anchor-link" href="#deleteFeatureExpressionFunctionCallV2">&#182;</a></h4><p>Call G2Config's <code>deleteFeatureExpressionFunctionCallV2()</code> method. Returns 0 on success</p>
 
 </div>
 </div>
@@ -14360,7 +14461,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">deleteFeatureExpressionFunctionCallV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureExpressElm</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 </pre></div>
@@ -14380,7 +14481,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="listFeatureComparisonFunctions">listFeatureComparisonFunctions<a class="anchor-link" href="#listFeatureComparisonFunctions">&#182;</a></h4><p>Call G2Config's <code>listFeatureComparisonFunctionsV2()</code> method and print results.</p>
+<h4 id="listFeatureComparisonFunctionsV2">listFeatureComparisonFunctionsV2<a class="anchor-link" href="#listFeatureComparisonFunctionsV2">&#182;</a></h4><p>Call G2Config's <code>listFeatureComparisonFunctionsV2()</code> method and print results.</p>
 
 </div>
 </div>
@@ -14395,7 +14496,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listFeatureComparisonFunctionsV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
@@ -14408,7 +14509,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="listFeatureComparisonFunctionCalls">listFeatureComparisonFunctionCalls<a class="anchor-link" href="#listFeatureComparisonFunctionCalls">&#182;</a></h4><p>Call G2Config's <code>listFeatureComparisonFunctionCallsV2()</code> method and print results.</p>
+<h4 id="listFeatureComparisonFunctionCallsV2">listFeatureComparisonFunctionCallsV2<a class="anchor-link" href="#listFeatureComparisonFunctionCallsV2">&#182;</a></h4><p>Call G2Config's <code>listFeatureComparisonFunctionCallsV2()</code> method and print results.</p>
 
 </div>
 </div>
@@ -14423,7 +14524,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listFeatureComparisonFunctionCallsV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
@@ -14436,7 +14537,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="getFeatureComparisonFunctionCall">getFeatureComparisonFunctionCall<a class="anchor-link" href="#getFeatureComparisonFunctionCall">&#182;</a></h4><p>Call G2Config's <code>getFeatureComparisonFunctionCallV2()</code> method and print results.</p>
+<h4 id="getFeatureComparisonFunctionCallV2">getFeatureComparisonFunctionCallV2<a class="anchor-link" href="#getFeatureComparisonFunctionCallV2">&#182;</a></h4><p>Call G2Config's <code>getFeatureComparisonFunctionCallV2()</code> method and print results.</p>
 
 </div>
 </div>
@@ -14452,7 +14553,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">getFeatureComparisonFunctionCallV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureCompFunc</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
@@ -14465,7 +14566,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="addFeatureComparisonFunctionCall">addFeatureComparisonFunctionCall<a class="anchor-link" href="#addFeatureComparisonFunctionCall">&#182;</a></h4><p>Call G2Config's <code>addFeatureComparisonFunctionCallV2()</code> method and print results.</p>
+<h4 id="addFeatureComparisonFunctionCallV2">addFeatureComparisonFunctionCallV2<a class="anchor-link" href="#addFeatureComparisonFunctionCallV2">&#182;</a></h4><p>Call G2Config's <code>addFeatureComparisonFunctionCallV2()</code> method and print results.</p>
 
 </div>
 </div>
@@ -14482,7 +14583,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
@@ -14495,7 +14596,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="deleteFeatureComparisonFunctionCall">deleteFeatureComparisonFunctionCall<a class="anchor-link" href="#deleteFeatureComparisonFunctionCall">&#182;</a></h4><p>Call G2Config's <code>deleteFeatureComparisonFunctionCallV2()</code> method. Returns 0 on success.</p>
+<h4 id="deleteFeatureComparisonFunctionCallV2">deleteFeatureComparisonFunctionCallV2<a class="anchor-link" href="#deleteFeatureComparisonFunctionCallV2">&#182;</a></h4><p>Call G2Config's <code>deleteFeatureComparisonFunctionCallV2()</code> method. Returns 0 on success.</p>
 
 </div>
 </div>
@@ -14510,7 +14611,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">deleteFeatureComparisonFunctionCallV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureComp</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 </pre></div>
@@ -14523,7 +14624,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="addFeatureComparisonFunctionCallElement">addFeatureComparisonFunctionCallElement<a class="anchor-link" href="#addFeatureComparisonFunctionCallElement">&#182;</a></h4><p>Call G2Config's <code>addFeatureComparisonFunctionCallElementV2()</code> method. Returns 0 on success</p>
+<h4 id="addFeatureComparisonFunctionCallElementV2">addFeatureComparisonFunctionCallElementV2<a class="anchor-link" href="#addFeatureComparisonFunctionCallElementV2">&#182;</a></h4><p>Call G2Config's <code>addFeatureComparisonFunctionCallElementV2()</code> method. Returns 0 on success</p>
 
 </div>
 </div>
@@ -14538,7 +14639,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">addFeatureComparisonFunctionCallElementV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureCompElm</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 </pre></div>
@@ -14551,7 +14652,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="deleteFeatureComparisonFunctionCallElement">deleteFeatureComparisonFunctionCallElement<a class="anchor-link" href="#deleteFeatureComparisonFunctionCallElement">&#182;</a></h4><p>Call G2Config's <code>deleteFeatureComparisonFunctionCallElementV2()</code> method. Returns 0 on success.</p>
+<h4 id="deleteFeatureComparisonFunctionCallElementV2">deleteFeatureComparisonFunctionCallElementV2<a class="anchor-link" href="#deleteFeatureComparisonFunctionCallElementV2">&#182;</a></h4><p>Call G2Config's <code>deleteFeatureComparisonFunctionCallElementV2()</code> method. Returns 0 on success.</p>
 
 </div>
 </div>
@@ -14566,7 +14667,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">deleteFeatureComparisonFunctionCallElementV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureCompElm</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 </pre></div>
@@ -14586,7 +14687,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="listFeatureDistinctFunctions">listFeatureDistinctFunctions<a class="anchor-link" href="#listFeatureDistinctFunctions">&#182;</a></h4><p>Call G2Config's <code>listFeatureDistinctFunctionV2()</code> method and print results.</p>
+<h4 id="listFeatureDistinctFunctionsV2">listFeatureDistinctFunctionsV2<a class="anchor-link" href="#listFeatureDistinctFunctionsV2">&#182;</a></h4><p>Call G2Config's <code>listFeatureDistinctFunctionV2()</code> method and print results.</p>
 
 </div>
 </div>
@@ -14601,7 +14702,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listFeatureDistinctFunctionsV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
@@ -14614,7 +14715,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="listFeatureComparisonFunctionCalls">listFeatureComparisonFunctionCalls<a class="anchor-link" href="#listFeatureComparisonFunctionCalls">&#182;</a></h4><p>Call G2config's <code>listFeatureDistinctFunctionCallsV2()</code> method and print results</p>
+<h4 id="listFeatureComparisonFunctionCallsV2">listFeatureComparisonFunctionCallsV2<a class="anchor-link" href="#listFeatureComparisonFunctionCallsV2">&#182;</a></h4><p>Call G2config's <code>listFeatureDistinctFunctionCallsV2()</code> method and print results</p>
 
 </div>
 </div>
@@ -14629,7 +14730,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listFeatureDistinctFunctionsV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
@@ -14642,7 +14743,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="getFeatureDistinctFunctionCall">getFeatureDistinctFunctionCall<a class="anchor-link" href="#getFeatureDistinctFunctionCall">&#182;</a></h4><p>Call G2Config's <code>getFeatureDistinctFunctionCallV2()</code> method and print results.</p>
+<h4 id="getFeatureDistinctFunctionCallV2">getFeatureDistinctFunctionCallV2<a class="anchor-link" href="#getFeatureDistinctFunctionCallV2">&#182;</a></h4><p>Call G2Config's <code>getFeatureDistinctFunctionCallV2()</code> method and print results.</p>
 
 </div>
 </div>
@@ -14658,7 +14759,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">getFeatureDistinctFunctionCallV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureFunc</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
@@ -14671,7 +14772,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="addFeatureDistinctFunctionCall">addFeatureDistinctFunctionCall<a class="anchor-link" href="#addFeatureDistinctFunctionCall">&#182;</a></h4><p>Call G2Config's <code>addFeatureDistinctFunctionCallV2()</code> method and print results.</p>
+<h4 id="addFeatureDistinctFunctionCallV2">addFeatureDistinctFunctionCallV2<a class="anchor-link" href="#addFeatureDistinctFunctionCallV2">&#182;</a></h4><p>Call G2Config's <code>addFeatureDistinctFunctionCallV2()</code> method and print results.</p>
 
 </div>
 </div>
@@ -14687,7 +14788,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">addFeatureDistinctFunctionCallV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureFunc</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
@@ -14700,7 +14801,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="deleteFeatureDistinctFunctionCall">deleteFeatureDistinctFunctionCall<a class="anchor-link" href="#deleteFeatureDistinctFunctionCall">&#182;</a></h4><p>Call G2Config's <code>deleteFeatureDistinctFunctionCallV2()</code> method. Returns 0 on success</p>
+<h4 id="deleteFeatureDistinctFunctionCallV2">deleteFeatureDistinctFunctionCallV2<a class="anchor-link" href="#deleteFeatureDistinctFunctionCallV2">&#182;</a></h4><p>Call G2Config's <code>deleteFeatureDistinctFunctionCallV2()</code> method. Returns 0 on success</p>
 
 </div>
 </div>
@@ -14715,7 +14816,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">deleteFeatureDistinctFunctionCallV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureFunc</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 </pre></div>
@@ -14728,7 +14829,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="addFeatureDistinctFunctionCallElement">addFeatureDistinctFunctionCallElement<a class="anchor-link" href="#addFeatureDistinctFunctionCallElement">&#182;</a></h4><p>Call G2Config's <code>addFeatureDistinctFunctionCallElementV2()</code> method. Returns 0 on success</p>
+<h4 id="addFeatureDistinctFunctionCallElementV2">addFeatureDistinctFunctionCallElementV2<a class="anchor-link" href="#addFeatureDistinctFunctionCallElementV2">&#182;</a></h4><p>Call G2Config's <code>addFeatureDistinctFunctionCallElementV2()</code> method. Returns 0 on success</p>
 
 </div>
 </div>
@@ -14743,7 +14844,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">addFeatureDistinctFunctionCallElementV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureElmt</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 </pre></div>
@@ -14756,7 +14857,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="deleteFeatureDistinctFunctionCallElement">deleteFeatureDistinctFunctionCallElement<a class="anchor-link" href="#deleteFeatureDistinctFunctionCallElement">&#182;</a></h4><p>Call G2Config's <code>deleteFeatureDistrinctFunctionCallElementV2()</code> method. Returns 0 on success</p>
+<h4 id="deleteFeatureDistinctFunctionCallElementV2">deleteFeatureDistinctFunctionCallElementV2<a class="anchor-link" href="#deleteFeatureDistinctFunctionCallElementV2">&#182;</a></h4><p>Call G2Config's <code>deleteFeatureDistrinctFunctionCallElementV2()</code> method. Returns 0 on success</p>
 
 </div>
 </div>
@@ -14771,7 +14872,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">deleteFeatureDistinctFunctionCallElementV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">featureElmt</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">return_code</span><span class="p">);</span>
 </pre></div>
@@ -14791,7 +14892,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="listAttributeClasses">listAttributeClasses<a class="anchor-link" href="#listAttributeClasses">&#182;</a></h3><p>Call G2Config's <code>listAttributeClassesV2()</code> method and print results.</p>
+<h3 id="listAttributeClassesV2">listAttributeClassesV2<a class="anchor-link" href="#listAttributeClassesV2">&#182;</a></h3><p>Call G2Config's <code>listAttributeClassesV2()</code> method and print results.</p>
 
 </div>
 </div>
@@ -14806,7 +14907,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listAttributeClassesV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
@@ -14819,7 +14920,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="listAttributes">listAttributes<a class="anchor-link" href="#listAttributes">&#182;</a></h3><p>Call G2Config's <code>listAttributesV2()</code> method and print results</p>
+<h3 id="listAttributesV2">listAttributesV2<a class="anchor-link" href="#listAttributesV2">&#182;</a></h3><p>Call G2Config's <code>listAttributesV2()</code> method and print results</p>
 
 </div>
 </div>
@@ -14834,7 +14935,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">listAttributesV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
@@ -14847,7 +14948,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="getAttribute">getAttribute<a class="anchor-link" href="#getAttribute">&#182;</a></h3><p>Call G2Config's <code>getAttributeV2()</code> method and print results.</p>
+<h3 id="getAttributeV2">getAttributeV2<a class="anchor-link" href="#getAttributeV2">&#182;</a></h3><p>Call G2Config's <code>getAttributeV2()</code> method and print results.</p>
 
 </div>
 </div>
@@ -14863,7 +14964,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">getAttributeV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
@@ -14876,7 +14977,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="addAttribute">addAttribute<a class="anchor-link" href="#addAttribute">&#182;</a></h3><p>Call G2Config's <code>addAttributeV2()</code> method and print results.</p>
+<h3 id="addAttributeV2">addAttributeV2<a class="anchor-link" href="#addAttributeV2">&#182;</a></h3><p>Call G2Config's <code>addAttributeV2()</code> method and print results.</p>
 
 </div>
 </div>
@@ -14892,7 +14993,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">addAttributeV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">response</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
 </pre></div>
@@ -14905,7 +15006,7 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="deleteAttribute">deleteAttribute<a class="anchor-link" href="#deleteAttribute">&#182;</a></h3><p>Call G2Config's <code>deleteAttributeV2()</code> method. Returns 0 on success</p>
+<h3 id="deleteAttributeV2">deleteAttributeV2<a class="anchor-link" href="#deleteAttributeV2">&#182;</a></h3><p>Call G2Config's <code>deleteAttributeV2()</code> method. Returns 0 on success</p>
 
 </div>
 </div>
@@ -14920,9 +15021,99 @@ Then, call the appropriate initialization method (such as initV2) to initialize 
 <span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">deleteAttributeV2</span><span class="p">(</span><span class="n">config_handle</span><span class="p">,</span> <span class="n">attr</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">RenderJSON</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 <span class="k">else</span>
     <span class="n">RenderJSON</span><span class="p">(</span><span class="n">response</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Cleanup">Cleanup<a class="anchor-link" href="#Cleanup">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="getLastException">getLastException<a class="anchor-link" href="#getLastException">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="clearLastException">clearLastException<a class="anchor-link" href="#clearLastException">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="n">g2config</span><span class="p">.</span><span class="na">clearLastException</span><span class="p">();</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="close">close<a class="anchor-link" href="#close">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="n">g2config</span><span class="p">.</span><span class="na">close</span><span class="p">(</span><span class="n">config_handle</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="destroy">destroy<a class="anchor-link" href="#destroy">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-java"><pre><span></span><span class="kt">int</span> <span class="n">return_code</span> <span class="o">=</span> <span class="n">g2config</span><span class="p">.</span><span class="na">destroy</span><span class="p">();</span>
+
+<span class="k">if</span><span class="p">(</span><span class="n">return_code</span><span class="o">!=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">print</span><span class="p">(</span><span class="n">g2config</span><span class="p">.</span><span class="na">getLastException</span><span class="p">());</span>
 </pre></div>
 
     </div>
