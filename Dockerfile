@@ -1,7 +1,7 @@
 # User can select the base image.
 # For BASE_IMAGE choices, see https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html
 
-ARG BASE_IMAGE=jupyter/minimal-notebook
+ARG BASE_IMAGE=jupyter/minimal-notebook:ubuntu-18.04
 FROM ${BASE_IMAGE}
 
 ENV REFRESHED_AT=2020-01-22
@@ -77,7 +77,7 @@ RUN conda install -n ipykernel_py2 -y \
 
 RUN conda install -n ipykernel_py2 -c conda-forge -y \
       widgetsnbextension \
-      ipywidgets 
+      ipywidgets
 
 # Install jupyter widgets for qgrid.
 
