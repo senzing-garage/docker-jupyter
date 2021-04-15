@@ -14,8 +14,8 @@
        Example:
 
         ```console
-        cat ${SENZING_VOLUME}\g2\g2BuildVersion.json
-        cat ${SENZING_VOLUME}\data\1.0.0\libpostal\data_version
+        type %SENZING_VOLUME%\g2\g2BuildVersion.json
+        type %SENZING_VOLUME%\g2\data\libpostal\data_version
         ```
 
 
