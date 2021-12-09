@@ -4,7 +4,7 @@
 ARG BASE_IMAGE=jupyter/minimal-notebook:ubuntu-18.04
 FROM ${BASE_IMAGE}
 
-ENV REFRESHED_AT=2020-01-22
+ENV REFRESHED_AT=2021-12-09
 
 LABEL Name="senzing/jupyter" \
       Maintainer="support@senzing.com" \
@@ -54,7 +54,7 @@ RUN conda update -y -n base conda
 
 # Python 2.
 
-RUN conda create -n ipykernel_py2 python=2 ipykernel
+RUN conda create -n ipykernel_py2 python=3 ipykernel
 
 # Python libraries for python 2.7.
 
