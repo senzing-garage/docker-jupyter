@@ -24,7 +24,7 @@ There is more information on the
 ```console
 docker build \
   --tag senzing/jupyter \
-  https://github.com/senzing/docker-jupyter.git
+  https://github.com/senzing/docker-jupyter.git#main
 ```
 
 ## Install Senzing
