@@ -1,7 +1,7 @@
 # User can select the base image.
 # For BASE_IMAGE choices, see https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html
 
-ARG BASE_IMAGE=jupyter/minimal-notebook:ubuntu-18.04
+ARG BASE_IMAGE=jupyter/minimal-notebook:ubuntu-20.04
 FROM ${BASE_IMAGE}
 
 ENV REFRESHED_AT=2021-12-09
@@ -98,6 +98,9 @@ RUN curl -L https://github.com/SpencerPark/IJava/releases/download/v1.3.0/ijava-
  && cd ijava-kernel \
  && python3 install.py --sys-prefix
 
+# Update notebook
+
+RUN pip3 install --upgrade ipykernel
 # Update nodeJS.
 
 RUN npm i -g npm
