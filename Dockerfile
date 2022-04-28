@@ -100,7 +100,7 @@ RUN curl -L https://github.com/SpencerPark/IJava/releases/download/v1.3.0/ijava-
 
 # Update notebook
 
-RUN pip3 install --upgrade ipykernel
+RUN pip3 install --upgrade ipykernel --user
 # Update nodeJS.
 
 RUN npm i -g npm
