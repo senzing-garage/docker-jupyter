@@ -36,8 +36,6 @@ RUN apt-get -y install \
       odbc-postgresql \
       postgresql-client \
       python-dev \
-      python-pip \
-      python-pyodbc \
       sqlite \
       unixodbc \
       unixodbc-dev \
@@ -54,11 +52,11 @@ RUN conda update -y -n base conda
 
 # Python 2.
 
-RUN conda create -n ipykernel_py2 python=3 ipykernel
+RUN conda create -n ipykernel_py3 python=3 ipykernel
 
 # Python libraries for python 2.7.
 
-RUN conda install -n ipykernel_py2 -y \
+RUN conda install -n ipykernel_py3 -y \
       bokeh \
       ipykernel \
       ipython \
@@ -75,21 +73,21 @@ RUN conda install -n ipykernel_py2 -y \
 
 # Install notebook widgets.
 
-RUN conda install -n ipykernel_py2 -c conda-forge -y \
+RUN conda install -n ipykernel_py3 -c conda-forge -y \
       widgetsnbextension \
       ipywidgets
 
 # Install jupyter widgets for qgrid.
 
-RUN conda run -n ipykernel_py2 jupyter labextension install @jupyter-widgets/jupyterlab-manager
+RUN conda run -n ipykernel_py3 jupyter labextension install @jupyter-widgets/jupyterlab-manager
 
 # Enable qgrid inside jupyter notebooks.
 
-RUN conda run -n ipykernel_py2 jupyter labextension install qgrid
+RUN conda install qgrid
 
 # Install python 2.7 kernel for users.
 
-RUN conda run -n ipykernel_py2 python -m ipykernel install --user
+RUN conda run -n ipykernel_py3 python -m ipykernel install --user
 
 # Install Java kernel
 
