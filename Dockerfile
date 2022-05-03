@@ -1,7 +1,7 @@
 # User can select the base image.
 # For BASE_IMAGE choices, see https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html
 
-ARG BASE_IMAGE=jupyter/minimal-notebook:ubuntu-18.04
+ARG BASE_IMAGE=jupyter/minimal-notebook:ubuntu-20.04
 FROM ${BASE_IMAGE}
 
 ENV REFRESHED_AT=2021-12-09
@@ -36,8 +36,6 @@ RUN apt-get -y install \
       odbc-postgresql \
       postgresql-client \
       python-dev \
-      python-pip \
-      python-pyodbc \
       sqlite \
       unixodbc \
       unixodbc-dev \
@@ -54,11 +52,11 @@ RUN conda update -y -n base conda
 
 # Python 2.
 
-RUN conda create -n ipykernel_py2 python=3 ipykernel
+RUN conda create -n ipykernel_py3 python=3 ipykernel
 
 # Python libraries for python 2.7.
 
-RUN conda install -n ipykernel_py2 -y \
+RUN conda install -n ipykernel_py3 -y \
       bokeh \
       ipykernel \
       ipython \
@@ -75,21 +73,21 @@ RUN conda install -n ipykernel_py2 -y \
 
 # Install notebook widgets.
 
-RUN conda install -n ipykernel_py2 -c conda-forge -y \
+RUN conda install -n ipykernel_py3 -c conda-forge -y \
       widgetsnbextension \
       ipywidgets
 
 # Install jupyter widgets for qgrid.
 
-RUN conda run -n ipykernel_py2 jupyter labextension install @jupyter-widgets/jupyterlab-manager
+RUN conda run -n ipykernel_py3 jupyter labextension install @jupyter-widgets/jupyterlab-manager
 
 # Enable qgrid inside jupyter notebooks.
 
-RUN conda run -n ipykernel_py2 jupyter labextension install qgrid
+RUN conda install qgrid
 
 # Install python 2.7 kernel for users.
 
-RUN conda run -n ipykernel_py2 python -m ipykernel install --user
+RUN conda run -n ipykernel_py3 python -m ipykernel install --user
 
 # Install Java kernel
 
@@ -98,6 +96,9 @@ RUN curl -L https://github.com/SpencerPark/IJava/releases/download/v1.3.0/ijava-
  && cd ijava-kernel \
  && python3 install.py --sys-prefix
 
+# Update notebook
+
+RUN pip3 install --upgrade ipykernel --user
 # Update nodeJS.
 
 RUN npm i -g npm
