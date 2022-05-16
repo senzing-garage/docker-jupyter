@@ -18,7 +18,7 @@ There is more information on the
 In addition, the Jupyter notebooks can be viewed on
 [nbviewer.jupyter.org](https://nbviewer.jupyter.org/).
 For example, visit
-[Senzing examples on NbViewer](https://nbviewer.jupyter.org/github/Senzing/docker-jupyter/tree/main/notebooks/senzing-examples/python).
+[Senzing examples on NbViewer](https://nbviewer.jupyter.org/github/Senzing/docker-jupyter/tree/master/notebooks/senzing-examples/python).
 
 ### Related artifacts
 
