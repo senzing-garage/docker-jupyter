@@ -1,7 +1,7 @@
 ## Overview
 
 The `docker-jupyter` repository holds example Senzing
-[Jupyter](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/jupyter-notebook.md)
+[Jupyter](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/jupyter-notebook.md)
 notebooks in the
 [notebooks](notebooks)
 subdirectory.
@@ -46,7 +46,7 @@ For example, visit
 
 ### Environment
 
-These notebooks are designed for the Windows OS and are expected to run in a single instance single window Windows standard command line. Python version 3.8+ is also required to run the notebooks. If you are looking to run the Jupyter Notebooks with linux and docker then go [here](https://github.com/Senzing/docker-jupyter/tree/master).
+These notebooks are designed for the Windows OS and are expected to run in a single instance single window Windows standard command line. Python version 3.8+ is also required to run the notebooks. If you are looking to run the Jupyter Notebooks with linux and docker then go [here](https://github.com/Senzing/docker-jupyter).
 
 ### Time
 
@@ -56,7 +56,7 @@ Budget 20 minutes to set the environment and begin using the notebooks
 
 This repository assumes a working knowledge of:
 
-1. [Jupyter](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/jupyter.md)
+1. [Jupyter](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/jupyter.md)
 1. Windows command line
 2. Python
 
@@ -65,7 +65,7 @@ This repository assumes a working knowledge of:
 ### Initialize Senzing
 
 1. If Senzing has not been initialized, visit
-   "[How to initialize Senzing with Docker](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/initialize-senzing-with-docker.md)".
+   "[How to initialize Senzing with Docker](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/initialize-senzing-with-docker.md)".
 
 ### Configuration
 
@@ -74,13 +74,13 @@ Configuration values specified by environment variable or command line parameter
 Non-Senzing configuration can be seen at
 [Jupyter Docker Stacks](https://jupyter-docker-stacks.readthedocs.io/en/latest/index.html)
 
-- **[JUPYTER_NOTEBOOKS_SHARED_DIR](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#jupyter_notebooks_shared_dir)**
-- **[SENZING_DATA_VERSION_DIR](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_data_version_dir)**
-- **[SENZING_ETC_DIR](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_etc_dir)**
-- **[SENZING_G2_DIR](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_g2_dir)**
-- **[SENZING_NETWORK](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_network)**
-- **[SENZING_RUNAS_USER](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_runas_user)**
-- **[SENZING_VAR_DIR](https://github.com/Senzing/knowledge-base/blob/master/lists/environment-variables.md#senzing_var_dir)**
+- **[JUPYTER_NOTEBOOKS_SHARED_DIR](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#jupyter_notebooks_shared_dir)**
+- **[SENZING_DATA_VERSION_DIR](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_data_version_dir)**
+- **[SENZING_ETC_DIR](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_etc_dir)**
+- **[SENZING_G2_DIR](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_g2_dir)**
+- **[SENZING_NETWORK](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_network)**
+- **[SENZING_RUNAS_USER](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_runas_user)**
+- **[SENZING_VAR_DIR](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_var_dir)**
 
 
 ### Volumes
@@ -115,9 +115,9 @@ Non-Senzing configuration can be seen at
 ### Begin using notebooks
 
 1. Run python
-   
+
    ```console
    python3
    ```
-   
-For the notebooks to run properly, every new instance of python3 must requrie you to run the [senzing-init-config](https://github.com/Senzing/docker-jupyter/blob/master/notebooks/senzing-examples/Windows/senzing-init-config.ipynb) notebook
+
+For the notebooks to run properly, every new instance of python3 must requrie you to run the [senzing-init-config](https://github.com/Senzing/docker-jupyter/blob/main/notebooks/senzing-examples/Windows/senzing-init-config.ipynb) notebook
