@@ -1,14 +1,14 @@
 # User can select the base image.
 # For BASE_IMAGE choices, see https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html
 
-ARG BASE_IMAGE=jupyter/minimal-notebook:ubuntu-20.04
+ARG BASE_IMAGE=jupyter/minimal-notebook:ubuntu-20.04@sha256:2d53044baa4ea352a1a22ab5866c093c0b2df73c8d5bcda3ee205d5abbbe592b
 FROM ${BASE_IMAGE}
 
-ENV REFRESHED_AT=2021-12-09
+ENV REFRESHED_AT=2022-05-24
 
 LABEL Name="senzing/jupyter" \
       Maintainer="support@senzing.com" \
-      Version="1.1.0"
+      Version="2.0.1"
 
 HEALTHCHECK CMD ["/app/healthcheck.sh"]
 
@@ -121,10 +121,10 @@ RUN chown -R $NB_UID:$NB_GID /home/$NB_USER
 RUN chmod -R ug+rw /home/$NB_USER
 
 # Install nbextensions
- RUN conda install -c conda-forge jupyter_contrib_nbextensions
- RUN jupyter contrib nbextension install --system
- RUN jupyter nbextension enable toc2/main --system \
-  && jupyter nbextension enable collapsible_headings/main --system
+RUN conda install -c conda-forge jupyter_contrib_nbextensions
+RUN jupyter contrib nbextension install --system
+RUN jupyter nbextension enable toc2/main --system \
+ && jupyter nbextension enable collapsible_headings/main --system
 
 
 #############################################
@@ -145,4 +145,3 @@ ENV IJAVA_CLASSPATH=/opt/senzing/g2/lib/g2.jar
 ENV DYLD_LIBRARY_PATH=/opt/senzing/g2/lib/
 
 WORKDIR /notebooks
-
