@@ -1,4 +1,3 @@
 [submodule "notebooks/senzing-sdk-api-specification"]
   path = notebooks/senzing-sdk-api-specification
   url = https://github.com/Senzing/senzing-sdk-api-specification.git
-  branch = 3.0.0
