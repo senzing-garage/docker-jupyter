@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 [markdownlint](https://dlaa.me/markdownlint/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0] - 2022-07-06
+
+### Changed in 3.0.0
+
+- Migrated to `senzing/senzingapi-runtime` as Docker base image
+
 ## [2.0.1] - 2022-05-24
 
 ### Changed in 2.0.1

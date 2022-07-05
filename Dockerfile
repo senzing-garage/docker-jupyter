@@ -4,11 +4,15 @@
 ARG BASE_IMAGE=jupyter/minimal-notebook:ubuntu-20.04@sha256:2d53044baa4ea352a1a22ab5866c093c0b2df73c8d5bcda3ee205d5abbbe592b
 FROM ${BASE_IMAGE}
 
-ENV REFRESHED_AT=2022-05-24
+ENV REFRESHED_AT=2022-07-06
 
 LABEL Name="senzing/jupyter" \
       Maintainer="support@senzing.com" \
-      Version="2.0.1"
+      Version="3.0.0"
+
+ARG SENZING_ACCEPT_EULA="I_ACCEPT_THE_SENZING_EULA"
+ARG SENZING_APT_INSTALL_PACKAGE="senzingapi-runtime=0.1.0-22181"
+ARG SENZING_APT_REPOSITORY_URL="https://senzing-production-apt.s3.amazonaws.com/senzingrepo_1.0.0-1_amd64.deb"
 
 HEALTHCHECK CMD ["/app/healthcheck.sh"]
 
@@ -41,6 +45,19 @@ RUN apt-get -y install \
       unixodbc-dev \
       wget \
  && rm -rf /var/lib/apt/lists/*
+
+# Install Senzing repository index.
+
+RUN curl \
+        --output /senzingrepo_1.0.0-1_amd64.deb \
+        ${SENZING_APT_REPOSITORY_URL} \
+ && apt -y install \
+        /senzingrepo_1.0.0-1_amd64.deb \
+ && apt update
+
+# Install Senzing package.
+
+RUN apt -y install ${SENZING_APT_INSTALL_PACKAGE}
 
 #############################################
 ## Python infrastructure
