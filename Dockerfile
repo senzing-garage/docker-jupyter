@@ -154,7 +154,7 @@ RUN jupyter nbextension enable toc2/main --system \
 USER $NB_UID
 
 ENV SENZING_ROOT=/opt/senzing
-ENV PYTHONPATH=${SENZING_ROOT}/g2/python
+ENV PYTHONPATH=${SENZING_ROOT}/g2/sdk/python
 ENV LD_LIBRARY_PATH=${SENZING_ROOT}/g2/lib:${SENZING_ROOT}/g2/lib/debian
 ENV DB2_CLI_DRIVER_INSTALL_PATH=${SENZING_ROOT}/db2/clidriver
 ENV PATH=$PATH:${SENZING_ROOT}/db2/clidriver/adm:${SENZING_ROOT}/db2/clidriver/bin
