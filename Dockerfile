@@ -4,7 +4,7 @@
 ARG BASE_IMAGE=jupyter/minimal-notebook:ubuntu-20.04@sha256:2d53044baa4ea352a1a22ab5866c093c0b2df73c8d5bcda3ee205d5abbbe592b
 FROM ${BASE_IMAGE}
 
-ENV REFRESHED_AT=2022-07-12
+ENV REFRESHED_AT=2022-07-14
 
 LABEL Name="senzing/jupyter" \
       Maintainer="support@senzing.com" \
