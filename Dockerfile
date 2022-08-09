@@ -81,7 +81,6 @@ RUN conda install -n ipykernel_py3 -y \
       numpy \
       pandas \
       plotly \
-      psutil \
       pyodbc \
       qgrid \
       seaborn \
