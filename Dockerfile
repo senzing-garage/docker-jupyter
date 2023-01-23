@@ -11,7 +11,7 @@ LABEL Name="senzing/jupyter" \
       Version="3.0.0"
 
 ARG SENZING_ACCEPT_EULA="I_ACCEPT_THE_SENZING_EULA"
-ARG SENZING_APT_INSTALL_PACKAGE="senzingapi-runtime=3.1.2-22194"
+ARG SENZING_APT_INSTALL_PACKAGE="senzingapi-runtime=3.3.2-22299"
 ARG SENZING_APT_REPOSITORY_URL="https://senzing-production-apt.s3.amazonaws.com/senzingrepo_1.0.0-1_amd64.deb"
 
 HEALTHCHECK CMD ["/app/healthcheck.sh"]
@@ -40,6 +40,7 @@ RUN apt-get -y install \
       odbc-postgresql \
       postgresql-client \
       python-dev \
+      python3-pip \
       sqlite \
       unixodbc \
       unixodbc-dev \
@@ -117,7 +118,7 @@ RUN curl -L https://github.com/SpencerPark/IJava/releases/download/v1.3.0/ijava-
 RUN pip3 install --upgrade ipykernel --user
 # Update nodeJS.
 
-RUN npm i -g npm
+#RUN npm i -g npm
 
 #############################################
 ## Prepare user home dir
