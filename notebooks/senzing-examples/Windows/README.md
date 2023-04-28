@@ -27,10 +27,9 @@ For example, visit
 ### Contents
 
 1. [Expectations](#expectations)
-    1. [Environment](#Environment)
+    1. [Environment](#environment)
     1. [Time](#time)
 1. [Demonstrate using command line](#demonstrate-using-command-line)
-    1. [Initialize Senzing](#initialize-senzing)
     1. [Configuration](#configuration)
     1. [Volumes](#volumes)
 
@@ -58,14 +57,9 @@ This repository assumes a working knowledge of:
 
 1. [Jupyter](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/jupyter.md)
 1. Windows command line
-2. Python
+1. Python
 
 ## Demonstrate using command line
-
-### Initialize Senzing
-
-1. If Senzing has not been initialized, visit
-   "[How to initialize Senzing with Docker](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/initialize-senzing-with-docker.md)".
 
 ### Configuration
 
@@ -81,7 +75,6 @@ Non-Senzing configuration can be seen at
 - **[SENZING_NETWORK](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_network)**
 - **[SENZING_RUNAS_USER](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_runas_user)**
 - **[SENZING_VAR_DIR](https://github.com/Senzing/knowledge-base/blob/main/lists/environment-variables.md#senzing_var_dir)**
-
 
 ### Volumes
 
@@ -102,7 +95,6 @@ Non-Senzing configuration can be seen at
         type %SENZING_VOLUME%\g2\data\libpostal\data_version
         ```
 
-
 1. Identify the `data_version`, `etc`, `g2`, and `var` directories.
    Example:
 
@@ -112,6 +104,7 @@ Non-Senzing configuration can be seen at
    set SENZING_ETC_DIR=%SENZING_G2_DIR%\etc
    set SENZING_VAR_DIR=%SENZING_G2_DIR%\var
     ```
+
 ### Begin using notebooks
 
 1. Run python

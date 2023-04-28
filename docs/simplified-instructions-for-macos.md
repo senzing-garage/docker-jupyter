@@ -30,7 +30,7 @@ There is more information on the
 ### Docker
 
 See
-[HOWTO/install-docker macOS](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/install-docker.md#macos)
+[HOWTO/install-docker macOS](https://github.com/Senzing/knowledge-base/blob/main/WHATIS/docker.md#macos)
 
 ## Build docker image
 
@@ -42,13 +42,6 @@ docker build \
   --tag senzing/jupyter \
   https://github.com/senzing/docker-jupyter.git#main
 ```
-
-## Install Senzing
-
-*Note*: Budget about 40min., depending on your internet speed.
-*Note*: It requires about 4GB of free disk.
-
-Follow the instructions at [HOWTO/create-senzing-dir.md](https://github.com/Senzing/knowledge-base/blob/main/HOWTO/create-senzing-dir.md)
 
 ## Add Senzing directory to Docker
 
