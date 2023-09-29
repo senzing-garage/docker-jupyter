@@ -1,10 +1,10 @@
 # User can select the base image.
 # For BASE_IMAGE choices, see https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html
 
-ARG BASE_IMAGE=jupyter/minimal-notebook:ubuntu-20.04@sha256:2d53044baa4ea352a1a22ab5866c093c0b2df73c8d5bcda3ee205d5abbbe592b
+ARG BASE_IMAGE=jupyter/minimal-notebook:ubuntu-20.04@sha256:143f7cc7e7bdf5a86c0ef3b2717c24d477359a3cf798b243c574d3efe453bfaa
 FROM ${BASE_IMAGE}
 
-ENV REFRESHED_AT=2022-07-14
+ENV REFRESHED_AT=2023-09-29
 
 LABEL Name="senzing/jupyter" \
       Maintainer="support@senzing.com" \
