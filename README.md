@@ -1,5 +1,17 @@
 # docker-jupyter
 
+## :no_entry: Deprecated
+
+Although Senzing can be used with Jupyter,
+Jupyter notebooks are not part of the Senzing product.
+
+If you are beginning your journey with
+[Senzing](https://senzing.com/),
+please start with
+[Senzing Quick Start guides](https://docs.senzing.com/quickstart/).
+
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+
 ## Overview
 
 The `docker-jupyter` repository holds example Senzing
